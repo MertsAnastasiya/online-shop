@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: "./src/index.ts",
@@ -41,6 +42,11 @@ module.exports = {
             ignoreOrder: true,
         }),
         new CleanWebpackPlugin(),
+        new CopyPlugin({
+            patterns: [
+                { from: path.resolve(__dirname, './src/assets'), to: path.resolve(__dirname, './public/assets') },
+            ],
+        }),
     ],
     devServer: {
         static: {
@@ -48,5 +54,6 @@ module.exports = {
         },
         compress: true,
         port: 9000,
+        hot: false
     },
 };
