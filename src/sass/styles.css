@@ -1,0 +1,194 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.product {
+  display: flex;
+  gap: 50px;
+  padding: 15px 0;
+  width: 90%;
+  color: #202020;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.product__description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.product__image {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.additional-images__wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.main-image {
+  width: 400px;
+  height: 430px;
+  background: url("../assets/img/iPhone13.png") no-repeat;
+  background-size: contain;
+}
+
+.additional-image {
+  width: 100px;
+  height: 100px;
+  background: url("../assets/img/iPhone13.png") no-repeat;
+  background-size: contain;
+}
+
+.product__name {
+  font-size: 2.5rem;
+  line-height: 2.5rem;
+  font-weight: 800;
+  font-style: normal;
+  padding-bottom: 20px;
+}
+
+.brand {
+  padding-bottom: 20px;
+}
+
+.description {
+  padding-bottom: 20px;
+}
+
+.price {
+  font-size: 2.5rem;
+  line-height: 2.5rem;
+  font-weight: 800;
+  font-style: normal;
+  padding: 15px 0;
+  border-top: 1px solid #eaedec;
+  border-bottom: 1px solid #eaedec;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.route {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 400;
+  font-style: normal;
+  padding: 15px;
+}
+
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating__label {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 400;
+  font-style: normal;
+  color: #07ab08;
+  text-decoration: none;
+}
+
+.buttons__wrapper {
+  display: flex;
+  gap: 20px;
+  padding-top: 15px;
+}
+
+.button {
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+  font-weight: 400;
+  font-style: normal;
+  width: 130px;
+  padding: 5px 10px;
+  border: 1px solid #023d28;
+  color: #023d28;
+  border-radius: 20px;
+  background-color: #ffffff;
+}
+.button:hover {
+  background-color: #023d28;
+  color: #ffffff;
+}
+
+.delivery__wrapper {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #eaedec;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.delivery::before {
+  content: " ";
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background: url("../assets/icons/truck.png") no-repeat;
+  filter: invert(75%) sepia(5%) saturate(3778%) hue-rotate(338deg) brightness(102%) contrast(91%);
+  background-size: contain;
+  padding-right: 20px;
+}
+
+.delivery,
+.return {
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  font-weight: 700;
+  font-style: normal;
+  border-bottom: 1px solid #eaedec;
+  padding: 10px 10px;
+}
+
+.return::before {
+  content: " ";
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background: url("../assets/icons/calendar.png") no-repeat;
+  filter: invert(75%) sepia(5%) saturate(3778%) hue-rotate(338deg) brightness(102%) contrast(91%);
+  background-size: contain;
+  padding-right: 20px;
+}
+
+.footer {
+  height: 30px;
+  background-color: #023d28;
+}
+
+.header {
+  height: 30px;
+  background-color: #023d28;
+}
+
+/*# sourceMappingURL=styles.css.map */
