@@ -1,3 +1,7 @@
+.main{
+   margin-left: 0vw;
+}
+
 .filters{
     display: flex;
     gap: 300px;
@@ -137,8 +141,8 @@ input[type=range] {
    display: flex;
    margin: 138px 0 0 84px;
    flex-wrap: wrap;
-   gap: 125px;
-   width: 1182px;
+   gap: 91px;
+   width: 1200px;
 
    .product{
       .product-img{
