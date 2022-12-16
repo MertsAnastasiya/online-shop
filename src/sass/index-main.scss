@@ -1,11 +1,11 @@
 .main{
-   margin-left: 0vw;
+   margin-left: 8vw;
 }
 
 .filters{
     display: flex;
     gap: 300px;
-    margin: 93px 0 0 99px;
+    margin: 93px 0 0 0px;
 
     .filter{
         width: 211px;
@@ -25,11 +25,11 @@
 
 .sliders{
    display: flex;
-   gap: 360px;
+   gap: 448px;
 }
 
 .price-slider{
-   margin-left: 86px;
+   margin-left: 0px;
    margin-top: 30px;
 
    .slider-descriptor{
@@ -139,7 +139,7 @@ input[type=range] {
 
 .products{
    display: flex;
-   margin: 138px 0 0 84px;
+   margin: 138px 0 0 0px;
    flex-wrap: wrap;
    gap: 91px;
    width: 1200px;
