@@ -62,6 +62,12 @@
 
             <select name="Sort" id="sort" class="filter">
                 <option value="Sort">Sort</option>
+                <option value="Price ASC">Price ASC</option>
+                <option value="Price DESC">Price DESC</option>
+                <option value="Rating ASC">Rating ASC</option>
+                <option value="Rating DESC">Rating DESC</option>
+                <option value="Discount ASC">Discount ASC</option>
+                <option value="Discount DESC">Discount DESC</option>
             </select>
         </section>
 
@@ -78,13 +84,13 @@
             </div>
 
             <div class="price-slider">
-                <p class="slider-descriptor">Price</p>
+                <p class="slider-descriptor">Stock</p>
                 <span class="price-range">
-                    <input class="price-range__input1" type="range" min="10" max="1749" value="10" id="lower">
-                    <input class="price-range__input2" type="range" min="10" max="1749" value="1749" id="upper">
+                    <input class="price-range__input1" type="range" min="1" max="150" value="2" id="lower">
+                    <input class="price-range__input2" type="range" min="1" max="150" value="150" id="upper">
                 </span>
-                <div class="price-spans">
-                    <span>€ 10.0</span><span>€ 1749.00</span>
+                <div class="stock-spans">
+                    <span>2</span><span>150</span>
                 </div>
             </div>
         </section>
@@ -152,7 +158,18 @@
         </section>
     </main>
     <footer class="footer">
+        <div class="authors">
+            <img src="assets/img/github.png" alt="github" class="github">
+            <ul class="authors-githubs">
+                <li><a class="authors-githubs__link" href="https://github.com/MertsAnastasiya">mertsanastasiya</a></li>
+                <li><a class="authors-githubs__link" href="https://github.com/Win4esterD">Win4esterD</a></li>
+            </ul>
+        </div>
 
+        <p class="year">2022</p>
+
+        <img src="assets/img/rs_school_js.svg" alt="RS-School logo" class="rs-logo">
+        
     </footer>
 </body>
 </html>
