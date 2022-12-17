@@ -1,0 +1,55 @@
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 15px;
+  gap: 15px;
+
+  @include media-mobile {
+    gap: 20px;
+  }
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  padding: 0 5px;
+  width: 30%;
+
+  .add-cart {
+    align-self: center;
+  }
+
+  @include media-mobile {
+    width: 100%;
+  }
+}
+
+.product__img {
+  border-radius: 5px;
+  width: 100%;
+  height: 200px;
+  // background: url("../assets/img/thumbnail (1).jpg");
+  // background-repeat: no-repeat;
+  // background-size: cover;
+}
+
+.product__spans {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Roboto";
+  padding: 10px 0;
+}
+
+.product__name {
+  overflow: hidden;
+  display: inline-block;
+  max-width: 70%;
+  @include font($size: 1.8rem, $weight: 600);
+  max-height: 1.8rem; //as font-size
+  text-align: center;
+}
+
+.product__price {
+  @include font($size: 1.6rem, $weight: 600);
+}

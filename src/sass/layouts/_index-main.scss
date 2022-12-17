@@ -1,0 +1,167 @@
+// .filters {
+//   // display: flex;
+//   // gap: 300px;
+//   // margin: 93px 0 0 99px;
+// }
+// .filter {
+//   width: 211px;
+//   height: 61px;
+//   background: #d9d9d9;
+//   border: 3px solid #000000;
+//   border-radius: 37px;
+//   font-family: "Roboto";
+//   font-style: normal;
+//   font-weight: 400;
+//   font-size: 30px;
+//   line-height: 35px;
+//   text-align: center;
+//   color: #000000;
+// }
+
+// .sliders {
+//   display: flex;
+//   gap: 360px;
+// }
+
+// .price-slider {
+//   margin-left: 86px;
+//   margin-top: 30px;
+
+//   .slider-descriptor {
+//     margin-left: 31px;
+//     font-family: "Roboto";
+//     font-style: normal;
+//     font-weight: 400;
+//     font-size: 34px;
+//     line-height: 40px;
+//     text-align: left;
+//     color: #000000;
+//   }
+
+//   .price-spans {
+//     display: flex;
+//     margin-top: 74px;
+//     gap: 156px;
+//     font-family: "Roboto";
+//     font-style: normal;
+//     font-weight: 400;
+//     font-size: 34px;
+//     line-height: 40px;
+//     text-align: left;
+//   }
+
+//   .stock-spans {
+//     display: flex;
+//     margin-top: 74px;
+//     gap: 329px;
+//     font-family: "Roboto";
+//     font-style: normal;
+//     font-weight: 400;
+//     font-size: 34px;
+//     line-height: 40px;
+//     text-align: left;
+//   }
+// }
+
+// input[type="range"] {
+//   box-sizing: border-box;
+//   appearance: none;
+//   width: 400px;
+//   margin: 0;
+//   padding: 0 2px;
+//   /* Add some L/R padding to ensure box shadow of handle is shown */
+//   overflow: hidden;
+//   border-radius: 1px;
+//   outline: none;
+//   background: linear-gradient(#023d29, #023d29) no-repeat center;
+//   /* Use a linear gradient to generate only the 2px height background */
+//   background-size: 100% 5px;
+//   pointer-events: none;
+
+//   &:active,
+//   &:focus {
+//     outline: none;
+//   }
+
+//   &::-webkit-slider-thumb {
+//     height: 28px;
+//     width: 28px;
+//     border-radius: 28px;
+//     background-color: #fff;
+//     position: relative;
+//     margin: 5px 0;
+//     /* Add some margin to ensure box shadow is shown */
+//     cursor: pointer;
+//     appearance: none;
+//     pointer-events: all;
+//     box-shadow: 0 1px 4px 0.5px rgba(0, 0, 0, 0.25);
+//     &::before {
+//       content: " ";
+//       display: block;
+//       position: absolute;
+//       top: 13px;
+//       left: 100%;
+//       width: 2000px;
+//       height: 2px;
+//     }
+//   }
+// }
+
+// .price-range {
+//   position: relative;
+//   height: 50px;
+
+//   input[type="range"] {
+//     position: absolute;
+
+//     &:nth-child(1) {
+//       &::-webkit-slider-thumb::before {
+//         background-color: red;
+//       }
+//     }
+
+//     &:nth-child(2) {
+//       background: none;
+
+//       &::-webkit-slider-thumb::before {
+//         background-color: grey;
+//       }
+//     }
+//   }
+// }
+
+// .products {
+//   display: flex;
+// margin: 138px 0 0 84px;
+// flex-wrap: wrap;
+// gap: 10px;
+// width: 1182px;
+
+// .add-cart {
+//   width: 170px;
+//   height: 61px;
+//   background: #d9d9d9;
+//   border: 3px solid #000000;
+//   border-radius: 37px;
+//   font-family: "Roboto";
+//   font-style: normal;
+//   font-weight: 400;
+//   font-size: 22px;
+//   line-height: 22px;
+//   text-align: center;
+//   color: #000000;
+// }
+
+// .add-cart:hover {
+//   cursor: pointer;
+// }
+
+// .add-cart:active {
+//   background: #fba705;
+// }
+// }
+
+// .product {
+
+//   }
+// }
