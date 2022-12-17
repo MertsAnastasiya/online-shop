@@ -1,4 +1,5 @@
-import { IProduct } from "../interfaces/product.interface";
+import { IProduct } from '../interfaces/product.interface';
+import '../../sass/components/productPage.scss';
 import { productsData } from '../data';
 
 export type productProperty = keyof Product;

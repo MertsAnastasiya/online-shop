@@ -13,6 +13,12 @@ class Filters {
     return this.filterByProperty(category, productsData, property);
   }
 
+  // public static filterBy(category: string[]): IProduct[] {
+  //   let property = 'category' as productProperty;
+  //   category.forEach((filtr ))
+  //   return this.filterByProperty(category, productsData, property);
+  // }
+
   public static filterByBrand(brand: string): IProduct[] {
     let property = 'brand' as productProperty;
     return this.filterByProperty(brand, productsData, property);
@@ -20,4 +26,4 @@ class Filters {
 }
 
 console.log(Filters.filterByBrand('apple'));
-console.log(Filters.filterByBrand('smartphones'));
+console.log(Filters.filterByCategory('smartphones'));
