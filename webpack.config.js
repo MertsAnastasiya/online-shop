@@ -38,10 +38,7 @@ module.exports = {
       filename: "index.html",
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(
-        __dirname,
-        "./src/components/product/product.html"
-      ),
+      template: path.resolve(__dirname, "./src/modules/product/product.html"),
       filename: "product.html",
     }),
     new MiniCssExtractPlugin({
