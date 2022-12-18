@@ -4,6 +4,8 @@ import './sass/index-main.scss';
 import './sass/footer.scss';
 import { dataBase } from './modules/database';
 import './modules/sliders';
+import { productsData } from './components/data';
+import { ClassLikeDeclarationBase } from 'typescript';
 
 function generateProduct(num: number){
     const products = document.querySelector(".products") as HTMLElement;
@@ -38,7 +40,39 @@ function generateProduct(num: number){
     products.appendChild(productDiv);
 }
 
+
+function uploadCategories(value: string, selector: string): void{
+    const categoriesSet = new Set();
+    const categoriesArray: string[]= [];
+    const cat: string = value;
+    const htmlSelector = selector;
+
+
+    for(let i = 0; i < dataBase.products.length - 1; i++){
+        cat === 'category'? categoriesSet.add(dataBase.products[i]?.category) : categoriesSet.add(dataBase.products[i]?.brand);
+    }
+
+    for(const value of categoriesSet.values()){
+        categoriesArray.push(value as string);
+    }
+
+    for(let i = 0; i < categoriesArray.length - 1; i++){
+        const categories = document.querySelector(htmlSelector) as HTMLDivElement;
+        const paragraph = document.createElement('p') as HTMLParagraphElement;
+        const input = document.createElement('input') as HTMLInputElement;
+        input.setAttribute('name', `option${i+1}`);
+        input.setAttribute('type', 'checkbox');
+        input.setAttribute('value', String(i+1));
+        paragraph.innerHTML = `<input type="checkbox" name="${categoriesArray[i]}" value="${i}">${categoriesArray[i]}`;
+        categories.appendChild(paragraph);
+    }
+
+}
+
 function start(){
+    uploadCategories('category', '.categories');
+    uploadCategories('brand', '.brands');
+
     for(let i = 0; i < dataBase.products.length - 1; i++){
         generateProduct(i);
     };

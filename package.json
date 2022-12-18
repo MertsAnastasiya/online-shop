@@ -8,7 +8,8 @@
     "build": "webpack",
     "serve": "webpack-dev-server --open",
     "sass": "sass --watch src/sass/styles.scss src/sass/styles.css",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "watch": "webpack --watch --progress"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.46.1",

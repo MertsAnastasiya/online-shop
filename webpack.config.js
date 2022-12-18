@@ -6,6 +6,7 @@ const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
+    watch: true,
     entry: "./src/index.ts",
     mode: "development",
     module: {
@@ -25,6 +26,10 @@ module.exports = {
             },
         ],
     },
+    // watchOptions: {
+    //     aggregateTimeout: 20,
+    //     poll: 100,
+    // },
     resolve: {
         extensions: [".ts", ".js", ".css"],
     },
@@ -52,8 +57,8 @@ module.exports = {
         static: {
             directory: path.join(__dirname, 'public'),
         },
-        compress: true,
-        port: 9000,
+        compress: false,
+        port: 8080,
         hot: false
     },
 };
