@@ -9,10 +9,10 @@
 
 .basket-background {
   position: relative;
-  background: url("../assets/img/solution-cart\ 1.png") no-repeat;
-  background-size: cover;
-  width: 60px;
-  height: 60px;
+  // background: url("../assets/img/solution-cart\ 1.png") no-repeat;
+  // background-size: cover;
+  // width: 60px;
+  // height: 60px;
 }
 
 .total-amount {
@@ -21,12 +21,13 @@
 
 .counter {
   position: absolute;
-  width: 25px;
-  height: 25px;
-  top: 31px;
-  left: 19px;
+  width: 30px;
+  height: 30px;
+  top: 49px;
+  left: 29px;
   color: $color-light;
   background-color: $color-primary;
   border-radius: 50px;
   text-align: center;
+  padding: 2px;
 }
