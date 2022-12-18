@@ -75,22 +75,22 @@
             <div class="price-slider">
                 <p class="slider-descriptor">Price</p>
                 <span class="price-range">
-                    <input class="price-range__input1" type="range" min="10" max="1749" value="10" id="lower">
-                    <input class="price-range__input2" type="range" min="10" max="1749" value="1749" id="upper">
+                    <input class="price-range__input1" id="price-range-start" value="10" step="1" type="range" min="10" max="1749">
+                    <input class="price-range__input2" id="price-range-finish" type="range" min="10" max="1749" value="1749">
                 </span>
                 <div class="price-spans">
-                    <span>€ 10.0</span><span>€ 1749.00</span>
+                    <span class="price-spans__span-min">€ 10.0</span><span class="price-spans__span-max">€ 1749.00</span>
                 </div>
             </div>
 
             <div class="price-slider">
                 <p class="slider-descriptor">Stock</p>
                 <span class="price-range">
-                    <input class="price-range__input1" type="range" min="1" max="150" value="2" id="lower">
-                    <input class="price-range__input2" type="range" min="1" max="150" value="150" id="upper">
+                    <input class="price-range__input1" id="stock-range-start" type="range" min="1" max="150" value="2" id="lower">
+                    <input class="price-range__input2" id="stock-range-finish" type="range" min="1" max="150" value="150" id="upper">
                 </span>
                 <div class="stock-spans">
-                    <span>2</span><span>150</span>
+                    <span class="stock-spans__span-min">2</span><span class="stock-spans__span-max">150</span>
                 </div>
             </div>
         </section>

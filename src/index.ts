@@ -3,10 +3,9 @@ import './sass/header.scss';
 import './sass/index-main.scss';
 import './sass/footer.scss';
 import { dataBase } from './modules/database';
-console.log(dataBase.products[0]?.images[0]);
+import './modules/sliders';
 
-
-function fillProducts(num: number){
+function generateProduct(num: number){
     const products = document.querySelector(".products") as HTMLElement;
     const productDiv: HTMLElement = document.createElement('div');
     const productImg: HTMLElement = document.createElement('img');
@@ -39,6 +38,10 @@ function fillProducts(num: number){
     products.appendChild(productDiv);
 }
 
-for(let i = 0; i < dataBase.products.length - 1; i++){
-    fillProducts(i);
+function start(){
+    for(let i = 0; i < dataBase.products.length - 1; i++){
+        generateProduct(i);
+    };
 }
+
+start();
