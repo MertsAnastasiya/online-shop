@@ -7,7 +7,7 @@ import './modules/sliders';
 import { productsData } from './components/data';
 import { ClassLikeDeclarationBase } from 'typescript';
 
-function generateProduct(num: number){
+function generateProduct(num: number): void{
     const products = document.querySelector(".products") as HTMLElement;
     const productDiv: HTMLElement = document.createElement('div');
     const productImg: HTMLElement = document.createElement('img');
@@ -69,7 +69,7 @@ function uploadCategories(value: string, selector: string): void{
 
 }
 
-function start(){
+function start(): void{
     uploadCategories('category', '.categories');
     uploadCategories('brand', '.brands');
 

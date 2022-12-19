@@ -1,35 +1,35 @@
+import { dataBase } from "./database";
+
 class DualSlider{
-    minRange: HTMLInputElement;
-    maxRange: HTMLInputElement;
-    minPrice: HTMLElement;
-    maxPrice: HTMLElement;
-    startSymbol: string;
-    endSymbol: string;
+    private minRange: HTMLInputElement; //first input range
+    private maxRange: HTMLInputElement; //second input range
+    private minPrice: HTMLElement; //first span for min price
+    private maxPrice: HTMLElement; //second span for max price
+    private currency: string; //currency
 
-    constructor(minRange: HTMLInputElement, maxRange: HTMLInputElement, minPrice: HTMLElement, maxPrice: HTMLElement, startSymbol='', endSymbol=''){
-        this.minRange = minRange; //first input range
-        this.maxRange = maxRange; //second input range
-        this.minPrice = minPrice; //first span for min price
-        this.maxPrice = maxPrice; //second span for max price
-        this.startSymbol = startSymbol;
-        this.endSymbol = endSymbol;
-
+    constructor(minRange: HTMLInputElement, maxRange: HTMLInputElement, minPrice: HTMLElement, maxPrice: HTMLElement, currency=''){
+        this.minRange = minRange; 
+        this.maxRange = maxRange; 
+        this.minPrice = minPrice; 
+        this.maxPrice = maxPrice; 
+        this.currency = currency;
     }
+
 
     showValues(){
         this.minRange.addEventListener('input', () => {
-            this.minPrice.innerHTML = `${this.startSymbol}${this.minRange.value}${this.endSymbol}`;
+            this.minPrice.innerHTML = `${this.currency}${this.minRange.value}`;
             if(Number(this.minRange.value) > Number(this.maxRange.value)){
-                this.maxPrice.innerHTML = `${this.startSymbol}${this.minRange.value}${this.endSymbol}`;
-                this.minPrice.innerHTML = `${this.startSymbol}${this.maxRange.value}${this.endSymbol}`;
+                this.maxPrice.innerHTML = `${this.currency}${this.minRange.value}`;
+                this.minPrice.innerHTML = `${this.currency}${this.maxRange.value}`;
             }
         });
 
         this.maxRange.addEventListener('input', () => {
-            this.maxPrice.innerHTML = `${this.startSymbol}${this.maxRange.value}${this.endSymbol}`;
+            this.maxPrice.innerHTML = `${this.currency}${this.maxRange.value}`;
             if(Number(this.minRange.value) > Number(this.maxRange.value)){
-                this.minPrice.innerHTML = `${this.startSymbol}${this.maxRange.value}${this.endSymbol}`;
-                this.maxPrice.innerHTML = `${this.startSymbol}${this.minRange.value}${this.endSymbol}`;
+                this.minPrice.innerHTML = `${this.currency}${this.maxRange.value}`;
+                this.maxPrice.innerHTML = `${this.currency}${this.minRange.value}`;
             }
         });
     }
@@ -48,8 +48,9 @@ const minStockSpan = document.querySelector('.stock-spans__span-min') as HTMLSpa
 const maxStockSpan = document.querySelector('.stock-spans__span-max') as HTMLSpanElement;
 
 
-const priceSlider = new DualSlider(minRange, maxRange, minPrice, maxPrice, '€ ', '.00');
+const priceSlider = new DualSlider(minRange, maxRange, minPrice, maxPrice, '€');
 priceSlider.showValues();
+// priceSlider.setMaxValue();
 
 const stockSlider = new DualSlider(minStockRange, maxStockRange, minStockSpan, maxStockSpan);
 stockSlider.showValues();
