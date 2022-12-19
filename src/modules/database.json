@@ -1578,7 +1578,7 @@
     },
     {
       "id": 87,
-      "title": "t Temperature Controller Incubator Controller",
+      "title": "Temperature Controller Incubator Controller",
       "description": "Both Heat and Cool Purpose, Temperature control range; -50 to +110, Temperature measurement accuracy; 0.1, Control accuracy; 0.1",
       "price": 40,
       "discountPercentage": 11.3,
