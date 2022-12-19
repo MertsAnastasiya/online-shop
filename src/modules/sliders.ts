@@ -18,7 +18,7 @@ class DualSlider{
         this.currency = currency;
     }
 
-    setMinMax(value: string){
+    public setMinMax(value: string): void{
         const arr = [];
         let maxTemp = 0;
 
@@ -53,7 +53,7 @@ class DualSlider{
     }
 
 
-    showValues(){
+    public showValues(): void{
         this.minRange.addEventListener('input', () => {
             this.minPrice.innerHTML = `${this.currency}${this.minRange.value}`;
             if(Number(this.minRange.value) > Number(this.maxRange.value)){
