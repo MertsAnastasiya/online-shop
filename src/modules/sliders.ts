@@ -22,7 +22,7 @@ class DualSlider{
         const arr = [];
         let maxTemp = 0;
 
-        for(let i = 0; i < productsData.length - 1; i++){
+        for(let i = 0; i < productsData.length; i++){
             arr.push(productsData[i]![value as keyof IProduct]);
         }
 

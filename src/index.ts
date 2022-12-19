@@ -37,7 +37,7 @@ function generateProduct(num: number, currency: string): void{
 }
 
 function start(): void{
-    for(let i = 0; i < productsData.length - 1; i++){
+    for(let i = 0; i < productsData.length; i++){
         generateProduct(i, '€');
     };
 }
