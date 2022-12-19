@@ -2,9 +2,7 @@ import { IProduct } from '../interfaces/product.interface';
 import { productProperty } from '../interfaces/type';
 
 export class Filters {
-  constructor() {
 
-  }
   public generateFilter(data: IProduct[],filterType: productProperty): void {
     const filter = document.querySelector(`.filter_${filterType}`)!;
     const setFilter: Set<unknown> = this.generateFilterItems(data, filterType);
