@@ -40,5 +40,5 @@ export class Filters {
     filterItem.appendChild(label);
 
     return filterItem;
-}
+  }
 }
