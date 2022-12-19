@@ -1,9 +1,62 @@
 .footer {
-  height: 30px;
-  background-color: $color-primary;
+  background: $color-primary;
+  padding: 10px 0;
 }
 
-.header {
-  height: 30px;
-  background-color: $color-primary;
+.footer__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @include font($size: 3.3rem);
+
+  @include media-mobile {
+    flex-direction: column;
+    gap: 20px;
+    @include font($size: 2rem);
+  }
+}
+
+.authors {
+  display: flex;
+  align-items: center;
+}
+
+.github {
+  display: block;
+  width: 97px;
+  height: 97px;
+
+  @include media-mobile {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.authors-githubs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style-type: none;
+}
+
+.authors-githubs__link {
+  text-decoration: none;
+  font-family: "Roboto";
+
+  color: #fffcfc;
+}
+
+.year {
+  font-family: "Roboto";
+  color: #fffcfc;
+}
+
+.rs-logo {
+  display: block;
+  width: 173px;
+  height: 97px;
+
+  @include media-mobile {
+    height: 50px;
+  }
 }

@@ -1,0 +1,15 @@
+.header {
+  background: $color-primary;
+  padding: 20px 0;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include media-mobile {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

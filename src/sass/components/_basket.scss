@@ -1,0 +1,33 @@
+.basket-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: $color-light;
+  font-family: "Roboto";
+  @include font($size: 2.5rem, $weight: 500);
+}
+
+.basket-background {
+  position: relative;
+  // background: url("../assets/img/solution-cart\ 1.png") no-repeat;
+  // background-size: cover;
+  // width: 60px;
+  // height: 60px;
+}
+
+.total-amount {
+  padding-top: 25px;
+}
+
+.counter {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 49px;
+  left: 29px;
+  color: $color-light;
+  background-color: $color-primary;
+  border-radius: 50px;
+  text-align: center;
+  padding: 2px;
+}
