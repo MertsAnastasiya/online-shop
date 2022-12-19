@@ -63,7 +63,7 @@ function uploadCategories(value: string, selector: string): void{
         input.setAttribute('name', `option${i+1}`);
         input.setAttribute('type', 'checkbox');
         input.setAttribute('value', String(i+1));
-        paragraph.innerHTML = `<input type="checkbox" name="${categoriesArray[i]}" value="${i}">${categoriesArray[i]}`;
+        paragraph.innerHTML = `<input class="${cat}" type="checkbox" name="${categoriesArray[i]}" value="${i}">${categoriesArray[i]}`;
         categories.appendChild(paragraph);
     }
 
