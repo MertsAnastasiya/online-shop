@@ -2,10 +2,8 @@
 import './sass/header.scss';
 import './sass/index-main.scss';
 import './sass/footer.scss';
-import { dataBase } from './modules/database';
 import './modules/sliders';
 import { productsData } from './components/data';
-import { ClassLikeDeclarationBase } from 'typescript';
 
 function generateProduct(num: number): void{
     const products = document.querySelector(".products") as HTMLElement;
@@ -20,13 +18,13 @@ function generateProduct(num: number): void{
 
     productDiv.className = "product";
     productSpans.className = "product-spans";
-    productImg.setAttribute('src', dataBase.products[num]?.images[0] as string);
+    productImg.setAttribute('src', productsData[num]?.images[0] as string);
     productImg.setAttribute('alt', "product");
     productImgDiv.appendChild(productImg);
     nameSpan.className = "name-span";
     priceSpan.className = "price-span";
-    nameSpan.innerHTML = `${dataBase.products[num]?.title}`;
-    priceSpan.innerHTML = `${dataBase.products[num]?.price}`;
+    nameSpan.innerHTML = `${productsData[num]?.title}`;
+    priceSpan.innerHTML = `${productsData[num]?.price}`;
     addToCart.className = "add-cart";
     addToCart.innerHTML = "Add to cart";
 
@@ -48,8 +46,8 @@ function uploadCategories(value: string, selector: string): void{
     const htmlSelector = selector;
 
 
-    for(let i = 0; i < dataBase.products.length - 1; i++){
-        cat === 'category'? categoriesSet.add(dataBase.products[i]?.category) : categoriesSet.add(dataBase.products[i]?.brand);
+    for(let i = 0; i < productsData.length - 1; i++){
+        cat === 'category'? categoriesSet.add(productsData[i]?.category) : categoriesSet.add(productsData[i]?.brand);
     }
 
     for(const value of categoriesSet.values()){
@@ -73,7 +71,7 @@ function start(): void{
     uploadCategories('category', '.categories');
     uploadCategories('brand', '.brands');
 
-    for(let i = 0; i < dataBase.products.length - 1; i++){
+    for(let i = 0; i < productsData.length - 1; i++){
         generateProduct(i);
     };
 }
