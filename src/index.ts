@@ -26,7 +26,7 @@ function generateProduct(num: number): void{
     nameSpan.className = "name-span";
     priceSpan.className = "price-span";
     nameSpan.innerHTML = `${dataBase.products[num]?.title}`;
-    priceSpan.innerHTML = `€${dataBase.products[num]?.price}.00`;
+    priceSpan.innerHTML = `${dataBase.products[num]?.price}`;
     addToCart.className = "add-cart";
     addToCart.innerHTML = "Add to cart";
 

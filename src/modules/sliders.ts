@@ -1,4 +1,7 @@
-import { dataBase } from "./database";
+// import { dataBase } from "./database";
+import { productsData } from "../components/data";
+import { IProduct } from "../components/interfaces/product.interface";
+
 
 class DualSlider{
     private minRange: HTMLInputElement; //first input range
@@ -13,6 +16,40 @@ class DualSlider{
         this.minPrice = minPrice; 
         this.maxPrice = maxPrice; 
         this.currency = currency;
+    }
+
+    setMinMax(value: string){
+        const arr = [];
+        let maxTemp = 0;
+
+        for(let i = 0; i < productsData.length - 1; i++){
+            arr.push(productsData[i]![value as keyof IProduct]);
+        }
+
+        for(const el of arr){
+            if(Number(el) > maxTemp){
+                maxTemp = Number(el);
+            }
+        };
+
+        this.maxRange.max = `${maxTemp}`;
+        this.maxRange.value = `${maxTemp}`;
+        this.minRange.max = `${maxTemp}`;
+        this.maxPrice.innerHTML = `${this.currency}${maxTemp}`;
+
+        let minTemp = maxTemp;
+
+        for(const el of arr){
+            if(Number(el) < maxTemp){
+                minTemp = Number(el);
+                maxTemp = Number(el);
+            }
+        };
+
+        this.maxRange.min = `${minTemp}`;
+        this.minRange.value = `${minTemp}`;
+        this.minRange.min = `${minTemp}`;
+        this.minPrice.innerHTML = `${this.currency}${minTemp}`;
     }
 
 
@@ -50,7 +87,8 @@ const maxStockSpan = document.querySelector('.stock-spans__span-max') as HTMLSpa
 
 const priceSlider = new DualSlider(minRange, maxRange, minPrice, maxPrice, '€');
 priceSlider.showValues();
-// priceSlider.setMaxValue();
+priceSlider.setMinMax('price');
 
 const stockSlider = new DualSlider(minStockRange, maxStockRange, minStockSpan, maxStockSpan);
 stockSlider.showValues();
+stockSlider.setMinMax('stock');
