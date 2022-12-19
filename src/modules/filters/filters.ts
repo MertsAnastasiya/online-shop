@@ -1,16 +1,16 @@
 import { IProduct } from '../interfaces/product.interface';
-import { productProperty } from '../interfaces/type';
+import { CurrentFilter } from '../interfaces/customTypes';
 
 export class Filters {
 
-  public generateFilter(data: IProduct[],filterType: productProperty): void {
+  public generateFilter(data: IProduct[], filterType: CurrentFilter): void {
     const filter = document.querySelector(`.filter_${filterType}`)!;
-    const setFilter: Set<unknown> = this.generateFilterItems(data, filterType);
-    setFilter.forEach((item) => filter.appendChild(this.createCheckbox(item as string)));
+    const setFilter: Set<string> = this.generateFilterItems(data, filterType);
+    setFilter.forEach((item) => filter.appendChild(this.createCheckbox(item)));
   }
 
-  private generateFilterItems(data: IProduct[], filterType: productProperty): Set<unknown>  {
-    const setItems = new Set<unknown>();
+  private generateFilterItems(data: IProduct[], filterType: CurrentFilter): Set<string>  {
+    const setItems = new Set<string>();
     data.forEach((item) => setItems.add(item[filterType]));
     return setItems;
   }
