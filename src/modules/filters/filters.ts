@@ -6,12 +6,12 @@ export class Filters {
   public generateFilter(data: IProduct[],filterType: productProperty): void {
     const filter = document.querySelector(`.filter_${filterType}`)!;
     const setFilter: Set<unknown> = this.generateFilterItems(data, filterType);
-    setFilter.forEach( (item) => filter.appendChild(this.createCheckbox(item as string)));
+    setFilter.forEach((item) => filter.appendChild(this.createCheckbox(item as string)));
   }
 
   private generateFilterItems(data: IProduct[], filterType: productProperty): Set<unknown>  {
     const setItems = new Set<unknown>();
-    data.forEach( (item) => setItems.add(item[filterType]));
+    data.forEach((item) => setItems.add(item[filterType]));
     return setItems;
   }
 
