@@ -14,7 +14,7 @@ export class Filters {
   }
 
   public generateFilter(data: IProduct[], filterType: FilterType): void {
-    const filter = document.querySelector(`.filter_${filterType}`)!;
+    const filter: Element = document.querySelector(`.filter_${filterType}`)!;
     const setFilter: Set<string> = this.generateFilterItems(data, filterType);
     setFilter.forEach((item) => filter.appendChild(this.createCheckbox(item, filterType)));
   }
@@ -48,33 +48,31 @@ export class Filters {
   }
 
   private viewFiltersResult(filterValue: string, filterType: FilterType): void {
-    const products = document.querySelector('.products')!;
-    this.setCurrentFilters(filterValue.toLowerCase(), filterType);
+    this.toggleFilter(filterValue.toLowerCase(), filterType);
     this.resultFilterProduct.clear();
-    productsData.forEach((item) => {
+    productsData.forEach((product) => {
       let addToResult: boolean = true;
       for(let key of this.selectedFiltres.keys()) {
-        const filterValuesForType = this.selectedFiltres.get(key);
-
-        if(filterValuesForType?.size !== 0 && !filterValuesForType?.has(item[key].toLowerCase())) {
+        const filterValuesForType: Set<string> = this.selectedFiltres.get(key)!;
+        const productPropertyValue: string = product[key].toLowerCase();
+        if(filterValuesForType.size !== 0 && !filterValuesForType.has(productPropertyValue)) {
           addToResult = false;
           break;
         }
       }
       if(addToResult) {
-        this.resultFilterProduct.add(item);
+        this.resultFilterProduct.add(product);
       }
     });
     console.log(this.resultFilterProduct); //I'm using it to show the result while we're thinking about function generateProduct()
   }
 
-  private setCurrentFilters(value: string, filterType: FilterType): void {
+  private toggleFilter(value: string, filterType: FilterType): void {
     const setFilterItems = this.selectedFiltres.get(filterType)!;
     if(setFilterItems.has(value)) {
       setFilterItems.delete(value);
     } else {
       setFilterItems.add(value);
     }
-    this.selectedFiltres.set(filterType, setFilterItems);
   }
 }
