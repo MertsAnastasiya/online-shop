@@ -35,7 +35,7 @@ export class Filters {
     checkbox.value = value;
     checkbox.id = value;
     checkbox.classList.add('checkbox');
-    checkbox.addEventListener('click', () => this.filtration(checkbox.id, filterType));
+    checkbox.addEventListener('click', () => this.viewFiltersResult(checkbox.id, filterType));
     const label = document.createElement('label');
     label.classList.add('label');
     label.htmlFor = checkbox.id;
@@ -47,7 +47,7 @@ export class Filters {
     return filterItem;
   }
 
-  private filtration(value: string, filterType: CurrentFilter): void {
+  private viewFiltersResult(value: string, filterType: CurrentFilter): void {
     const products = document.querySelector('.products')!;
     this.setCurrentFilters(value.toLowerCase(), filterType);
 
