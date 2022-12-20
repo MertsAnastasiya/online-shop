@@ -1,31 +1,31 @@
 import { IProduct } from '../interfaces/product.interface';
-import { CurrentFilter } from '../interfaces/customTypes';
+import { FilterType } from '../interfaces/customTypes';
 import { productsData } from '../data';
 
 export class Filters {
-  private selectedFiltres: Map<CurrentFilter, Set<string>>;
+  private selectedFiltres: Map<FilterType, Set<string>>;
   private resultFilterProduct: Set<IProduct>;
 
   constructor() {
-    this.selectedFiltres = new  Map<CurrentFilter, Set<string>>();
+    this.selectedFiltres = new  Map<FilterType, Set<string>>();
     this.selectedFiltres.set('category', new Set<string>());
     this.selectedFiltres.set('brand', new Set<string>());
     this.resultFilterProduct = new Set<IProduct>();
   }
 
-  public generateFilter(data: IProduct[], filterType: CurrentFilter): void {
+  public generateFilter(data: IProduct[], filterType: FilterType): void {
     const filter = document.querySelector(`.filter_${filterType}`)!;
     const setFilter: Set<string> = this.generateFilterItems(data, filterType);
     setFilter.forEach((item) => filter.appendChild(this.createCheckbox(item, filterType)));
   }
 
-  private generateFilterItems(data: IProduct[], filterType: CurrentFilter): Set<string>  {
+  private generateFilterItems(data: IProduct[], filterType: FilterType): Set<string>  {
     const setItems = new Set<string>();
     data.forEach((item) => setItems.add(item[filterType]));
     return setItems;
   }
 
-  private createCheckbox(value: string, filterType: CurrentFilter): HTMLElement {
+  private createCheckbox(value: string, filterType: FilterType): HTMLElement {
     const filterItem: HTMLElement = document.createElement('div');
     filterItem.classList.add('filter__item');
 
@@ -47,27 +47,28 @@ export class Filters {
     return filterItem;
   }
 
-  private viewFiltersResult(value: string, filterType: CurrentFilter): void {
+  private viewFiltersResult(filterValue: string, filterType: FilterType): void {
     const products = document.querySelector('.products')!;
-    this.setCurrentFilters(value.toLowerCase(), filterType);
-
+    this.setCurrentFilters(filterValue.toLowerCase(), filterType);
+    this.resultFilterProduct.clear();
     productsData.forEach((item) => {
-      if(this.resultFilterProduct.size === 0) {
-        if(this.selectedFiltres.get(filterType)?.has(item[filterType].toLowerCase())) {
-          this.resultFilterProduct.add(item);
+      let addToResult: boolean = true;
+      for(let key of this.selectedFiltres.keys()) {
+        const filterValuesForType = this.selectedFiltres.get(key);
+
+        if(filterValuesForType?.size !== 0 && !filterValuesForType?.has(item[key].toLowerCase())) {
+          addToResult = false;
+          break;
         }
-      } else {
-        if(this.selectedFiltres.get(filterType)?.has(item[filterType].toLowerCase())) {
-          this.resultFilterProduct.add(item);
-        } else {
-          this.resultFilterProduct.delete(item)
-        }
+      }
+      if(addToResult) {
+        this.resultFilterProduct.add(item);
       }
     });
     console.log(this.resultFilterProduct); //I'm using it to show the result while we're thinking about function generateProduct()
   }
 
-  private setCurrentFilters(value: string, filterType: CurrentFilter): void {
+  private setCurrentFilters(value: string, filterType: FilterType): void {
     const setFilterItems = this.selectedFiltres.get(filterType)!;
     if(setFilterItems.has(value)) {
       setFilterItems.delete(value);
