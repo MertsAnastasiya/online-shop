@@ -20,12 +20,24 @@ class Basket{
     }
 
     public countPurchase(){
+        if(localStorage.sum){
+            this.sum.innerHTML = `${this.currency}${localStorage.sum}`;
+            this.sumCounter = Number(localStorage.sum);
+        }
+
+        if(localStorage.amount){
+            this.amount.innerHTML = `${localStorage.amount}`;
+            this.amountCounter = Number(localStorage.amount);
+        }
+
         this.addCartBtns.forEach((el: Element) => {
             el.addEventListener('click', (): void => {
                 this.sumCounter += Number(productsData[Number(el.id)-1]?.price);
                 this.amountCounter += 1;
-                this.amount.innerHTML = `${this.amountCounter}`;
-                this.sum.innerHTML = `${this.currency}${this.sumCounter}`;
+                localStorage.setItem('sum', `${this.sumCounter}`);
+                localStorage.setItem('amount', `${this.amountCounter}`);
+                this.amount.innerHTML = `${localStorage.amount}`;
+                this.sum.innerHTML = `${this.currency}${localStorage.sum}`;
             });
         });
     }
@@ -36,6 +48,8 @@ class Basket{
             this.sumCounter = 0;
             this.amount.innerHTML = `${this.amountCounter}`;
             this.sum.innerHTML = `${this.currency}${this.sumCounter}`;
+            localStorage.sum = '0';
+            localStorage.amount = '0';
         });
     }
 
