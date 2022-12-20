@@ -49,7 +49,6 @@ export class Filters {
 
   private filtration(value: string, filterType: CurrentFilter): void {
     const products = document.querySelector('.products')!;
-    products.innerHTML = '';
     this.setCurrentFilters(value.toLowerCase(), filterType);
 
     productsData.forEach((item) => {
