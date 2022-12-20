@@ -68,7 +68,7 @@ export class Filters {
   }
 
   private setCurrentFilters(value: string, filterType: CurrentFilter): void {
-    let setFilterItems = this.selectedFiltres.get(filterType)!;
+    const setFilterItems = this.selectedFiltres.get(filterType)!;
     if(setFilterItems.has(value)) {
       setFilterItems.delete(value);
     } else {
