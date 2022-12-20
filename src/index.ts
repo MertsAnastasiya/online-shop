@@ -42,7 +42,7 @@ function start(): void{
         generateProduct(i, '€');
     };
 
-    let filters: Filters = new Filters();
+    const filters: Filters = new Filters();
     filters.generateFilter(productsData, 'category');
     filters.generateFilter(productsData, 'brand');
 

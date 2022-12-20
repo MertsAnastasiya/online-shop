@@ -1,4 +1,3 @@
-// import { dataBase } from "./database";
 import { productsData } from "./data";
 import { IProduct } from "./interfaces/product.interface";
 
