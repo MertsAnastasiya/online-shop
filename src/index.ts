@@ -2,6 +2,7 @@ import './sass/styles.scss';
 import "./modules/sliders";
 import { productsData } from './modules/data';
 import { IProduct } from './modules/interfaces/product.interface';
+import { Filters } from './modules/filters/filters';
 
 function generateProduct(num: number, currency: string): void{
     const products = document.querySelector(".products") as HTMLElement;
@@ -40,6 +41,11 @@ function start(): void{
     for(let i = 0; i < productsData.length; i++){
         generateProduct(i, '€');
     };
+
+    let filters: Filters = new Filters();
+    filters.generateFilter(productsData, 'category');
+    filters.generateFilter(productsData, 'brand');
+
 }
 
 start();

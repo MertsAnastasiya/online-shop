@@ -30,6 +30,8 @@
   flex-direction: column;
   border-top: 2px solid $color-filters;
   padding: 10px 0;
+  max-height: 30rem;
+  overflow: auto;
 
   &:first-child {
     border-top: none;
@@ -47,4 +49,13 @@
   @include media-mobile {
     @include font($size: 1.8rem, $weight: 600);
   }
+}
+
+.checkbox {
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.lavel {
+  cursor: pointer;
 }
