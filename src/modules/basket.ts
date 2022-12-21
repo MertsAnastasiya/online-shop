@@ -20,12 +20,24 @@ class Basket{
     }
 
     public countPurchase(){
+        if(localStorage.getItem('sum')){
+            this.sum.innerHTML = `${this.currency}${localStorage.getItem('sum')}`;
+            this.sumCounter = Number(localStorage.getItem('sum'));
+        }
+
+        if(localStorage.getItem('amount')){
+            this.amount.innerHTML = `${localStorage.getItem('amount')}`;
+            this.amountCounter = Number(localStorage.getItem('amount'));
+        }
+
         this.addCartBtns.forEach((el: Element) => {
             el.addEventListener('click', (): void => {
                 this.sumCounter += Number(productsData[Number(el.id)-1]?.price);
                 this.amountCounter += 1;
-                this.amount.innerHTML = `${this.amountCounter}`;
-                this.sum.innerHTML = `${this.currency}${this.sumCounter}`;
+                localStorage.setItem('sum', `${this.sumCounter}`);
+                localStorage.setItem('amount', `${this.amountCounter}`);
+                this.amount.innerHTML = `${localStorage.getItem('amount')}`;
+                this.sum.innerHTML = `${this.currency}${localStorage.getItem('sum')}`;
             });
         });
     }
@@ -36,6 +48,8 @@ class Basket{
             this.sumCounter = 0;
             this.amount.innerHTML = `${this.amountCounter}`;
             this.sum.innerHTML = `${this.currency}${this.sumCounter}`;
+            localStorage.setItem('sum', '0');
+            localStorage.setItem('amount', '0');
         });
     }
 
