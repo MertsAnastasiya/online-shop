@@ -20,14 +20,14 @@ class Basket{
     }
 
     public countPurchase(){
-        if(localStorage.sum){
-            this.sum.innerHTML = `${this.currency}${localStorage.sum}`;
-            this.sumCounter = Number(localStorage.sum);
+        if(localStorage.getItem('sum')){
+            this.sum.innerHTML = `${this.currency}${localStorage.getItem('sum')}`;
+            this.sumCounter = Number(localStorage.getItem('sum'));
         }
 
-        if(localStorage.amount){
-            this.amount.innerHTML = `${localStorage.amount}`;
-            this.amountCounter = Number(localStorage.amount);
+        if(localStorage.getItem('amount')){
+            this.amount.innerHTML = `${localStorage.getItem('amount')}`;
+            this.amountCounter = Number(localStorage.getItem('amount'));
         }
 
         this.addCartBtns.forEach((el: Element) => {
@@ -36,8 +36,8 @@ class Basket{
                 this.amountCounter += 1;
                 localStorage.setItem('sum', `${this.sumCounter}`);
                 localStorage.setItem('amount', `${this.amountCounter}`);
-                this.amount.innerHTML = `${localStorage.amount}`;
-                this.sum.innerHTML = `${this.currency}${localStorage.sum}`;
+                this.amount.innerHTML = `${localStorage.getItem('amount')}`;
+                this.sum.innerHTML = `${this.currency}${localStorage.getItem('sum')}`;
             });
         });
     }
@@ -48,8 +48,8 @@ class Basket{
             this.sumCounter = 0;
             this.amount.innerHTML = `${this.amountCounter}`;
             this.sum.innerHTML = `${this.currency}${this.sumCounter}`;
-            localStorage.sum = '0';
-            localStorage.amount = '0';
+            localStorage.setItem('sum', '0');
+            localStorage.setItem('amount', '0');
         });
     }
 
