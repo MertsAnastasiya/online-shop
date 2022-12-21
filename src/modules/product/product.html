@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product</title>
     <link rel="stylesheet" href="./styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header class="header">
@@ -27,7 +31,7 @@
     </header>
     <main>
       <div class="container">
-        <div class="route">Store / Phones / Apple / iPhone 13</div>
+        <div class="route"><a href="index.html">Store</a> / <span class="category-name">Phones</span> / <span class="brand-name">Apple</span> / <span class="model-name">iPhone 13</span></div>
         <div class="product">
           <div class="product__image">
             <div class="main-image"></div>
@@ -48,6 +52,8 @@
                 ut autem eius cum.
               </div>
               <div class="rating">
+                <!-- I think you've overdone it right there with these stars, it takes more complicated algorithm
+                to generate start according to float numbers in the database -->
                 <input name="stars" id="r5" type="radio" />
                 <label for="r5" class="rating__label">☆</label>
                 <input name="stars" id="r4" type="radio" />
@@ -59,10 +65,11 @@
                 <input name="stars" id="r1" type="radio" />
                 <label for="r1" class="rating__label">★</label>
               </div>
+              <span class="rating-number">Rating: 4.7</span>
               <div class="price">1200€‎</div>
             </div>
             <div class="buttons__wrapper">
-              <button class="button button_add">Add to Cart</button>
+              <button class="button button_add add-cart">Add to Cart</button>
               <button class="button button_buy">Buy Now</button>
             </div>
             <div class="delivery__wrapper">
