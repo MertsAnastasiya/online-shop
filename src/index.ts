@@ -22,3 +22,9 @@ start();
 //to avoid merge conflicts on this stage of development.
 
 implementBasket();
+
+const urlSearchParams = new URLSearchParams(window.location.search);
+const params = Object.fromEntries(urlSearchParams.entries());
+console.log(params);
+// Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
+// let value = params.some_key; // "some_value"
