@@ -16,8 +16,6 @@ function determineProduct(currency='€'){
 
     const urlSearchParams = new URLSearchParams(window.location.search); //gets query parameters
     const params = Object.fromEntries(urlSearchParams.entries()); // represents query parameters as object
-    console.log(Object.keys(params));
-    console.log(productsData[Number(Object.keys(params))]);
     for(let i = 0; i < productsData.length; i++){
         if(Number(productsData[i]!.id) === Number(Object.keys(params))){
             const routeText = `Store / ${productsData[i]!.category} / ${productsData[i]!.brand} / ${productsData[i]!.title}`;
