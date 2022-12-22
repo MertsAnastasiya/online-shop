@@ -4,11 +4,8 @@ import { implementBasket } from "./modules/basket";
 import { productsData } from './modules/data';
 
 function determineProduct(currency='€'){
-    //Detirmine the places, where to unload the data from productsData
-
-    const categoryName = document.querySelector('.category-name');
-    const brandName = document.querySelector('.brand-name');
-    const modelName = document.querySelector('.model-name');
+    
+    const route = document.querySelector('.route');
     const productName = document.querySelector('.product__name');
     const brand = document.querySelector('.brand');
     const description = document.querySelector('.description');
@@ -23,9 +20,8 @@ function determineProduct(currency='€'){
     console.log(productsData[Number(Object.keys(params))]);
     for(let i = 0; i < productsData.length; i++){
         if(Number(productsData[i]!.id) === Number(Object.keys(params))){
-            categoryName!.innerHTML = `${productsData[i]!.category}`;
-            brandName!.innerHTML = `${productsData[i]!.brand}`;
-            modelName!.innerHTML = `${productsData[i]!.title}`;
+            const routeText = `Store / ${productsData[i]!.category} / ${productsData[i]!.brand} / ${productsData[i]!.title}`;
+            route!.innerHTML = `${routeText}`;
             productName!.innerHTML = `${productsData[i]!.title}`;
             brand!.innerHTML = `${productsData[i]!.brand}`;
             description!.innerHTML = `${productsData[i]!.description}`;
