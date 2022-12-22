@@ -1,8 +1,8 @@
 import './sass/styles.scss';
-import "./modules/sliders";
+import './modules/sliders';
 import { productsData } from './modules/data';
 import { Filters } from './modules/filters/filters';
-import { implementBasket } from "./modules/basket";
+import { implementBasket } from './modules/basket';
 import { ProductViewGenerator } from './modules/product/product';
 
 function start(): void {

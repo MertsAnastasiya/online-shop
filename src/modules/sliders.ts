@@ -1,5 +1,5 @@
-import { productsData } from "./data";
-import { IProduct } from "./interfaces/product.interface";
+import { productsData } from './data';
+import { IProduct } from './interfaces/product.interface';
 
 
 class DualSlider{
@@ -10,10 +10,10 @@ class DualSlider{
     private currency: string; //currency
 
     constructor(minRange: HTMLInputElement, maxRange: HTMLInputElement, minPrice: HTMLElement, maxPrice: HTMLElement, currency=''){
-        this.minRange = minRange; 
-        this.maxRange = maxRange; 
-        this.minPrice = minPrice; 
-        this.maxPrice = maxPrice; 
+        this.minRange = minRange;
+        this.maxRange = maxRange;
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
         this.currency = currency;
     }
 
@@ -73,9 +73,9 @@ class DualSlider{
 
 //Elements for price dual slider
 const minRange = document.querySelector('.price-range__input1') as HTMLInputElement;
-const maxRange = document.querySelector(".price-range__input2") as HTMLInputElement;
-const minPrice = document.querySelector(".price-spans__min") as HTMLSpanElement;
-const maxPrice = document.querySelector(".price-spans__max") as HTMLElement;
+const maxRange = document.querySelector('.price-range__input2') as HTMLInputElement;
+const minPrice = document.querySelector('.price-spans__min') as HTMLSpanElement;
+const maxPrice = document.querySelector('.price-spans__max') as HTMLElement;
 
 //Elements for stock dual slider
 const minStockRange = document.querySelector('.stock-range__input1') as HTMLInputElement;
