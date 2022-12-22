@@ -1,4 +1,4 @@
-import { productsData } from "./data";
+import { productsData } from './data';
 
 class Basket{
     private amount: HTMLParagraphElement; // the number of products put in the basket
@@ -64,4 +64,3 @@ export function implementBasket(): void{
     basket.countPurchase();
     basket.resetBasket();
 };
-
