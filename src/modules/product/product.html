@@ -5,12 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product</title>
     <link rel="stylesheet" href="./styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <header class="header">Online store</header>
+    <header class="header">
+      <div class="container header__container">
+        <a class="link logo" href="index.html">Online store</a>
+        <input type="text" class="search" placeholder="Search product" />
+        <div class="basket-wrapper">
+          <button class="reset-basket">reset</button>
+          <p class="total-amount">€0</p>
+          <div class="basket-background">
+            <img
+              src="assets/img/solution-cart 1.png"
+              alt="basket"
+              class="basket"
+            />
+            <p class="counter">0</p>
+          </div>
+        </div>
+      </div>
+    </header>
     <main>
       <div class="container">
-        <div class="route">Store / Phones / Apple / iPhone 13</div>
+        <div class="route"></div>
         <div class="product">
           <div class="product__image">
             <div class="main-image"></div>
@@ -32,23 +53,12 @@
                 asperiores, ut autem eius cum.
               </div>
               <div class="rating">
-                <input name="stars" id="r5" type="radio" />
-                <label for="r5" class="rating__label">☆</label>
-                <input name="stars" id="r4" type="radio" />
-                <label for="r4" class="rating__label">★</label>
-                <input name="stars" id="r3" type="radio" />
-                <label for="r3" class="rating__label">★</label>
-                <input name="stars" id="r2" type="radio" />
-                <label for="r2" class="rating__label">★</label>
-                <input name="stars" id="r1" type="radio" />
-                <label for="r1" class="rating__label">★</label>
               </div>
+              <span class="rating-number">Rating: 4.7</span>
               <div class="price">1200€‎</div>
             </div>
             <div class="buttons__wrapper">
-              <button class="button button_add">
-                Add to Cart
-              </button>
+              <button class="button button_add add-cart">Add to Cart</button>
               <button class="button button_buy">Buy Now</button>
             </div>
             <div class="delivery__wrapper">
@@ -60,10 +70,35 @@
       </div>
     </main>
     <footer class="footer">
-      <select name="filterByCategory" id="filterByCategory" multiple>
-        <option value="smartphones">smartphones</option>
-        <option value="laptops">laptops</option>
-      </select>
+      <div class="container footer__container">
+        <div class="authors">
+          <img src="assets/img/github.png" alt="github" class="github" />
+          <ul class="authors-githubs">
+            <li>
+              <a
+                class="authors-githubs__link"
+                href="https://github.com/MertsAnastasiya"
+                >mertsanastasiya</a
+              >
+            </li>
+            <li>
+              <a
+                class="authors-githubs__link"
+                href="https://github.com/Win4esterD"
+                >Win4esterD</a
+              >
+            </li>
+          </ul>
+        </div>
+        <p class="year">&copy;2022</p>
+        <a>
+          <img
+            src="assets/img/rs_school_js.svg"
+            alt="RS-School logo"
+            class="rs-logo"
+          />
+        </a>
+      </div>
     </footer>
   </body>
 </html>

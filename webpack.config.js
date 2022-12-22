@@ -6,7 +6,10 @@ const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-    entry: "./src/index.ts",
+    entry: {
+        index: "./src/index.ts",
+        product: "./src/product.ts",
+    },
     mode: "development",
     module: {
         rules: [
@@ -29,17 +32,19 @@ module.exports = {
         extensions: [".ts", ".js", ".css"],
     },
     output: {
-        filename: "bundle.js",
+        filename: "[name].js",
         path: path.resolve(__dirname, "public"),
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "./src/index.html"),
             filename: "index.html",
+            chunks: ['index'],
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "./src/modules/product/product.html"),
             filename: "product.html",
+            chunks: ["product"],
         }),
         new MiniCssExtractPlugin({
             filename: "styles.css",

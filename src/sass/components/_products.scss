@@ -48,6 +48,8 @@
   @include font($size: 1.8rem, $weight: 600);
   max-height: 1.8rem; //as font-size
   text-align: center;
+  color: black;
+  text-decoration: none;
 }
 
 .product__price {
