@@ -27,7 +27,7 @@ export class DualSlider {
 
         const title = document.createElement('p');
         title.classList.add('filter__title', 'slider-descriptor');
-        title.innerHTML = `${this.type},  €`;
+        title.innerHTML = `${this.type.charAt(0).toUpperCase()}${this.type.slice(1)},  €`;
         slider.appendChild(title);
 
         const range: HTMLElement = document.createElement('span');
