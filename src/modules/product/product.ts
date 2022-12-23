@@ -1,9 +1,10 @@
 import { IProduct } from '../interfaces/product.interface';
 
 export class ProductViewGenerator {
-    public static generateProduct(arrayData: IProduct[]): void {
+    public generateProduct(arrayData: IProduct[]): void {
+        const products = document.querySelector('.products') as HTMLElement;
+        products.innerHTML = '';
         arrayData.forEach((data) => {
-            const products = document.querySelector('.products') as HTMLElement;
             const productDiv: HTMLDivElement = document.createElement('div');
             const productImg: HTMLImageElement = document.createElement('img');
             const productSpans: HTMLDivElement = document.createElement('div');
