@@ -1,7 +1,11 @@
 import { productsData } from '../data';
 import { GlobalFilters } from '../filters/globalFilters';
 import { Result } from '../filters/result';
-import { FilterType } from '../interfaces/customTypes';
+import {
+    FilterType,
+    FilterTypeSliders,
+    SliderValue,
+} from '../interfaces/customTypes';
 import { ProductViewGenerator } from '../product/product';
 
 export class App {
@@ -11,8 +15,10 @@ export class App {
 
     constructor() {
         this.allFilters = new GlobalFilters(
-            (currentFilters: Map<FilterType, Set<string>>) =>
-                this.updateResult(currentFilters)
+            (
+                currentFilters: Map<FilterType, Set<string>>,
+                currentSliders: Map<FilterTypeSliders, SliderValue>
+            ) => this.updateResult(currentFilters, currentSliders)
         );
         this.view = new ProductViewGenerator();
         this.result = new Result();
@@ -20,13 +26,18 @@ export class App {
 
     public start(): void {
         this.allFilters.createFilters(productsData);
-        const startFilters = this.allFilters.getCurrentFilters();
+        this.allFilters.createSliders();
 
-        this.updateResult(startFilters);
+        const startFilters = this.allFilters.getCurrentFilters();
+        const startSliders = this.allFilters.getCurrentSliders();
+        this.updateResult(startFilters, startSliders);
     }
 
-    public updateResult(currentFilters: Map<FilterType, Set<string>>): void {
-        const array = this.result.getResult(currentFilters);
+    public updateResult(
+        currentFilters: Map<FilterType, Set<string>>,
+        slidersValue: Map<FilterTypeSliders, SliderValue>
+    ): void {
+        const array = this.result.getResult(currentFilters, slidersValue);
         this.view.generateProduct(array);
         this.setFoundProducts(array.length);
     }
