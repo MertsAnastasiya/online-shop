@@ -28,7 +28,7 @@ export class CheckboxFilter {
 
     private generateFilterItems(data: IProduct[]): Set<string> {
         const setItems = new Set<string>();
-        data.forEach((item) => setItems.add(item[this.filterType]));
+        data.forEach((item) => setItems.add(item[this.filterType].toLowerCase()));
         return setItems;
     }
 
@@ -48,7 +48,7 @@ export class CheckboxFilter {
         const label = document.createElement('label');
         label.classList.add('label');
         label.htmlFor = checkbox.id;
-        label.textContent = value;
+        label.textContent = value.charAt(0).toUpperCase() + value.slice(1);
 
         filterItem.appendChild(checkbox);
         filterItem.appendChild(label);
@@ -57,6 +57,7 @@ export class CheckboxFilter {
     }
 
     private toggleFilter(value: string): void {
+        debugger;
         const setFilterItems = this.selectedCheckboxes.get(this.filterType)!;
         if (setFilterItems.has(value)) {
             setFilterItems.delete(value);
