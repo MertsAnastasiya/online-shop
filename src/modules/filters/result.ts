@@ -7,7 +7,6 @@ export class Result {
         filtersState: Map<FilterType, Set<string>>
     ): IProduct[] {
         let productsResult: Set<IProduct> = new Set<IProduct>();
-        debugger;
         if (filtersState.size === 0) {
             productsData.forEach((product) => productsResult.add(product));
         } else {

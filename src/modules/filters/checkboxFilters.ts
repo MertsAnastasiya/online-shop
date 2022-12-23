@@ -57,7 +57,6 @@ export class CheckboxFilter {
     }
 
     private toggleFilter(value: string): void {
-        debugger;
         const setFilterItems = this.selectedCheckboxes.get(this.filterType)!;
         if (setFilterItems.has(value)) {
             setFilterItems.delete(value);
