@@ -2,7 +2,6 @@ import { productsData } from '../data';
 import { GlobalFilters } from '../filters/globalFilters';
 import { Result } from '../filters/result';
 import { FilterType } from '../interfaces/customTypes';
-import { IProduct } from '../interfaces/product.interface';
 import { ProductViewGenerator } from '../product/product';
 
 export class App {
