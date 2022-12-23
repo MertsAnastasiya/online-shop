@@ -16,13 +16,20 @@ export class CheckboxFilter {
     }
 
     public generateFilter(data: IProduct[]): void {
-        const filter: Element = document.querySelector(
-            `.filter_${this.filterType}`
-        )!;
+        const wrapperFiltres: Element = document.querySelector('.filters')!;
+
+        const filter: Element = document.createElement('div');
+        filter.classList.add(`filter_${this.filterType}`, 'filter');
+
+        const title: Element = document.createElement('div');
+        title.classList.add('filter__title');
+        title.innerHTML = `${this.filterType.charAt(0).toUpperCase()}${this.filterType.slice(1)}`
+        filter.appendChild(title);
         const setFilter: Set<string> = this.generateFilterItems(data);
         setFilter.forEach((item) =>
             filter.appendChild(this.createCheckbox(item))
         );
+        wrapperFiltres.appendChild(filter)
     }
 
     private generateFilterItems(data: IProduct[]): Set<string> {
