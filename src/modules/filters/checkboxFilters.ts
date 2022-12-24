@@ -1,0 +1,81 @@
+import { CallbackViewChanged, FilterType } from '../interfaces/customTypes';
+import { IProduct } from '../interfaces/product.interface';
+
+export class CheckboxFilter {
+    private selectedCheckboxes: Set<string>;
+    private filterType: FilterType;
+    private callback: CallbackViewChanged;
+
+    constructor(
+        filterType: FilterType,
+        callback: CallbackViewChanged
+    ) {
+        this.selectedCheckboxes = new Set<string>();
+        this.filterType = filterType;
+        this.callback = callback;
+    }
+
+    public generateFilter(data: IProduct[]): void {
+        const wrapperFiltres: Element = document.querySelector('.filters')!;
+
+        const filter: Element = document.createElement('div');
+        filter.classList.add(`filter_${this.filterType}`, 'filter');
+
+        const title: Element = document.createElement('div');
+        title.classList.add('filter__title');
+        title.innerHTML = `${this.filterType.charAt(0).toUpperCase()}${this.filterType.slice(1)}`
+        filter.appendChild(title);
+        const setFilter: Set<string> = this.generateFilterItems(data);
+        setFilter.forEach((item) =>
+            filter.appendChild(this.createCheckbox(item))
+        );
+        wrapperFiltres.appendChild(filter)
+    }
+
+    private generateFilterItems(data: IProduct[]): Set<string> {
+        const setItems = new Set<string>();
+        data.forEach((item) => setItems.add(item[this.filterType].toLowerCase()));
+        return setItems;
+    }
+
+    private createCheckbox(value: string): HTMLElement {
+        const filterItem: HTMLElement = document.createElement('div');
+        filterItem.classList.add('filter__item');
+
+        const checkbox: HTMLInputElement = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = value;
+        checkbox.value = value;
+        checkbox.id = value;
+        checkbox.classList.add('checkbox');
+        checkbox.addEventListener('click', () =>
+            this.toggleFilter(checkbox.value.toLowerCase())
+        );
+        const label = document.createElement('label');
+        label.classList.add('label');
+        label.htmlFor = checkbox.id;
+        label.textContent = value.charAt(0).toUpperCase() + value.slice(1);
+
+        filterItem.appendChild(checkbox);
+        filterItem.appendChild(label);
+
+        return filterItem;
+    }
+
+    private toggleFilter(value: string): void {
+        if (this.selectedCheckboxes.has(value)) {
+            this.selectedCheckboxes.delete(value);
+        } else {
+            this.selectedCheckboxes.add(value);
+        }
+        this.callback();
+    }
+
+    public getFilterType(): FilterType {
+        return this.filterType;
+    }
+
+    public getSelectedCheckboxes(): Set<string> {
+        return this.selectedCheckboxes;
+    }
+}

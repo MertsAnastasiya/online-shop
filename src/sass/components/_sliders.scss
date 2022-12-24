@@ -1,0 +1,97 @@
+.sliders {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-slider,
+.stock-slider {
+  width: 99%;
+  padding: 15px 0;
+  border-top: 2px solid $color-filters;
+}
+
+.price-spans,
+.stock-spans {
+  display: flex;
+  margin-top: 25px;
+  justify-content: space-between;
+  font-family: 'Roboto';
+  @include font($size: 2.1rem);
+
+  @include media-mobile {
+    @include font($size: 1.8rem);
+  }
+}
+
+.price-range,
+.stock-range {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+input[type='range'] {
+  box-sizing: border-box;
+  appearance: none;
+  width: 100%;
+  /* Add some L/R padding to ensure box shadow of handle is shown */
+  overflow: hidden;
+  border-radius: 1px;
+  outline: none;
+  background: linear-gradient(#023d29, #023d29) no-repeat center;
+  /* Use a linear gradient to generate only the 2px height background */
+  background-size: 100% 2px;
+  pointer-events: none;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-slider-thumb {
+    height: 15px;
+    width: 15px;
+    border-radius: 15px;
+    background-color: $color-primary;
+    position: relative;
+    margin: 5px 0;
+    /* Add some margin to ensure box shadow is shown */
+    cursor: pointer;
+    appearance: none;
+    pointer-events: all;
+    box-shadow: 0 1px 4px 0.5px rgba(0, 0, 0, 0.25);
+
+    @include media-mobile {
+      height: 10px;
+      width: 10px;
+    }
+
+    // &::before {//could you explain why we use it?
+    //   content: " ";
+    //   display: block;
+    //   position: absolute;
+    //   top: 13px;
+    //   left: 100%;
+    //   // width: 2000px; //could you explain why we use it?
+    //   height: 2px;
+    // }
+  }
+}
+
+input[type='range'] {
+  position: absolute;
+
+  &:nth-child(1) {
+    &::-webkit-slider-thumb::before {
+      background-color: red;
+    }
+  }
+
+  &:nth-child(2) {
+    background: none;
+
+    &::-webkit-slider-thumb::before {
+      background-color: grey;
+    }
+  }
+}

@@ -1,0 +1,59 @@
+.product {
+  display: flex;
+  gap: 50px;
+  padding: 15px 0;
+  width: 90%;
+  color: $color-dark;
+  @include font($size: 1.5rem);
+}
+
+.product__description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.product__image {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.additional-images__wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.main-image {
+  width: 400px;
+  height: 430px;
+  background: url("../assets/img/iPhone13.png") no-repeat;
+  background-size: contain;
+}
+
+.additional-image {
+  width: 100px;
+  height: 100px;
+  background: url("../assets/img/iPhone13.png") no-repeat;
+  background-size: contain;
+}
+
+.product__name {
+  @include font($size: 2.5rem, $weight: 800);
+  padding-bottom: 20px;
+}
+
+.brand {
+  padding-bottom: 20px;
+}
+
+.description {
+  padding-bottom: 20px;
+}
+
+.price {
+  @include font($size: 2.5rem, $weight: 800);
+  padding: 15px 0;
+  border-top: 1px solid $color-filters;
+  border-bottom: 1px solid $color-filters;
+}
