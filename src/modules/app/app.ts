@@ -11,11 +11,11 @@ import { ProductViewGenerator } from '../product/product';
 
 export class App {
     private view: ProductViewGenerator;
-    private allFilters: GlobalFilters;
+    private globalFiltres: GlobalFilters;
     private result: Result;
 
     constructor() {
-        this.allFilters = new GlobalFilters(
+        this.globalFiltres = new GlobalFilters(
             (
                 currentFilters: Map<FilterType, Set<string>>,
                 currentSliders: Map<FilterTypeSliders, SliderValue>
@@ -26,11 +26,11 @@ export class App {
     }
 
     public start(): void {
-        this.allFilters.createFilters(productsData);
-        this.allFilters.createSliders();
+        this.globalFiltres.createFilters(productsData);
+        this.globalFiltres.createSliders();
 
-        const startFilters: Map<FilterType, Set<string>> = this.allFilters.getCurrentFilters();
-        const startSliders: Map<FilterTypeSliders, SliderValue> = this.allFilters.getCurrentSliders();
+        const startFilters: Map<FilterType, Set<string>> = this.globalFiltres.getCurrentFilters();
+        const startSliders: Map<FilterTypeSliders, SliderValue> = this.globalFiltres.getCurrentSliders();
         this.updateResult(startFilters, startSliders);
     }
 
