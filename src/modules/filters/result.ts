@@ -7,7 +7,7 @@ export class Result {
         stateFilters: Map<FilterType, Set<string>>,
         stateSliders: Map<FilterTypeSliders, SliderValue>
     ): IProduct[] {
-            let productsResult: Set<IProduct> = new Set<IProduct>();
+            let productsResult: IProduct[] = [];
             productsData.forEach((product) => {
                 let addToResult: boolean = true;
                 for (let key of stateFilters.keys()) {
@@ -37,9 +37,9 @@ export class Result {
                 }
 
                 if (addToResult) {
-                    productsResult.add(product);
+                    productsResult.push(product);
                 }
             });
-            return Array.from(productsResult);
+            return productsResult;
     }
 }
