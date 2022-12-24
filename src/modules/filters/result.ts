@@ -2,8 +2,8 @@ import { productsData } from '../data';
 import { FilterType, FilterTypeSliders, SliderValue } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 
-export class Result {
-    public getResult(
+export class FilterResult {
+    public static getFilterResult(
         stateFilters: Map<FilterType, Set<string>>,
         stateSliders: Map<FilterTypeSliders, SliderValue>
     ): IProduct[] {
