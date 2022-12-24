@@ -20,12 +20,12 @@ export class DualSlider {
     }
 
     public drawSlider() {
-        const wrapperSliders = document.querySelector('.sliders')!;
+        const wrapperSliders: Element = document.querySelector('.sliders')!;
 
-        const slider = document.createElement('div')
+        const slider: Element = document.createElement('div')
         slider.classList.add(`${this.type}-slider`, 'slider');
 
-        const title = document.createElement('p');
+        const title: Element = document.createElement('p');
         title.classList.add('filter__title', 'slider-descriptor');
         title.innerHTML = `${this.type.charAt(0).toUpperCase()}${this.type.slice(1)},  €`;
         slider.appendChild(title);
