@@ -49,4 +49,29 @@ export class Cart {
             this.setSum('0');
         });
     }
+    public updateCart(event: Event, price: number) {
+        const target = event.target! as Element;
+        let sum: number = Number(this.getSum());
+        let amount: number = Number(this.getAmount());
+        if(target.classList.contains('add-cart')) {
+            target.classList.remove('add-cart');
+            target.classList.add('remove-cart');
+            target.innerHTML = 'Remove from cart';
+            sum += price;
+            this.setSum(sum.toString());
+            amount += 1;
+            this.setAmount(amount.toString());
+        } else {
+            target.classList.add('add-cart');
+            target.classList.remove('remove-cart');
+            target.innerHTML = 'Add to cart';
+            sum -= price;
+            this.setSum(sum.toString());
+            amount -= 1;
+            this.setAmount(amount.toString());
+        }
+
+        this.headerAmount.innerHTML = this.getAmount();
+        this.headerSum.innerHTML = this.getSum();
+    }
 }

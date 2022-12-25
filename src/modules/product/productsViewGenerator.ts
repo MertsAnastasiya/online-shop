@@ -1,3 +1,4 @@
+import { Cart } from '../cart';
 import { IProduct } from '../interfaces/product.interface';
 
 export class ProductsViewGenerator {
@@ -27,11 +28,11 @@ export class ProductsViewGenerator {
             nameTitle.innerHTML = data.title;
             priceSpan.innerHTML = data.price.toString();
             addToCart.className = 'button button_small add-cart';
+            addToCart.addEventListener('click', (event) => Cart.getInstance().updateCart(event, data.price));
             addToCart.innerHTML = 'Add to cart';
             addToCart.setAttribute('id', data.id.toString());
             productSpans.appendChild(nameTitle);
             productSpans.appendChild(priceSpan);
-
             productImg.className = 'product__img';
             productLink.appendChild(productImgDiv);
             productLink.appendChild(productSpans);
