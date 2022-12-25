@@ -15,8 +15,9 @@
   flex-direction: column;
   padding: 0 5px;
   width: 30%;
+  cursor: pointer;
 
-  .add-cart {
+  .add-cart, .remove-cart {
     align-self: center;
   }
 

@@ -7,10 +7,10 @@ import {
     SliderValue,
 } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
-import { ProductViewGenerator } from '../product/product';
+import { ProductsViewGenerator } from '../product/ProductsViewGenerator';
 
 export class App {
-    private view: ProductViewGenerator;
+    private view: ProductsViewGenerator;
     private globalFiltres: GlobalFilters;
 
     constructor() {
@@ -20,7 +20,7 @@ export class App {
                 currentSliders: Map<FilterTypeSliders, SliderValue>
             ) => this.updateResult(currentFilters, currentSliders)
         );
-        this.view = new ProductViewGenerator();
+        this.view = new ProductsViewGenerator();
     }
 
     public start(): void {
