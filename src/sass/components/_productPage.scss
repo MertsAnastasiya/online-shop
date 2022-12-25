@@ -1,10 +1,11 @@
-.product {
+.product-info {
   display: flex;
+  justify-content: center;
   gap: 50px;
   padding: 15px 0;
   width: 90%;
   color: $color-dark;
-  @include font($size: 1.5rem);
+  @include font($size: 2rem);
 }
 
 .product__description {
@@ -16,38 +17,45 @@
 .product__image {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
 }
 
 .additional-images__wrapper {
   display: flex;
   justify-content: center;
+  gap: 20px;
 }
 
 .main-image {
-  width: 400px;
-  height: 430px;
-  background: url("../assets/img/iPhone13.png") no-repeat;
-  background-size: contain;
+  display: inline-block;
+  max-width: 50%;
+  max-height: 50vh;
 }
 
 .additional-image {
-  width: 100px;
-  height: 100px;
-  background: url("../assets/img/iPhone13.png") no-repeat;
-  background-size: contain;
+  border-radius: 5px;
+  max-width: 30%;
+  max-height: 15vh;
+  cursor: pointer;
 }
 
-.product__name {
+.name {
   @include font($size: 2.5rem, $weight: 800);
   padding-bottom: 20px;
 }
 
 .brand {
+  @include font($size: 2.2rem, $weight: 800);
   padding-bottom: 20px;
 }
 
 .description {
+  padding-bottom: 20px;
+}
+
+.rating {
   padding-bottom: 20px;
 }
 
