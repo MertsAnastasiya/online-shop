@@ -1,3 +1,4 @@
+import { Cart } from '../cart';
 import { productsData } from '../data';
 import { GlobalFilters } from '../filters/globalFilters';
 import { FilterResult } from '../filters/result';
@@ -7,7 +8,7 @@ import {
     SliderValue,
 } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
-import { ProductsViewGenerator } from '../product/ProductsViewGenerator';
+import { ProductsViewGenerator } from '../product/productsViewGenerator';
 
 export class App {
     private view: ProductsViewGenerator;
@@ -24,6 +25,7 @@ export class App {
     }
 
     public start(): void {
+        Cart.getInstance().resetCart();
         this.globalFiltres.createFilters(productsData);
         this.globalFiltres.createSliders();
 

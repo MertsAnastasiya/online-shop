@@ -1,10 +1,8 @@
 "use strict";
 import './sass/styles.scss';
-import { implementBasket } from "./modules/basket";
 import { productsData } from './modules/data';
 
-function determineProduct(currency='€'){
-    
+function determineProduct(currency='€') {
     const route = document.querySelector('.route');
     const productName = document.querySelector('.product__name');
     const brand = document.querySelector('.brand');
@@ -16,7 +14,7 @@ function determineProduct(currency='€'){
 
     const urlSearchParams = new URLSearchParams(window.location.search); //gets query parameters
     const params = Object.fromEntries(urlSearchParams.entries()); // represents query parameters as object
-    for(let i = 0; i < productsData.length; i++){
+    for(let i = 0; i < productsData.length; i++) {
         if(Number(productsData[i]!.id) === Number(Object.keys(params))){
             const routeText = `Store / ${productsData[i]!.category} / ${productsData[i]!.brand} / ${productsData[i]!.title}`;
             route!.innerHTML = `${routeText}`;
@@ -32,4 +30,3 @@ function determineProduct(currency='€'){
 }
 
 determineProduct();
-implementBasket();
