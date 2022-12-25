@@ -36,8 +36,9 @@
 .view {
   width: 30px;
   height: 30px;
+  cursor: pointer;
 
-  &_1 {
+  &_5 {
     background: url("../assets/icons/3items.png") no-repeat;
     background-size: contain;
   }

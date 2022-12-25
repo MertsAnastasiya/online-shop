@@ -25,13 +25,18 @@
   }
 }
 
+.layout-5-column .product {
+  width: 19%;
+}
+
+.layout-5-column .product__img {
+  height: 15rem;
+}
+
 .product__img {
   border-radius: 5px;
   width: 100%;
-  height: 200px;
-  // background: url("../assets/img/thumbnail (1).jpg");
-  // background-repeat: no-repeat;
-  // background-size: cover;
+  height: 20rem;
 }
 
 .product__spans {
