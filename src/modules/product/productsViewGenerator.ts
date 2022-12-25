@@ -18,7 +18,8 @@ export class ProductsViewGenerator {
 
             productDiv.classList.add('product');
             productLink.classList.add('link');
-            productLink!.setAttribute('href', `product.html?${data.id}`);
+            productLink.setAttribute('href', `product.html?${data.id}`);
+            productLink.setAttribute('target', '_blank');
             productSpans.className = 'product__spans';
             productImg.setAttribute('src', data.images[0]!);
             productImg.setAttribute('alt', `${data.title}`);
