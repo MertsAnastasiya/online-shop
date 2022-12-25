@@ -1,32 +1,48 @@
 "use strict";
 import './sass/styles.scss';
 import { productsData } from './modules/data';
+import { IProduct } from './modules/interfaces/product.interface';
 
-function determineProduct(currency='€') {
-    const route = document.querySelector('.route');
-    const productName = document.querySelector('.product__name');
-    const brand = document.querySelector('.brand');
-    const description = document.querySelector('.description');
-    const addCartButton = document.querySelector('.add-cart');
-    const price = document.querySelector('.price');
-    const rating = document.querySelector('.rating-number');
+function drawProductPage() {
+    const route: Element = document.querySelector('.route')!;
+    const productName: Element = document.querySelector('.name')!;
+    const brand: Element = document.querySelector('.brand')!;
+    const description: Element = document.querySelector('.description')!;
+    const addCartButton: Element = document.querySelector('.add-cart')!;
+    const price: Element = document.querySelector('.price')!;
+    const rating: Element = document.querySelector('.rating')!;
 
+    const mainImg = document.querySelector('.main-image')! as HTMLImageElement;
+    const addImg = document.querySelectorAll('.additional-image')! as NodeListOf<HTMLImageElement>;
 
     const urlSearchParams = new URLSearchParams(window.location.search); //gets query parameters
     const params = Object.fromEntries(urlSearchParams.entries()); // represents query parameters as object
-    for(let i = 0; i < productsData.length; i++) {
-        if(Number(productsData[i]!.id) === Number(Object.keys(params))){
-            const routeText = `Store / ${productsData[i]!.category} / ${productsData[i]!.brand} / ${productsData[i]!.title}`;
-            route!.innerHTML = `${routeText}`;
-            productName!.innerHTML = `${productsData[i]!.title}`;
-            brand!.innerHTML = `${productsData[i]!.brand}`;
-            description!.innerHTML = `${productsData[i]!.description}`;
-            addCartButton?.setAttribute('id', `${productsData[i]!.id}`);
-            price!.innerHTML = `${productsData[i]!.price}${currency}`;
-            rating!.innerHTML = `Rating: ${productsData[i]!.rating}`;
-            break;
+    const paramsId = Number(Object.keys(params));
+
+    if(productsData.filter((item) => item.id === paramsId)) {
+        const data: IProduct = productsData.filter((item) => item.id === paramsId)[0]!;
+        const routeText: string = `Store / ${data.category.charAt(0).toUpperCase()}${data.category.slice(1)} / ${data.brand} / ${data.title}`;
+        route.innerHTML = routeText;
+        productName.innerHTML = data.title;
+        brand!.innerHTML = data.brand;
+        description!.innerHTML = data.description;
+        addCartButton.setAttribute('id', data.id.toString());
+        price!.innerHTML = `€${data.price}`;
+        rating!.innerHTML = `Rating: ${data.rating}`;
+        if(data.images[0]) {
+            mainImg.src = data.images[0]!;
         }
+        let i = 0;
+        addImg.forEach((item) => {
+            if(data.images[i]) {
+                item.src = data.images[i]!;
+                item.addEventListener('click', () => {
+                    mainImg.src = item.src;
+                });
+            }
+            i++;
+        });
     }
 }
 
-determineProduct();
+drawProductPage();
