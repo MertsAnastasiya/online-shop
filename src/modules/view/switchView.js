@@ -4,7 +4,6 @@ const switchTo3Column = document.querySelector('.view_3');
 
 switchTo5Column.addEventListener('click', () => {
     wrapperProducts.classList.add('layout-5-column');
-    console.log('switch5');
 });
 
 switchTo3Column.addEventListener('click', () => {
