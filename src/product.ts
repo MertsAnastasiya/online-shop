@@ -11,6 +11,10 @@ function drawProductPage() {
     const addCartButton: Element = document.querySelector('.add-cart')!;
     const price: Element = document.querySelector('.price')!;
     const rating: Element = document.querySelector('.rating')!;
+    const buyButton: Element = document.querySelector('.button_buy')!;
+    const closeModal: Element = document.querySelector('.modal__close')!;
+    const modalWindow: Element = document.querySelector('.modal-window')!;
+    const modalBackground: Element = document.querySelector('.modal-background')!;
 
     const mainImg = document.querySelector('.main-image')! as HTMLImageElement;
     const addImg = document.querySelectorAll('.additional-image')! as NodeListOf<HTMLImageElement>;
@@ -27,6 +31,14 @@ function drawProductPage() {
         brand!.innerHTML = data.brand;
         description!.innerHTML = data.description;
         addCartButton.setAttribute('id', data.id.toString());
+        buyButton.addEventListener('click', () => {
+            modalWindow.classList.remove('display-none');
+            modalBackground.classList.remove('display-none');
+        });
+        closeModal.addEventListener('click', () => {
+            modalWindow.classList.add('display-none');
+            modalBackground.classList.add('display-none');
+        });
         price!.innerHTML = `€${data.price}`;
         rating!.innerHTML = `Rating: ${data.rating}`;
         if(data.images[0]) {
