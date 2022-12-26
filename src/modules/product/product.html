@@ -14,7 +14,7 @@
     <header class="header">
       <div class="container header__container">
         <a class="link logo" href="index.html">Online store</a>
-        <input type="text" class="search" placeholder="Search product" />
+        <input type="text" class="input input_search" placeholder="Search product" />
         <div class="basket-wrapper">
           <button class="reset-basket">reset</button>
           <p class="total-amount">€0</p>
@@ -60,6 +60,30 @@
           </div>
         </div>
       </div>
+      <div class="modal-window display-none">
+        <p class="modal__close">&times;</p>
+        <div  class="personal-data">
+          <p class="modal__text"> Personal Details</p>
+          <input type="text" class="input input_name" placeholder="Name">
+          <input type="phone" class="input input_phone" placeholder="Phone">
+          <input type="phone" class="input input_address" placeholder="Delivery address">
+          <input type="email" class="input input_email" placeholder="E-mail">
+        </div>
+        <div class="credit-card">
+          <p class="modal__text">Credit Card Details</p>
+          <div class="systems">
+            <img src="../../assets/icons/mastercard.png" class="img_payments" alt="card type">
+            <input type="email" class="input input_card-number">
+          </div>
+          <div>
+            <label for="input_valid" class="label">VALID</label>
+            <input type="text" class="input input_small input_valid" id="input_valid">
+            <label for="input_code" class="label">CVV</label>
+            <input type="text" class="input input_small input_code" id="input_code">
+          </div>
+        </div>
+      </div>
+      <div class="modal-background display-none"></div>
     </main>
     <footer class="footer">
       <div class="container footer__container">
