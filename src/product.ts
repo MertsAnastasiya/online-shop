@@ -2,8 +2,7 @@
 import './sass/styles.scss';
 import { productsData } from './modules/data';
 
-function determineProduct(currency='€'){
-
+function determineProduct(currency='€') {
     const route = document.querySelector('.route');
     const productName = document.querySelector('.product__name');
     const brand = document.querySelector('.brand');
