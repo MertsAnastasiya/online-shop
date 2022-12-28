@@ -1,4 +1,5 @@
 import './sass/styles.scss';
+import './modules/view/switchView';
 import { implementBasket } from "./modules/basket";
 import { App } from './modules/app/app';
 

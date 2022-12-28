@@ -36,13 +36,14 @@
 .view {
   width: 30px;
   height: 30px;
+  cursor: pointer;
 
-  &_1 {
-    background: url("../assets/icons/3items.png") no-repeat;
+  &_5 {
+    background: url("../assets/icons/view5.png") no-repeat;
     background-size: contain;
   }
   &_3 {
-    background: url("../assets/icons/3items.png") no-repeat;
+    background: url("../assets/icons/view3.png") no-repeat;
     background-size: contain;
   }
 
