@@ -8,7 +8,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
     entry: {
         index: "./src/index.ts",
-        product: "./src/product.ts",
+        product: "./src/productPage.ts",
     },
     mode: "development",
     module: {
