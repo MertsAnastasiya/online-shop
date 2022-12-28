@@ -1,10 +1,9 @@
 "use strict";
 import './sass/styles.scss';
-import { implementBasket } from "./modules/basket";
 import { productsData } from './modules/data';
 
 function determineProduct(currency='€'){
-    
+
     const route = document.querySelector('.route');
     const productName = document.querySelector('.product__name');
     const brand = document.querySelector('.brand');
@@ -32,4 +31,3 @@ function determineProduct(currency='€'){
 }
 
 determineProduct();
-implementBasket();
