@@ -1,10 +1,13 @@
+import { OnButtonCartClick } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 
 export class ProductList {
     private parent: Element;
+    private onButtonClick: OnButtonCartClick;
 
-    constructor(parent: Element) {
+    constructor(parent: Element, onButtonClick: OnButtonCartClick) {
         this.parent = parent;
+        this.onButtonClick = onButtonClick;
     }
 
     public drawProductList(productsList: IProduct[]): void {
@@ -16,7 +19,7 @@ export class ProductList {
             const productSpans: HTMLDivElement = document.createElement('div');
             const nameTitle: HTMLSpanElement = document.createElement('a');
             const priceSpan: HTMLSpanElement = document.createElement('span');
-            const addToCart: HTMLButtonElement = document.createElement('button');
+            const buttonAddToCart: HTMLButtonElement = document.createElement('button');
             const productImgDiv: HTMLDivElement = document.createElement('div');
 
             productDiv.className = 'product';
@@ -27,18 +30,32 @@ export class ProductList {
             nameTitle.className = 'product__name';
             priceSpan.className = 'product__price';
             nameTitle.innerHTML = product.title;
-            nameTitle!.setAttribute('href', `product.html?${product.id}`);
+            nameTitle!.setAttribute('href', `product.html?id=${product.id}`);
             priceSpan.innerHTML = product.price.toString();
-            addToCart.className = 'button button_small add-to-cart';
-            addToCart.innerHTML = 'Add to cart';
-            addToCart.setAttribute('id', product.id.toString());
+            buttonAddToCart.className = 'button button_small add-to-cart';
+            buttonAddToCart.innerHTML = 'Add to cart';
+            buttonAddToCart.addEventListener('click', (event) => {
+                const target = event.target as Element;
+                target.classList.toggle('add-to-cart');
+                target.classList.toggle('remove-from-cart');
+                let isAdded: boolean;
+                if (target.classList.contains('remove-from-cart')) {
+                   target.innerHTML = 'Remove from cart';
+                   isAdded = true;
+                 } else {
+                     target.innerHTML = 'Add to cart';
+                     isAdded = false;
+                 }
+
+                this.onButtonClick(product.id, isAdded);
+            });
             productSpans.appendChild(nameTitle);
             productSpans.appendChild(priceSpan);
 
             productImg.className = 'product__img';
             productDiv.appendChild(productImgDiv);
             productDiv.appendChild(productSpans);
-            productDiv.appendChild(addToCart);
+            productDiv.appendChild(buttonAddToCart);
 
             this.parent.appendChild(productDiv);
         });

@@ -13,4 +13,6 @@ export type CallbackFiltersChanged = (currentFilters: Map<FilterType, Set<string
 export type SliderValue = {
     'min': number;
     'max': number;
-}
+};
+
+export type OnButtonCartClick = (productId: number, isAdded: boolean) => void;
