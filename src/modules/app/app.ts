@@ -1,7 +1,7 @@
 import { productsData } from '../data';
 import { GlobalFilters } from '../filters/globalFilters';
 import { FilterResult } from '../filters/result';
-import { FilterType, FilterTypeSliders, SliderValue } from '../interfaces/customTypes';
+import { FilterType, SliderType, SliderValue } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 import { ProductList } from '../product/productList';
 import { Cart } from '../cart';
@@ -15,7 +15,7 @@ export class App {
         this.globalFiltres = new GlobalFilters(
             (
                 currentFilters: Map<FilterType, Set<string>>,
-                currentSliders: Map<FilterTypeSliders, SliderValue>
+                currentSliders: Map<SliderType, SliderValue>
             ) => this.updateResult(currentFilters, currentSliders)
         );
         const products: Element = document.querySelector('.products')!; // ???
@@ -37,13 +37,13 @@ export class App {
         this.globalFiltres.createSliders();
 
         const startFilters: Map<FilterType, Set<string>> = this.globalFiltres.getCurrentFilters();
-        const startSliders: Map<FilterTypeSliders, SliderValue> = this.globalFiltres.getCurrentSliders();
+        const startSliders: Map<SliderType, SliderValue> = this.globalFiltres.getCurrentSliders();
         this.updateResult(startFilters, startSliders);
     }
 
     public updateResult(
         currentFilters: Map<FilterType, Set<string>>,
-        slidersValue: Map<FilterTypeSliders, SliderValue>
+        slidersValue: Map<SliderType, SliderValue>
     ): void {
         const array: IProduct[] = FilterResult.getFilterResult(
             currentFilters,

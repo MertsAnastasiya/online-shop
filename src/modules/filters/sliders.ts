@@ -1,40 +1,56 @@
-import { CallbackViewChanged, FilterTypeSliders, SliderValue } from '../interfaces/customTypes';
-
+import {
+    CallbackViewChanged,
+    SliderType,
+    SliderValue,
+} from '../interfaces/customTypes';
 
 export class DualSlider {
     private min: number;
     private max: number;
     private step: string;
-    private type: FilterTypeSliders;
-    private callback: CallbackViewChanged;
+    private sliderType: SliderType;
     private currentValue: SliderValue;
+    private parent: Element;
+    private onChangeSliders: CallbackViewChanged;
 
-    constructor(min: number, max: number, step: string, type: FilterTypeSliders, callback: CallbackViewChanged)
-    {
+    constructor(
+        parent: Element,
+        min: number,
+        max: number,
+        step: string,
+        wrapperSliders: SliderType,
+        onChangeSliders: CallbackViewChanged
+    ) {
+        this.parent = parent;
         this.min = min;
         this.max = max;
-        this.type = type;
+        this.sliderType = wrapperSliders;
         this.step = step;
-        this.currentValue = {'min': min, 'max': max};
-        this.callback = callback;
+        this.currentValue = { min: min, max: max };
+        this.onChangeSliders = onChangeSliders;
     }
 
-    public drawSlider() {
-        const wrapperSliders: Element = document.querySelector('.sliders')!;
-
-        const slider: Element = document.createElement('div')
-        slider.classList.add(`${this.type}-slider`, 'slider');
+    public drawSlider(): void {
+        const slider: Element = document.createElement('div');
+        slider.classList.add(`${this.sliderType}-slider`, 'slider');
 
         const title: Element = document.createElement('p');
         title.classList.add('filter__title', 'slider-descriptor');
-        title.innerHTML = `${this.type.charAt(0).toUpperCase()}${this.type.slice(1)},  €`;
+        const sliderTitle: string = `${this.sliderType
+            .charAt(0)
+            .toUpperCase()}${this.sliderType.slice(1)}`;
+        if (this.sliderType === 'price') {
+            title.innerHTML = `${sliderTitle}, €`;
+        } else {
+            title.innerHTML = sliderTitle;
+        }
         slider.appendChild(title);
 
         const range: HTMLElement = document.createElement('span');
-        range.classList.add(`${this.type}-range`);
+        range.classList.add(`${this.sliderType}-range`);
 
         const inputMin: HTMLInputElement = document.createElement('input');
-        inputMin.classList.add(`${this.type}-range__input1`);
+        inputMin.classList.add(`${this.sliderType}-range__input1`);
         inputMin.type = 'range';
         inputMin.id = 'lower';
         inputMin.step = this.step;
@@ -43,7 +59,7 @@ export class DualSlider {
         inputMin.value = String(this.min);
 
         const inputMax: HTMLInputElement = document.createElement('input');
-        inputMax.classList.add(`${this.type}-range__input2`);
+        inputMax.classList.add(`${this.sliderType}-range__input2`);
         inputMax.type = 'range';
         inputMax.id = 'upper';
         inputMax.step = this.step;
@@ -57,14 +73,14 @@ export class DualSlider {
         slider.appendChild(range);
 
         const spans: HTMLElement = document.createElement('div');
-        spans.classList.add(`${this.type}-spans`);
+        spans.classList.add(`${this.sliderType}-spans`);
 
         const spanMin: HTMLElement = document.createElement('span');
-        spanMin.classList.add(`${this.type}-spans__min`);
+        spanMin.classList.add(`${this.sliderType}-spans__min`);
         spanMin.innerHTML = `${this.min}`;
 
         const spanMax: HTMLElement = document.createElement('span');
-        spanMax.classList.add(`${this.type}-spans__max`);
+        spanMax.classList.add(`${this.sliderType}-spans__max`);
         spanMax.innerHTML = `${this.max}`;
 
         spans.appendChild(spanMin);
@@ -73,24 +89,16 @@ export class DualSlider {
         inputMin.addEventListener('input', () => {
             spanMin.innerHTML = `${inputMin.value}`;
             this.currentValue['min'] = Number(inputMin.value);
-            this.callback();
+            this.onChangeSliders(this.sliderType, this.currentValue);
         });
 
         inputMax.addEventListener('input', () => {
             spanMax.innerHTML = `${inputMax.value}`;
             this.currentValue['max'] = Number(inputMax.value);
-            this.callback();
+            this.onChangeSliders(this.sliderType, this.currentValue);
         });
 
         slider.appendChild(spans);
-        wrapperSliders.appendChild(slider);
-    }
-
-    public getSliderType(): FilterTypeSliders {
-        return this.type;
-    }
-
-    public getCurrentSliders(): SliderValue {
-        return this.currentValue;
+        this.parent.appendChild(slider);
     }
 }

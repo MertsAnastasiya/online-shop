@@ -1,40 +1,43 @@
-import { CallbackViewChanged, FilterType } from '../interfaces/customTypes';
+import { CallbackOnClickCheckbox, FilterType } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 
 export class CheckboxFilter {
-    private selectedCheckboxes: Set<string>;
+    private parent: Element;
     private filterType: FilterType;
-    private callback: CallbackViewChanged;
+    private onClickCheckbox: CallbackOnClickCheckbox;
 
     constructor(
+        parent: Element,
         filterType: FilterType,
-        callback: CallbackViewChanged
+        onClickCheckbox: CallbackOnClickCheckbox
     ) {
-        this.selectedCheckboxes = new Set<string>();
+        this.parent = parent;
         this.filterType = filterType;
-        this.callback = callback;
+        this.onClickCheckbox = onClickCheckbox;
     }
 
-    public generateFilter(data: IProduct[]): void {
-        const wrapperFiltres: Element = document.querySelector('.filters')!;
-
+    public drawFilter(data: IProduct[]): void {
         const filter: Element = document.createElement('div');
         filter.classList.add(`filter_${this.filterType}`, 'filter');
 
         const title: Element = document.createElement('div');
         title.classList.add('filter__title');
-        title.innerHTML = `${this.filterType.charAt(0).toUpperCase()}${this.filterType.slice(1)}`
+        title.innerHTML = `${this.filterType
+            .charAt(0)
+            .toUpperCase()}${this.filterType.slice(1)}`;
         filter.appendChild(title);
         const setFilter: Set<string> = this.generateFilterItems(data);
         setFilter.forEach((item) =>
             filter.appendChild(this.createCheckbox(item))
         );
-        wrapperFiltres.appendChild(filter)
+        this.parent.appendChild(filter);
     }
 
     private generateFilterItems(data: IProduct[]): Set<string> {
         const setItems = new Set<string>();
-        data.forEach((item) => setItems.add(item[this.filterType].toLowerCase()));
+        data.forEach((item) =>
+            setItems.add(item[this.filterType].toLowerCase())
+        );
         return setItems;
     }
 
@@ -48,9 +51,12 @@ export class CheckboxFilter {
         checkbox.value = value;
         checkbox.id = value;
         checkbox.classList.add('checkbox');
-        checkbox.addEventListener('click', () =>
-            this.toggleFilter(checkbox.value.toLowerCase())
-        );
+        checkbox.addEventListener('click', () => {
+            let isAdded: boolean = false;
+            if (checkbox.checked) isAdded = true;
+            console.log('isAdded = ' + isAdded);
+            this.onClickCheckbox(this.filterType, checkbox.id, isAdded);
+        });
         const label = document.createElement('label');
         label.classList.add('label');
         label.htmlFor = checkbox.id;
@@ -60,22 +66,5 @@ export class CheckboxFilter {
         filterItem.appendChild(label);
 
         return filterItem;
-    }
-
-    private toggleFilter(value: string): void {
-        if (this.selectedCheckboxes.has(value)) {
-            this.selectedCheckboxes.delete(value);
-        } else {
-            this.selectedCheckboxes.add(value);
-        }
-        this.callback();
-    }
-
-    public getFilterType(): FilterType {
-        return this.filterType;
-    }
-
-    public getSelectedCheckboxes(): Set<string> {
-        return this.selectedCheckboxes;
     }
 }
