@@ -1,12 +1,16 @@
 import { CheckboxFilter } from './checkboxFilters';
 import {
-    CallbackFiltersChanged,
+    CallbackOnChangeFilters,
     FilterType,
-    FilterTypeSliders,
+    SliderType,
     SliderValue,
 } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 import { DualSlider } from './sliders';
+
+//I'll change it later when all layout is refactored
+const wrapperFiltres: Element = document.querySelector('.filters')!;
+const wrapperSliders: Element = document.querySelector('.sliders')!;
 
 export class GlobalFilters {
     private filterCategory: CheckboxFilter;
@@ -14,35 +18,53 @@ export class GlobalFilters {
     private sliderPrice: DualSlider;
     private sliderStock: DualSlider;
     private currentFilters: Map<FilterType, Set<string>>;
-    private currentSliders: Map<FilterTypeSliders, SliderValue>;
-    private callbackFilter: CallbackFiltersChanged;
+    private currentSliders: Map<SliderType, SliderValue>;
+    private callbackOnChangeFilters: CallbackOnChangeFilters;
 
-    constructor(callbackFilter: CallbackFiltersChanged) {
+    constructor(callbackFilter: CallbackOnChangeFilters) {
         this.currentFilters = new Map();
         this.currentSliders = new Map();
 
-        this.callbackFilter = callbackFilter;
+        this.callbackOnChangeFilters = callbackFilter;
 
-        this.filterCategory = new CheckboxFilter('category', () =>
-            this.updateCurrentFilterState()
+        this.filterCategory = new CheckboxFilter(
+            wrapperFiltres,
+            'category',
+            (filterType: FilterType, value: string, isAdded: boolean) =>
+                this.updateCurrentFiltersState(filterType, value, isAdded)
         );
 
-        this.filterBrand = new CheckboxFilter('brand', () =>
-            this.updateCurrentFilterState()
+        this.filterBrand = new CheckboxFilter(
+            wrapperFiltres,
+            'brand',
+            (filterType: FilterType, value: string, isAdded: boolean) =>
+                this.updateCurrentFiltersState(filterType, value, isAdded)
         );
 
-        this.sliderPrice = new DualSlider(0, 3000, '1', 'price', () =>
-            this.updateCurrentFilterState()
+        this.sliderPrice = new DualSlider(
+            wrapperSliders,
+            0,
+            3000,
+            '1',
+            'price',
+            (sliderType: SliderType, currentSliderValue: SliderValue) =>
+                this.updateCurrentSliderState(sliderType, currentSliderValue)
         );
 
-        this.sliderStock = new DualSlider(0, 100, '1', 'stock', () =>
-            this.updateCurrentFilterState()
+        this.sliderStock = new DualSlider(
+            wrapperSliders,
+            0,
+            100,
+            '1',
+            'stock',
+            (sliderType: SliderType, currentSliderValue: SliderValue) =>
+                this.updateCurrentSliderState(sliderType, currentSliderValue)
         );
     }
 
     public createFilters(productsData: IProduct[]): void {
-        this.filterCategory.generateFilter(productsData);
-        this.filterBrand.generateFilter(productsData);
+        this.filterCategory.drawFilter(productsData);
+        this.filterBrand.drawFilter(productsData);
     }
 
     public createSliders() {
@@ -50,25 +72,28 @@ export class GlobalFilters {
         this.sliderStock.drawSlider();
     }
 
-    public updateCurrentFilterState(): void {
-        this.currentFilters.set(
-            this.filterCategory.getFilterType(),
-            this.filterCategory.getSelectedCheckboxes()
-        );
-        this.currentFilters.set(
-            this.filterBrand.getFilterType(),
-            this.filterBrand.getSelectedCheckboxes()
-        );
-        this.currentSliders.set(
-            this.sliderPrice.getSliderType(),
-            this.sliderPrice.getCurrentSliders()
-        );
-        this.currentSliders.set(
-            this.sliderStock.getSliderType(),
-            this.sliderStock.getCurrentSliders()
-        );
+    public updateCurrentSliderState(
+        sliderType: SliderType,
+        currentSliderValue: SliderValue
+    ): void {
+        this.currentSliders.set(sliderType, currentSliderValue);
 
-        this.callbackFilter(this.currentFilters, this.currentSliders);
+        this.callbackOnChangeFilters(this.currentFilters, this.currentSliders);
+    }
+
+    public updateCurrentFiltersState(
+        filterType: FilterType,
+        value: string,
+        isAdded: boolean
+    ): void {
+        const setSelectedCheckbox =
+            this.currentFilters.get(filterType) || new Set<string>();
+        isAdded
+            ? setSelectedCheckbox?.add(value)
+            : setSelectedCheckbox?.delete(value);
+        this.currentFilters.set(filterType, setSelectedCheckbox);
+
+        this.callbackOnChangeFilters(this.currentFilters, this.currentSliders);
     }
 
     public getCurrentFilters() {
