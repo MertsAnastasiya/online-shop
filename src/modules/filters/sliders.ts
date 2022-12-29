@@ -18,15 +18,15 @@ export class DualSlider {
         min: number,
         max: number,
         step: string,
-        wrapperSliders: SliderType,
+        sliderType: SliderType,
         onChangeSliders: CallbackViewChanged
     ) {
         this.parent = parent;
         this.min = min;
         this.max = max;
-        this.sliderType = wrapperSliders;
+        this.sliderType = sliderType;
         this.step = step;
-        this.currentValue = { min: min, max: max };
+        this.currentValue = {min, max};
         this.onChangeSliders = onChangeSliders;
     }
 
@@ -39,11 +39,10 @@ export class DualSlider {
         const sliderTitle: string = `${this.sliderType
             .charAt(0)
             .toUpperCase()}${this.sliderType.slice(1)}`;
-        if (this.sliderType === 'price') {
-            title.innerHTML = `${sliderTitle}, €`;
-        } else {
-            title.innerHTML = sliderTitle;
-        }
+        title.innerHTML = this.sliderType === 'price'
+            ? `${sliderTitle}, €`
+            : sliderTitle;
+
         slider.appendChild(title);
 
         const range: HTMLElement = document.createElement('span');

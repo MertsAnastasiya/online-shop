@@ -54,7 +54,6 @@ export class CheckboxFilter {
         checkbox.addEventListener('click', () => {
             let isAdded: boolean = false;
             if (checkbox.checked) isAdded = true;
-            console.log('isAdded = ' + isAdded);
             this.onClickCheckbox(this.filterType, checkbox.id, isAdded);
         });
         const label = document.createElement('label');
