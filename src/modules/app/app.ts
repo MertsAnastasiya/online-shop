@@ -5,18 +5,29 @@ import { FilterType, SliderType, SliderValue } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 import { ProductList } from '../product/productList';
 import { Cart } from '../cart';
+import { SearchParams } from '../searchParams';
 
 export class App {
     private productList: ProductList;
     private globalFiltres: GlobalFilters;
     private cart: Cart;
+    private searchParams: SearchParams;
 
     constructor() {
+        this.searchParams = new SearchParams();
         this.globalFiltres = new GlobalFilters(
             (
                 currentFilters: Map<FilterType, Set<string>>,
                 currentSliders: Map<SliderType, SliderValue>
-            ) => this.updateResult(currentFilters, currentSliders)
+            ) => this.updateResult(currentFilters, currentSliders),
+            (param: string, value: string, isAdd: boolean) =>
+                this.searchParams.updateSearchParamByCheckbox(
+                    param,
+                    value,
+                    isAdd
+                ),
+            (param: string, min: string, max: string) =>
+                this.searchParams.updateSearchParamBySlider(param, min, max)
         );
         const products: Element = document.querySelector('.products')!; // ???
         this.productList = new ProductList(
@@ -94,34 +105,4 @@ export class App {
     private setCount(amount: string): void {
         localStorage.setItem('count', amount);
     }
-
-//     public getQueryParam(param: string): Object {
-//         const params =  new URLSearchParams(window.location.search);
-//         return Object.fromEntries(params)[];
-//     }
-//
-//     private setQueryParam(param: string, value: string): void {
-//         const params =  new URLSearchParams(window.location.search);
-//         params.set(param, value);
-//     }
-
-}
-
-export function updateQueryParam(param: string, value: string, isAdded: boolean) {
-    const params: URLSearchParams =  new URLSearchParams(window.location.search);
-    // const paramsObject: Object = Object.fromEntries(params);
-    let currentParams: string = params.get(param) || '';
-    if(isAdded) {
-        if(currentParams) {
-            currentParams += `|${value}`;
-        } else {
-            currentParams += `${value}`;
-        }
-        console.log(currentParams);
-    } else {
-        currentParams.
-    }
-    console.log('llllll');
-    // let newUrl = ${window.location.href} + params.toString(
-    window.history.pushState('index', 'title1', `${window.location.pathname}?${params.toString()}`);
 }

@@ -1,6 +1,8 @@
 import { CheckboxFilter } from './checkboxFilters';
 import {
     CallbackOnChangeFilters,
+    ToChangeParamsByCheckbox,
+    ToChangeParamsBySlider,
     FilterType,
     SliderType,
     SliderValue,
@@ -19,13 +21,22 @@ export class GlobalFilters {
     private sliderStock: DualSlider;
     private currentFilters: Map<FilterType, Set<string>>;
     private currentSliders: Map<SliderType, SliderValue>;
-    private callbackOnChangeFilters: CallbackOnChangeFilters;
 
-    constructor(callbackFilter: CallbackOnChangeFilters) {
+    private callbackOnChangeFilters: CallbackOnChangeFilters;
+    private toChangeParamsByCheckbox: ToChangeParamsByCheckbox;
+    private toChangeParamsBySlider: ToChangeParamsBySlider;
+
+    constructor(
+        callbackFilter: CallbackOnChangeFilters,
+        callbackToChangeSearchParamsCheckbox: ToChangeParamsByCheckbox,
+        callbackToChangeSearchParamsSlider: ToChangeParamsBySlider
+    ) {
         this.currentFilters = new Map();
         this.currentSliders = new Map();
 
         this.callbackOnChangeFilters = callbackFilter;
+        this.toChangeParamsByCheckbox = callbackToChangeSearchParamsCheckbox;
+        this.toChangeParamsBySlider = callbackToChangeSearchParamsSlider;
 
         this.filterCategory = new CheckboxFilter(
             wrapperFiltres,
@@ -77,7 +88,11 @@ export class GlobalFilters {
         currentSliderValue: SliderValue
     ): void {
         this.currentSliders.set(sliderType, currentSliderValue);
-
+        this.toChangeParamsBySlider(
+            sliderType,
+            currentSliderValue.min.toString(),
+            currentSliderValue.max.toString()
+        );
         this.callbackOnChangeFilters(this.currentFilters, this.currentSliders);
     }
 
@@ -93,6 +108,7 @@ export class GlobalFilters {
             : setSelectedCheckbox?.delete(value);
         this.currentFilters.set(filterType, setSelectedCheckbox);
 
+        this.toChangeParamsByCheckbox(filterType, value, isAdded);
         this.callbackOnChangeFilters(this.currentFilters, this.currentSliders);
     }
 
