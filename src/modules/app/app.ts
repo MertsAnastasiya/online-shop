@@ -18,8 +18,9 @@ export class App {
         this.globalFiltres = new GlobalFilters(
             (
                 currentFilters: Map<FilterType, Set<string>>,
-                currentSliders: Map<SliderType, SliderValue>
-            ) => this.updateResult(currentFilters, currentSliders),
+                currentSliders: Map<SliderType, SliderValue>,
+                searchValue: string
+            ) => this.updateResult(currentFilters, currentSliders, searchValue),
             (param: string, value: string, isAdd: boolean) =>
                 this.searchParams.updateSearchParamByCheckbox(
                     param,
@@ -45,20 +46,21 @@ export class App {
         this.cart.setCurrentValues('0', '0');
         this.cart.resetBtn(); // will be remove at the end
         this.globalFiltres.createFilters(productsData);
-        this.globalFiltres.createSliders();
 
         const startFilters: Map<FilterType, Set<string>> = this.globalFiltres.getCurrentFilters();
         const startSliders: Map<SliderType, SliderValue> = this.globalFiltres.getCurrentSliders();
-        this.updateResult(startFilters, startSliders);
+        this.updateResult(startFilters, startSliders, '');
     }
 
     public updateResult(
         currentFilters: Map<FilterType, Set<string>>,
-        slidersValue: Map<SliderType, SliderValue>
+        slidersValue: Map<SliderType, SliderValue>,
+        searchValue: string
     ): void {
         const array: IProduct[] = FilterResult.getFilterResult(
             currentFilters,
-            slidersValue
+            slidersValue,
+            searchValue
         );
         this.productList.drawProductList(array);
         this.setFoundProducts(array.length);

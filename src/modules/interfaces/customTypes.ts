@@ -10,7 +10,7 @@ export type CallbackOnClickCheckbox = (filterType: FilterType, value: string, is
 
 export type CallbackViewChanged = (sliderType: SliderType, currentSliderValue: SliderValue) => void;
 
-export type CallbackOnChangeFilters = (currentFilters: Map<FilterType, Set<string>>, currentSliders:  Map<SliderType, SliderValue>) => void;
+export type CallbackOnChangeFilters = (currentFilters: Map<FilterType, Set<string>>, currentSliders: Map<SliderType, SliderValue>, searchValue: string) => void;
 
 export type ToChangeParamsByCheckbox = (param: string, value: string, isAdd: boolean) => void;
 
@@ -23,3 +23,5 @@ export type SliderValue = {
 };
 
 export type OnButtonCartClick = (productId: number, isAdded: boolean) => void;
+
+export type OnChangeSearch = (searchText: string) => void;
