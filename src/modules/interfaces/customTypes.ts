@@ -16,6 +16,7 @@ export type ToChangeParamsByCheckbox = (param: string, value: string, isAdd: boo
 
 export type ToChangeParamsBySlider = (param: string, min: string, max: string) => void;
 
+export type ToChangeParamsBySearch = (param: string, value: string) => void;
 
 export type SliderValue = {
     'min': number;
@@ -24,4 +25,4 @@ export type SliderValue = {
 
 export type OnButtonCartClick = (productId: number, isAdded: boolean) => void;
 
-export type OnChangeSearch = (searchText: string) => void;
+export type OnChangeSearch = (param: string, searchText: string) => void;

@@ -12,16 +12,22 @@ export class SearchParams {
                 ? searchParams.set(param, newCurrentValue.join('|'))
                 : searchParams.delete(param);
         }
-        this.updateSearchParams(searchParams);
+        this.updateUrl(searchParams);
     }
 
     public updateSearchParamBySlider(param: string, min: string, max: string): void {
         const searchParams: URLSearchParams = new URLSearchParams(window.location.search);
         searchParams.set(param, `${min}/${max}`);
-        this.updateSearchParams(searchParams);
+        this.updateUrl(searchParams);
     }
 
-    private updateSearchParams(searchParams: URLSearchParams): void {
+    public updateSearchParamBySearch(param: string, value: string): void {
+        const searchParams: URLSearchParams = new URLSearchParams(window.location.search);
+        value !== '' ? searchParams.set(param, value) : searchParams.delete(param);
+        this.updateUrl(searchParams);
+    }
+
+    private updateUrl(searchParams: URLSearchParams): void {
         if (searchParams.toString() !== '') {
             searchParams.sort();
             window.history.pushState(

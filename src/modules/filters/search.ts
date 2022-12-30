@@ -15,7 +15,7 @@ import { OnChangeSearch } from '../interfaces/customTypes';
          inputSearch.classList.add('search');
          inputSearch.placeholder = 'Search product';
 
-         inputSearch.addEventListener('input', () => this.onChangeSearch(inputSearch.value));
+         inputSearch.addEventListener('input', () => this.onChangeSearch('search', inputSearch.value));
 
          this.parent.appendChild(inputSearch);
      }

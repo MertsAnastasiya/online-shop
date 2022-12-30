@@ -21,6 +21,7 @@ export class App {
                 currentSliders: Map<SliderType, SliderValue>,
                 searchValue: string
             ) => this.updateResult(currentFilters, currentSliders, searchValue),
+
             (param: string, value: string, isAdd: boolean) =>
                 this.searchParams.updateSearchParamByCheckbox(
                     param,
@@ -28,7 +29,8 @@ export class App {
                     isAdd
                 ),
             (param: string, min: string, max: string) =>
-                this.searchParams.updateSearchParamBySlider(param, min, max)
+                this.searchParams.updateSearchParamBySlider(param, min, max),
+            (param: string, value: string) => this.searchParams.updateSearchParamBySearch(param, value)
         );
         const products: Element = document.querySelector('.products')!; // ???
         this.productList = new ProductList(

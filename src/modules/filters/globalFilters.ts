@@ -6,6 +6,7 @@ import {
     FilterType,
     SliderType,
     SliderValue,
+    ToChangeParamsBySearch,
 } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 import { DualSlider } from './sliders';
@@ -23,19 +24,22 @@ export class GlobalFilters {
     private callbackOnChangeFilters: CallbackOnChangeFilters;
     private toChangeParamsByCheckbox: ToChangeParamsByCheckbox;
     private toChangeParamsBySlider: ToChangeParamsBySlider;
+    private toChangeParamsBySearch: ToChangeParamsBySearch;
 
     constructor(
         callbackOnChangeFilters: CallbackOnChangeFilters,
-        callbackToChangeSearchParamsCheckbox: ToChangeParamsByCheckbox,
-        callbackToChangeSearchParamsSlider: ToChangeParamsBySlider
+        toChangeSearchParamsCheckbox: ToChangeParamsByCheckbox,
+        toChangeSearchParamsSlider: ToChangeParamsBySlider,
+        toChangeParamsBySearch: ToChangeParamsBySearch
     ) {
         this.currentFilters = new Map();
-         this.currentSliders = new Map();
-         this.currentSearch = '';
+        this.currentSliders = new Map();
+        this.currentSearch = '';
 
         this.callbackOnChangeFilters = callbackOnChangeFilters;
-        this.toChangeParamsByCheckbox = callbackToChangeSearchParamsCheckbox;
-        this.toChangeParamsBySlider = callbackToChangeSearchParamsSlider;
+        this.toChangeParamsByCheckbox = toChangeSearchParamsCheckbox;
+        this.toChangeParamsBySlider = toChangeSearchParamsSlider;
+        this.toChangeParamsBySearch = toChangeParamsBySearch;
     }
 
     public createFilters(productsData: IProduct[]): void {
@@ -59,27 +63,31 @@ export class GlobalFilters {
             3000,
             '1',
             'price',
-            (sliderType: SliderType, currentSliderValue: SliderValue) => this.updateCurrentSliderState(sliderType, currentSliderValue)
-         );
+            (sliderType: SliderType, currentSliderValue: SliderValue) =>
+                this.updateCurrentSliderState(sliderType, currentSliderValue)
+        );
 
-         const sliderStock = new DualSlider(
-             wrapperSliders,
-             0,
-             100,
-             '1',
-             'stock',
-             (sliderType: SliderType, currentSliderValue: SliderValue) =>
-                 this.updateCurrentSliderState(sliderType, currentSliderValue)
-         );
+        const sliderStock = new DualSlider(
+            wrapperSliders,
+            0,
+            100,
+            '1',
+            'stock',
+            (sliderType: SliderType, currentSliderValue: SliderValue) =>
+                this.updateCurrentSliderState(sliderType, currentSliderValue)
+        );
 
-         const search = new Search(document.querySelector('.header__container')!, (searchValue: string) => this.onChangeSearch(searchValue));
+        const search = new Search(
+            document.querySelector('.header__container')!,
+            (param: string, value: string) => this.onChangeSearch(param, value)
+        );
 
-         filterCategory.drawFilter(productsData);
-         filterBrand.drawFilter(productsData);
-         sliderPrice.drawSlider();
-         sliderStock.drawSlider();
+        filterCategory.drawFilter(productsData);
+        filterBrand.drawFilter(productsData);
+        sliderPrice.drawSlider();
+        sliderStock.drawSlider();
 
-         search.drawSearch();
+        search.drawSearch();
     }
 
     public updateCurrentSliderState(
@@ -92,7 +100,11 @@ export class GlobalFilters {
             currentSliderValue.min.toString(),
             currentSliderValue.max.toString()
         );
-        this.callbackOnChangeFilters(this.currentFilters, this.currentSliders, this.currentSearch);
+        this.callbackOnChangeFilters(
+            this.currentFilters,
+            this.currentSliders,
+            this.currentSearch
+        );
     }
 
     public updateCurrentFiltersState(
@@ -108,19 +120,28 @@ export class GlobalFilters {
         this.currentFilters.set(filterType, setSelectedCheckbox);
 
         this.toChangeParamsByCheckbox(filterType, value, isAdded);
-        this.callbackOnChangeFilters(this.currentFilters, this.currentSliders, this.currentSearch);
+        this.callbackOnChangeFilters(
+            this.currentFilters,
+            this.currentSliders,
+            this.currentSearch
+        );
     }
 
     public getCurrentFilters(): Map<FilterType, Set<string>> {
         return this.currentFilters;
     }
 
-    public getCurrentSliders(): Map<SliderType, SliderValue>  {
+    public getCurrentSliders(): Map<SliderType, SliderValue> {
         return this.currentSliders;
     }
 
-    public onChangeSearch(search: string): void {
-        this.currentSearch = search;
-        this.callbackOnChangeFilters(this.currentFilters, this.currentSliders, this.currentSearch);
+    public onChangeSearch(param: string, value: string): void {
+        this.currentSearch = value;
+        this.toChangeParamsBySearch(param, this.currentSearch);
+        this.callbackOnChangeFilters(
+            this.currentFilters,
+            this.currentSliders,
+            this.currentSearch
+        );
     }
 }
