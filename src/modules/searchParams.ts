@@ -1,6 +1,8 @@
 export class SearchParams {
+    private static readonly unused: string = '';
+
     public updateSearchParamByCheckbox(param: string, value: string, isAdd: boolean): void {
-        let searchParams: URLSearchParams = new URLSearchParams(window.location.search);
+        const searchParams: URLSearchParams = new URLSearchParams(window.location.search);
         if (isAdd) {
             searchParams.append(param, value);
         } else {
@@ -10,25 +12,25 @@ export class SearchParams {
                 ? searchParams.set(param, newCurrentValue.join('|'))
                 : searchParams.delete(param);
         }
-        if (searchParams.toString()) {
-            searchParams.sort();
-            window.history.pushState(
-                Object.fromEntries(searchParams.entries()),
-                ' ',
-                `${window.location.pathname}?${searchParams.toString()}`
-            );
-        } else {
-            window.history.pushState({}, ' ', window.location.pathname);
-        }
+        this.updateSearchParams(searchParams);
     }
 
     public updateSearchParamBySlider(param: string, min: string, max: string): void {
-        let searchParams: URLSearchParams = new URLSearchParams(window.location.search);
+        const searchParams: URLSearchParams = new URLSearchParams(window.location.search);
         searchParams.set(param, `${min}/${max}`);
-        window.history.pushState(
-            Object.fromEntries(searchParams.entries()),
-            ' ',
-            `${window.location.pathname}?${searchParams.toString()}`
-        );
+        this.updateSearchParams(searchParams);
+    }
+
+    private updateSearchParams(searchParams: URLSearchParams): void {
+        if (searchParams.toString() !== '') {
+            searchParams.sort();
+            window.history.pushState(
+                Object.fromEntries(searchParams.entries()),
+                SearchParams.unused,
+                `${window.location.pathname}?${searchParams.toString()}`
+            );
+        } else {
+            window.history.pushState({}, SearchParams.unused, window.location.pathname);
+        }
     }
 }
