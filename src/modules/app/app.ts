@@ -35,7 +35,6 @@ export class App {
         this.cart.setCurrentValues('0', '0');
         this.cart.resetBtn(); // will be remove at the end
         this.globalFiltres.createFilters(productsData);
-        // this.globalFiltres.createSliders();
 
         const startFilters: Map<FilterType, Set<string>> = this.globalFiltres.getCurrentFilters();
         const startSliders: Map<SliderType, SliderValue> = this.globalFiltres.getCurrentSliders();
@@ -61,7 +60,7 @@ export class App {
         found.innerHTML = `Found: ${count}`;
     }
 
-    public onProductItemSelected(productId: number, isAdded: boolean) {
+    public onProductItemSelected(productId: number, isAdded: boolean): void {
         const product = productsData.filter(
             (product) => product.id === productId
         )[0]!;

@@ -51,25 +51,6 @@ export class FilterResult {
                 productsResult.push(product);
             }
         });
-
-//         const searchArray: IProduct[] = [];
-//
-//         productsResult.forEach((product) => {
-//             let addToResult: boolean = false;
-//
-//             const array: ProductProperty[] = Object.keys(product) as ProductProperty[];
-//
-//             array.forEach((property) => {
-//                 if(product[property].toString().toLowerCase().includes(searchValue.toLowerCase())) {
-//                     addToResult = true;
-//                 }
-//             });
-//
-//             if (addToResult) {
-//                 searchArray.push(product);
-//             }
-//         });
-        // return searchArray;
         return productsResult;
     }
 }
