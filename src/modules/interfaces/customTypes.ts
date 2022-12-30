@@ -12,6 +12,11 @@ export type CallbackViewChanged = (sliderType: SliderType, currentSliderValue: S
 
 export type CallbackOnChangeFilters = (currentFilters: Map<FilterType, Set<string>>, currentSliders:  Map<SliderType, SliderValue>) => void;
 
+export type ToChangeParamsByCheckbox = (param: string, value: string, isAdd: boolean) => void;
+
+export type ToChangeParamsBySlider = (param: string, min: string, max: string) => void;
+
+
 export type SliderValue = {
     'min': number;
     'max': number;
