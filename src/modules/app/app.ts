@@ -5,18 +5,32 @@ import { FilterType, SliderType, SliderValue } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 import { ProductList } from '../product/productList';
 import { Cart } from '../cart';
+import { SearchParams } from '../searchParams';
 
 export class App {
     private productList: ProductList;
     private globalFiltres: GlobalFilters;
     private cart: Cart;
+    private searchParams: SearchParams;
 
     constructor() {
+        this.searchParams = new SearchParams();
         this.globalFiltres = new GlobalFilters(
             (
                 currentFilters: Map<FilterType, Set<string>>,
-                currentSliders: Map<SliderType, SliderValue>
-            ) => this.updateResult(currentFilters, currentSliders)
+                currentSliders: Map<SliderType, SliderValue>,
+                searchValue: string
+            ) => this.updateResult(currentFilters, currentSliders, searchValue),
+
+            (param: string, value: string, isAdd: boolean) =>
+                this.searchParams.updateSearchParamByCheckbox(
+                    param,
+                    value,
+                    isAdd
+                ),
+            (param: string, min: string, max: string) =>
+                this.searchParams.updateSearchParamBySlider(param, min, max),
+            (param: string, value: string) => this.searchParams.updateSearchParamBySearch(param, value)
         );
         const products: Element = document.querySelector('.products')!; // ???
         this.productList = new ProductList(
@@ -34,20 +48,21 @@ export class App {
         this.cart.setCurrentValues('0', '0');
         this.cart.resetBtn(); // will be remove at the end
         this.globalFiltres.createFilters(productsData);
-        this.globalFiltres.createSliders();
 
         const startFilters: Map<FilterType, Set<string>> = this.globalFiltres.getCurrentFilters();
         const startSliders: Map<SliderType, SliderValue> = this.globalFiltres.getCurrentSliders();
-        this.updateResult(startFilters, startSliders);
+        this.updateResult(startFilters, startSliders, '');
     }
 
     public updateResult(
         currentFilters: Map<FilterType, Set<string>>,
-        slidersValue: Map<SliderType, SliderValue>
+        slidersValue: Map<SliderType, SliderValue>,
+        searchValue: string
     ): void {
         const array: IProduct[] = FilterResult.getFilterResult(
             currentFilters,
-            slidersValue
+            slidersValue,
+            searchValue
         );
         this.productList.drawProductList(array);
         this.setFoundProducts(array.length);
