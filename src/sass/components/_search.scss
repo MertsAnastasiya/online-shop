@@ -4,21 +4,12 @@
   background: #fcfafa;
   border: 1px solid $color-primary;
   border-radius: 37px;
+  @include font($size: 2rem);
+  padding: 1rem;
 
   &::placeholder {
-    font-family: "Roboto";
-    @include font($size: 1.8rem);
-    padding: 10px;
     color: $color-primary;
-    opacity: 0.5;
-  }
-
-  // &::after {
-  // }
-
-  &:focus {
-    @include font($size: 2.2rem);
-    padding: 10px;
+     opacity: 0.5;
   }
 
   &:focus::-webkit-input-placeholder {
