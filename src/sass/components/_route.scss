@@ -1,4 +1,5 @@
 .route {
-  @include font($size: 2rem);
-  padding: 15px;
+  @include font($size: 2.5rem, $weight:800);
+  padding: 2rem;
+  text-align: center;
 }

@@ -17,7 +17,7 @@ export class ProductList {
             const productDiv: HTMLDivElement = document.createElement('div');
             const productImg: HTMLImageElement = document.createElement('img');
             const productSpans: HTMLDivElement = document.createElement('div');
-            const nameTitle: HTMLSpanElement = document.createElement('a');
+            const nameTitle: HTMLSpanElement = document.createElement('span');
             const priceSpan: HTMLSpanElement = document.createElement('span');
             const buttonAddToCart: HTMLButtonElement = document.createElement('button');
             const productImgDiv: HTMLDivElement = document.createElement('div');
@@ -30,11 +30,17 @@ export class ProductList {
             nameTitle.className = 'product__name';
             priceSpan.className = 'product__price';
             nameTitle.innerHTML = product.title;
-            nameTitle!.setAttribute('href', `product.html?id=${product.id}`);
+            productDiv.addEventListener('click', () => {
+                window.open(
+                    `${window.location.href}product.html?id=${product.id}`,
+                    '_blank'
+                );
+            })
             priceSpan.innerHTML = product.price.toString();
             buttonAddToCart.className = 'button button_small add-to-cart';
             buttonAddToCart.innerHTML = 'Add to cart';
             buttonAddToCart.addEventListener('click', (event) => {
+                event.stopPropagation();
                 const target = event.target as Element;
                 target.classList.toggle('add-to-cart');
                 target.classList.toggle('remove-from-cart');
