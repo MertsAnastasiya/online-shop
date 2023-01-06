@@ -12,6 +12,8 @@
   color: $color-primary;
   border-radius: 20px;
   background-color: $color-light;
+  cursor: pointer;
+  text-transform: capitalize;
 
   &:hover {
     background-color: $color-primary;
