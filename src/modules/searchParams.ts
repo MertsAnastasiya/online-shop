@@ -34,7 +34,11 @@ export class SearchParams {
                 `${window.location.pathname}?${this.searchParams.toString()}`
             );
         } else {
-            window.history.pushState({}, SearchParams.unused, window.location.pathname);
+            this.clearUrl();
         }
+    }
+
+    public clearUrl(): void {
+        window.history.pushState({}, SearchParams.unused, window.location.pathname);
     }
 }
