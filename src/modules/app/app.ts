@@ -138,6 +138,9 @@ export class App {
                 this.searchParams.clearUrl();
                 this.globalFiltres.clearFilters();
             }
+            default:
+                throw new Error('Something went wrong');
+                break;
         }
     }
 }
