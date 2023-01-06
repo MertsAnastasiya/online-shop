@@ -36,7 +36,8 @@ export class App {
         this.productList = new ProductList(
             products,
             (id: number, isAdded: boolean) =>
-                this.onProductItemSelected(id, isAdded)
+                this.onProductItemSelected(id, isAdded),
+            (id: number) => this.onProductClick(id)
         );
         const header: Element = document.querySelector('.header__container')!; //???
 
@@ -91,6 +92,13 @@ export class App {
         this.setCount(String(currentCount));
         this.setSum(String(currentSum));
         this.cart.setCurrentValues(String(currentSum), String(currentCount));
+    }
+
+    public onProductClick(id: number) {
+        window.open(
+            `${window.location.href}product.html?id=${id}`,
+            '_blank'
+        );
     }
 
     public getSum(): string {

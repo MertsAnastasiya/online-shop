@@ -31,12 +31,12 @@ export class ProductPage {
                     <div class="price"></div>
                     </div>
                     <div class="buttons__wrapper">
-                    <button class="button button_add add-cart">Add to Cart</button>
-                    <button class="button button_buy">Buy Now</button>
+                        <button class="button button_add add-cart">Add to Cart</button>
+                        <button class="button button_buy">Buy Now</button>
                     </div>
                     <div class="delivery__wrapper">
-                    <div class="delivery">Free Delivery</div>
-                    <div class="return">Free 30days returns</div>
+                        <div class="delivery">Free Delivery</div>
+                        <div class="return">Free 30days returns</div>
                     </div>
                 </div>
             </div>
@@ -44,8 +44,6 @@ export class ProductPage {
     }
 
     public drawProductPage() {
-        console.log(this.product);
-
         this.parent.innerHTML = this.productDataLayout;
         const route: Element = document.querySelector('.route')!;
         const productName: Element = document.querySelector('.name')!;
