@@ -6,6 +6,7 @@ import { IProduct } from '../interfaces/product.interface';
 import { ProductList } from '../product/productList';
 import { Cart } from '../cart';
 import { SearchParams } from '../searchParams';
+import { Button } from '../filters/button';
 
 export class App {
     private productList: ProductList;
@@ -28,8 +29,7 @@ export class App {
                     value,
                     isAdd
                 ),
-            (param: string, min: string, max: string) =>
-                this.searchParams.updateSearchParamBySlider(param, min, max),
+            (param: string, min: string, max: string) => this.searchParams.updateSearchParamBySlider(param, min, max),
             (param: string, value: string) => this.searchParams.updateSearchParamBySearch(param, value)
         );
         const products: Element = document.querySelector('.products')!; // ???
@@ -52,6 +52,13 @@ export class App {
         const startFilters: Map<FilterType, Set<string>> = this.globalFiltres.getCurrentFilters();
         const startSliders: Map<SliderType, SliderValue> = this.globalFiltres.getCurrentSliders();
         this.updateResult(startFilters, startSliders, '');
+
+        const btnCopy = new Button(
+            document.querySelector('.buttons__wrapper')!,
+            (type: string) => this.onClickButton(type)
+        );
+        btnCopy.drawButton('copy');
+        btnCopy.drawButton('reset');
     }
 
     public updateResult(
@@ -108,5 +115,29 @@ export class App {
 
     private setCount(amount: string): void {
         localStorage.setItem('count', amount);
+    }
+
+    private onClickButton(type: string) {
+        switch (type) {
+            case 'copy': {
+                const temp: HTMLInputElement = document.createElement('input');
+                document.body.appendChild(temp);
+                temp.value = window.location.href;
+                temp.select();
+                document.execCommand('copy');
+                document.body.removeChild(temp);
+                break;
+            }
+            case 'reset': {
+                const allCheckbox: NodeListOf<HTMLInputElement> = document.querySelectorAll('.checkbox');
+                allCheckbox.forEach((checkbox) => {
+                    if (checkbox.checked) {
+                        checkbox.checked = false;
+                    }
+                });
+                this.searchParams.clearUrl();
+                this.globalFiltres.clearFilters();
+            }
+        }
     }
 }

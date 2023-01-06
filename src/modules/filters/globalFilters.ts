@@ -135,6 +135,17 @@ export class GlobalFilters {
         return this.currentSliders;
     }
 
+    public clearFilters(): void {
+        this.currentFilters.clear();
+        this.currentSearch = '';
+        this.currentSliders.clear();
+        this.callbackOnChangeFilters(
+            this.currentFilters,
+            this.currentSliders,
+            this.currentSearch
+        );
+    }
+
     public onChangeSearch(param: string, value: string): void {
         this.currentSearch = value;
         this.toChangeParamsBySearch(param, this.currentSearch);
