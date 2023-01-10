@@ -135,6 +135,25 @@ export class GlobalFilters {
         return this.currentSliders;
     }
 
+    public setCurrentFilters(filterType: FilterType, value: string): void {
+        const setSelectedCheckbox = this.currentFilters.get(filterType) || new Set<string>();
+        setSelectedCheckbox.add(value);
+
+        this.currentFilters.set(filterType, setSelectedCheckbox);
+    }
+
+    public setCurrentSliders(sliderType: SliderType, value: SliderValue): void {
+        const sliderMax = document.querySelector(`.${sliderType}-max`)! as HTMLInputElement;
+        const sliderMin = document.querySelector(`.${sliderType}-min`)! as HTMLInputElement;
+        const spanMax = document.querySelector(`.${sliderType}-spans__max`)!;
+        const spanMin = document.querySelector(`.${sliderType}-spans__min`)!;
+        sliderMax.value = value.max.toString();
+        sliderMin.value = value.min.toString();
+        spanMax.innerHTML = value.max.toString();
+        spanMin.innerHTML = value.min.toString();
+        this.currentSliders.set(sliderType, value);
+    }
+
     public clearFilters(): void {
         this.currentFilters.clear();
         this.currentSearch = '';

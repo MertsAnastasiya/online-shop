@@ -8,10 +8,8 @@ export class ProductPage {
     private productDataLayout: string;
     private product: IProduct;
 
-    constructor(parent: Element) {
-        const params = Object.fromEntries(new URLSearchParams(window.location.search));
-        const paramsId = Number(params.id);
-        this.product = productsData.filter((data) => data.id === paramsId)[0]!;
+    constructor(parent: Element, id: number) {
+        this.product = productsData.filter((data) => data.id === id)[0]!;
 
         this.parent = parent;
         this.productDataLayout = `
@@ -24,11 +22,11 @@ export class ProductPage {
                 </div>
                 <div class="product__description">
                     <div>
-                    <div class="name"></div>
-                    <div class="brand"></div>
-                    <div class="description"></div>
-                    <div class="rating"></div>
-                    <div class="price"></div>
+                        <div class="name"></div>
+                        <div class="brand"></div>
+                        <div class="description"></div>
+                        <div class="rating"></div>
+                        <div class="price"></div>
                     </div>
                     <div class="buttons__wrapper">
                         <button class="button button_add add-cart">Add to Cart</button>
@@ -84,5 +82,5 @@ export class ProductPage {
 }
 
 //I'm not sure of it
-const page = new ProductPage(document.querySelector('main')!);
-page.drawProductPage();
+// const page = new ProductPage(document.querySelector('main')!);
+// page.drawProductPage();

@@ -49,7 +49,7 @@ export class DualSlider {
         range.classList.add(`${this.sliderType}-range`);
 
         const inputMin: HTMLInputElement = document.createElement('input');
-        inputMin.classList.add(`${this.sliderType}-range__input1`);
+        inputMin.classList.add(`${this.sliderType}-min`);
         inputMin.type = 'range';
         inputMin.id = 'lower';
         inputMin.step = this.step;
@@ -58,7 +58,7 @@ export class DualSlider {
         inputMin.value = String(this.min);
 
         const inputMax: HTMLInputElement = document.createElement('input');
-        inputMax.classList.add(`${this.sliderType}-range__input2`);
+        inputMax.classList.add(`${this.sliderType}-max`);
         inputMax.type = 'range';
         inputMax.id = 'upper';
         inputMax.step = this.step;
