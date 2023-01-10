@@ -7,8 +7,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
-        index: "./src/index.ts",
-        // product: "./src/productPage.ts",
+        index: "./src/index.ts"
     },
     mode: "development",
     module: {
@@ -41,11 +40,6 @@ module.exports = {
             filename: "index.html",
             chunks: ['index'],
         }),
-        // new HtmlWebpackPlugin({
-        //     template: path.resolve(__dirname, "./src/modules/product/product.html"),
-        //     filename: "product.html",
-        //     chunks: ["product"],
-        // }),
         new MiniCssExtractPlugin({
             filename: "styles.css",
             ignoreOrder: true,
