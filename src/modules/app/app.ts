@@ -7,7 +7,7 @@ import { ProductList } from '../product/productList';
 import { Cart } from '../cart';
 import { SearchParams } from '../searchParams';
 import { Button } from '../filters/button';
-import { ProductPage } from '../../productPage';
+import { ProductPage } from '../productPage';
 
 export class App {
     private productList: ProductList;

@@ -1,7 +1,7 @@
 'use strict';
 import './sass/styles.scss';
-import { productsData } from './modules/data';
-import { IProduct } from './modules/interfaces/product.interface';
+import { productsData } from './data';
+import { IProduct } from './interfaces/product.interface';
 
 export class ProductPage {
     private parent: Element;
