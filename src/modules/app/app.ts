@@ -29,8 +29,10 @@ export class App {
                     value,
                     isAdd
                 ),
-            (param: string, min: string, max: string) => this.searchParams.updateSearchParamBySlider(param, min, max),
-            (param: string, value: string) => this.searchParams.updateSearchParamBySearch(param, value)
+            (param: string, min: string, max: string) =>
+                this.searchParams.updateSearchParamBySlider(param, min, max),
+            (param: string, value: string) =>
+                this.searchParams.updateSearchParamBySearch(param, value)
         );
         const products: Element = document.querySelector('.products')!; // ???
         this.productList = new ProductList(
@@ -49,8 +51,12 @@ export class App {
         this.cart.resetBtn(); // will be remove at the end
         this.globalFiltres.createFilters(productsData);
 
-        const startFilters: Map<FilterType, Set<string>> = this.globalFiltres.getCurrentFilters();
-        const startSliders: Map<SliderType, SliderValue> = this.globalFiltres.getCurrentSliders();
+        const startFilters: Map<
+            FilterType,
+            Set<string>
+        > = this.globalFiltres.getCurrentFilters();
+        const startSliders: Map<SliderType, SliderValue> =
+            this.globalFiltres.getCurrentSliders();
         this.updateResult(startFilters, startSliders, '');
 
         const btnCopy = new Button(
@@ -129,7 +135,8 @@ export class App {
                 break;
             }
             case 'reset': {
-                const allCheckbox: NodeListOf<HTMLInputElement> = document.querySelectorAll('.checkbox');
+                const allCheckbox: NodeListOf<HTMLInputElement> =
+                    document.querySelectorAll('.checkbox');
                 allCheckbox.forEach((checkbox) => {
                     if (checkbox.checked) {
                         checkbox.checked = false;
