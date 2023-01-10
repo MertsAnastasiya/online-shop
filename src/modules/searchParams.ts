@@ -4,7 +4,12 @@ export class SearchParams {
 
     public updateSearchParamByCheckbox(param: string, value: string, isAdd: boolean): void {
         if (isAdd) {
-            this.searchParams.append(param, value);
+            const temp: string | null = this.searchParams.get(param);
+            if (temp) {
+                this.searchParams.set(param, `${temp}|${value}`);
+            } else {
+                this.searchParams.set(param, `${value}`);
+            }
         } else {
             const currentParamValueArray: string[] = this.searchParams.getAll(param);
             const newCurrentValue: string[] = currentParamValueArray.filter((item) => item !== value);
@@ -39,6 +44,7 @@ export class SearchParams {
     }
 
     public clearUrl(): void {
-        window.history.pushState({}, SearchParams.unused, window.location.pathname);
+        window.location.search = '';
+        window.history.pushState({}, SearchParams.unused, window.location.pathname);//???
     }
 }

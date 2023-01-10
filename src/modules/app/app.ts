@@ -51,6 +51,7 @@ export class App {
         this.cart.resetBtn(); // will be remove at the end
 
         const searchParams = Object.fromEntries(new URLSearchParams(window.location.search));
+        const searchParamsString = window.location.search.toString();
 
         if (Object.keys(searchParams).includes('id')) {
             const productView = new ProductPage(document.querySelector('.main__container')!, Number(searchParams.id));
@@ -63,9 +64,11 @@ export class App {
                         const objectMinMax: SliderValue = {min: Number(searchParams[key]!.split('/')[0]), max: Number(searchParams[key]!.split('/')[1])};
                         this.globalFiltres.setCurrentSliders(key as SliderType, objectMinMax);
                     } else if (key === 'category' || key === 'brand') {
-                        const checkbox =  document.getElementById(searchParams[key]!)! as HTMLInputElement;
-                        checkbox.checked = true;
-                        this.globalFiltres.setCurrentFilters(key as FilterType, searchParams[key]!);
+                        searchParams[key]!.split('|').forEach((item) => {
+                            const checkbox =  document.getElementById(item!)! as HTMLInputElement;
+                            checkbox.checked = true;
+                            this.globalFiltres.setCurrentFilters(key as FilterType, item);
+                        })
                     }
                 }
             }
@@ -77,43 +80,6 @@ export class App {
             button.drawButton('copy');
             button.drawButton('reset');
         }
-
-//         if(Object.keys(searchParams).length === 0) {
-//             this.globalFiltres.createFilters(productsData);
-//
-//             const startFilters: Map<FilterType, Set<string>> = this.globalFiltres.getCurrentFilters();
-//             const startSliders: Map<SliderType, SliderValue> = this.globalFiltres.getCurrentSliders();
-//             this.updateResult(startFilters, startSliders, '');
-//
-//             const button = new Button(
-//                 document.querySelector('.buttons__wrapper')!,
-//                 (type: string) => this.onClickButton(type)
-//             );
-//             button.drawButton('copy');
-//             button.drawButton('reset');
-        // } else if (Object.keys(searchParams).includes('id')) {
-        //     const productView = new ProductPage(document.querySelector('.main__container')!, Number(searchParams.id));
-        //     productView.drawProductPage();
-        // } else {
-        //     this.globalFiltres.createFilters(productsData);
-        //     for(const key in searchParams) {
-        //         if (key === 'price' || key === 'stock') {
-        //             const objectMinMax: SliderValue = {min: Number(searchParams[key]!.split('/')[0]), max: Number(searchParams[key]!.split('/')[1])};
-        //             this.globalFiltres.setCurrentSliders(key as SliderType, objectMinMax);
-        //         } else if (key === 'category' || key === 'brand') {
-        //             const checkbox =  document.getElementById(searchParams[key]!)! as HTMLInputElement;
-        //             checkbox.checked = true;
-        //             this.globalFiltres.setCurrentFilters(key as FilterType, searchParams[key]!);
-        //         }
-        //     }
-        //     this.updateResult(this.globalFiltres.getCurrentFilters(), this.globalFiltres.getCurrentSliders(), searchParams['search'] || '');
-        //     const button = new Button(
-        //         document.querySelector('.buttons__wrapper')!,
-        //         (type: string) => this.onClickButton(type)
-        //     );
-        //     button.drawButton('copy');
-        //     button.drawButton('reset');
-        // }
     }
 
     public updateResult(
@@ -149,28 +115,10 @@ export class App {
     }
 
     public onProductClick(id: number) {
-        console.log(id);
-
-        // window.open(
-        //     `${window.location.href}product.html?id=${id}`,
-        //     '_blank'
-        // );
         window.open(
             `${window.location.href}?id=${id}`,
             '_blank'
         );
-        // const productView = new ProductPage(document.querySelector('.main__container')!);
-        // productView.drawProductPage();
-        // const params = Object.fromEntries(new URLSearchParams(window.location.search));
-        // const paramsId = Number(params.id);
-        // if (paramsId) {
-            // const productView = new ProductPage(document.querySelector('.main__container')!, 1);
-            // productView.drawProductPage();
-            // window.open(
-            //     `${window.location.href}?id=${id}`,
-            //     '_blank'
-            // );
-        // }
     }
 
     public getSum(): string {
