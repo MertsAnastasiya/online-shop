@@ -51,7 +51,6 @@ export class App {
         this.cart.resetBtn(); // will be remove at the end
 
         const searchParams = Object.fromEntries(new URLSearchParams(window.location.search));
-        const searchParamsString = window.location.search.toString();
 
         if (Object.keys(searchParams).includes('id')) {
             const productView = new ProductPage(document.querySelector('.main__container')!, Number(searchParams.id));
@@ -116,7 +115,7 @@ export class App {
 
     public onProductClick(id: number) {
         window.open(
-            `${window.location.href}?id=${id}`,
+            `${window.location.origin}?id=${id}`,
             '_blank'
         );
     }

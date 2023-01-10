@@ -53,7 +53,7 @@ export class ProductPage {
         const mainImg = document.querySelector('.main-image')! as HTMLImageElement;
         const addImgWrapper: Element = document.querySelector('.additional-images__wrapper')!;
 
-        const routeText: string = `Store / ${this.product.category.charAt(0).toUpperCase()}${this.product.category.slice(1)} / ${this.product.brand} / ${this.product.title}`;
+        const routeText: string = `Store / ${this.product.category} / ${this.product.brand} / ${this.product.title}`;
         route.innerHTML = routeText;
         productName.innerHTML = this.product.title;
         brand!.innerHTML = this.product.brand;
@@ -80,7 +80,3 @@ export class ProductPage {
         }
     }
 }
-
-//I'm not sure of it
-// const page = new ProductPage(document.querySelector('main')!);
-// page.drawProductPage();
