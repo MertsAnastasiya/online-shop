@@ -2,6 +2,8 @@
 import { productsData } from './data';
 import { IProduct } from './interfaces/product.interface';
 
+const IMAGE_COUNT = 3;
+
 export class ProductPage {
     private parent: Element;
     private productDataLayout: string;
@@ -65,7 +67,7 @@ export class ProductPage {
         }
 
         let i = 0;
-        while (i !== 3) {
+        while (i < IMAGE_COUNT) {
             if (this.product.images[i]) {
                 const addImg = document.createElement('img');
                 addImg.classList.add('additional-image')
