@@ -1,10 +1,10 @@
-import { OnButtonClick } from '../interfaces/customTypes';
+import { OnClickButton } from '../interfaces/customTypes';
 
 export class Button {
     private parent: Element;
-    private onClickButton: OnButtonClick;
+    private onClickButton: OnClickButton;
 
-    constructor(parent: Element, onClickButton: OnButtonClick) {
+    constructor(parent: Element, onClickButton: OnClickButton) {
         this.parent = parent;
         this.onClickButton = onClickButton;
     }

@@ -8,6 +8,7 @@ import { Cart } from '../cart';
 import { SearchParams } from '../searchParams';
 import { Button } from '../filters/button';
 import { ProductPage } from '../productPage';
+import { PaymentForm } from '../modalWindow';
 
 export class App {
     private productList: ProductList;
@@ -53,7 +54,7 @@ export class App {
         const searchParams = Object.fromEntries(new URLSearchParams(window.location.search));
 
         if (Object.keys(searchParams).includes('id')) {
-            const productView = new ProductPage(document.querySelector('.main__container')!, Number(searchParams.id));
+            const productView = new ProductPage(document.querySelector('.main__container')!, Number(searchParams.id), this.onClickButton);
             productView.drawProductPage();
         } else {
             this.globalFiltres.createFilters(productsData);
@@ -144,7 +145,7 @@ export class App {
         localStorage.setItem('count', amount);
     }
 
-    private onClickButton(type: string) {
+    private onClickButton(type: string): void {
         switch (type) {
             case 'copy': {
                 const temp: HTMLInputElement = document.createElement('input');
@@ -165,9 +166,13 @@ export class App {
                 this.searchParams.clearUrl();
                 this.globalFiltres.clearFilters();
             }
+            case 'buy': {
+                const paymentForm = new PaymentForm(document.querySelector('.main__container')!);
+                paymentForm.drawForm();
+            }
+
             default:
                 throw new Error('Something went wrong');
-                break;
         }
     }
 }

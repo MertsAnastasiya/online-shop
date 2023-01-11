@@ -1,15 +1,18 @@
 'use strict';
 import { productsData } from './data';
+import { OnClickButton } from './interfaces/customTypes';
 import { IProduct } from './interfaces/product.interface';
 
 export class ProductPage {
     private parent: Element;
     private productDataLayout: string;
     private product: IProduct;
+    private onClickButton: OnClickButton;
 
-    constructor(parent: Element, id: number) {
+    constructor(parent: Element, id: number, onClickButton: OnClickButton) {
+        this.onClickButton = onClickButton;
+
         this.product = productsData.filter((data) => data.id === id)[0]!;
-
         this.parent = parent;
         this.productDataLayout = `
             <div class="route"></div>
@@ -46,7 +49,8 @@ export class ProductPage {
         const productName: Element = document.querySelector('.name')!;
         const brand: Element = document.querySelector('.brand')!;
         const description: Element = document.querySelector('.description')!;
-        const addCartButton: Element = document.querySelector('.add-cart')!;
+        const addCartButton = document.querySelector('.add-cart')! as HTMLButtonElement;
+        const buyButton: Element = document.querySelector('.button_buy')! as HTMLButtonElement;
         const price: Element = document.querySelector('.price')!;
         const rating: Element = document.querySelector('.rating')!;
         const mainImg = document.querySelector('.main-image')! as HTMLImageElement;
@@ -77,5 +81,7 @@ export class ProductPage {
             }
             i++;
         }
+        addCartButton.addEventListener('click', () => this.onClickButton('cart'));
+        buyButton.addEventListener('click', () => this.onClickButton('buy'));
     }
 }
