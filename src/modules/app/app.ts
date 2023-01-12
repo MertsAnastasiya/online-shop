@@ -8,7 +8,7 @@ import { Cart } from '../cart';
 import { SearchParams } from '../searchParams';
 import { Button } from '../filters/button';
 import { ProductPage } from '../productPage';
-import { PaymentForm } from '../modalWindow';
+import { PaymentForm } from '../paymentForm';
 
 export class App {
     private productList: ProductList;
@@ -165,10 +165,18 @@ export class App {
                 });
                 this.searchParams.clearUrl();
                 this.globalFiltres.clearFilters();
+                break;
             }
             case 'buy': {
-                const paymentForm = new PaymentForm(document.querySelector('.main__container')!);
+                const paymentForm = new PaymentForm(document.querySelector('.main__container')!, this.onClickButton);
                 paymentForm.drawForm();
+                break;
+            }
+            case 'pay': {
+                console.log('pay');
+                document.querySelector('.modal-window')!.innerHTML = `<p class="message">The order accepted!</p>`;
+                setTimeout(() => window.location.href = window.location.origin, 2000);
+                break;
             }
 
             default:

@@ -1,4 +1,8 @@
 .modal-window {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     z-index: 1;
     width: 50%;
     height: 50%;
@@ -84,4 +88,8 @@
 
   .button-pay {
     align-self: center;
+  }
+
+  .message {
+    @include font($size: 2.5rem);
   }

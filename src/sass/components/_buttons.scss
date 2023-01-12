@@ -28,4 +28,10 @@
       width: 100%;
     }
   }
+
+  &:disabled {
+    color: $color-filters;
+    border-color: $color-filters;
+    cursor: auto;
+  }
 }

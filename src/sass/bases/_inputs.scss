@@ -1,0 +1,15 @@
+.input {
+    @include font($size: 2rem);
+    border: 1px solid $color-primary;
+    border-radius: $radius;
+    padding: 1rem;
+
+    &::placeholder {
+        color: $color-primary;
+         opacity: 0.5;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
