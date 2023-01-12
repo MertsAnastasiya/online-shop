@@ -6,7 +6,7 @@ import { IProduct } from '../interfaces/product.interface';
 import { ProductList } from '../product/productList';
 import { Cart } from '../cart';
 import { SearchParams } from '../searchParams';
-import { Button } from '../filters/button';
+import { Button } from '../button';
 import { ProductPage } from '../productPage';
 
 export class App {
@@ -72,12 +72,16 @@ export class App {
                 }
             }
             this.updateResult(this.globalFiltres.getCurrentFilters(), this.globalFiltres.getCurrentSliders(), searchParams['search'] || '');
-            const button = new Button(
+            const buttonCopy = new Button(
                 document.querySelector('.buttons__wrapper')!,
                 (type: string) => this.onClickButton(type)
             );
-            button.drawButton('copy');
-            button.drawButton('reset');
+            buttonCopy.drawButton('copy');
+            const buttonReset= new Button(
+                document.querySelector('.buttons__wrapper')!,
+                (type: string) => this.onClickButton(type)
+            );
+            buttonReset.drawButton('reset');
         }
     }
 
