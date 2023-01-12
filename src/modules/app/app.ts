@@ -72,12 +72,12 @@ export class App {
                 }
             }
             this.updateResult(this.globalFiltres.getCurrentFilters(), this.globalFiltres.getCurrentSliders(), searchParams['search'] || '');
-            const buttonCopy = new Button(
+            const buttonCopy: Button = new Button(
                 document.querySelector('.buttons__wrapper')!,
                 (type: string) => this.onClickButton(type)
             );
             buttonCopy.drawButton('copy');
-            const buttonReset= new Button(
+            const buttonReset: Button = new Button(
                 document.querySelector('.buttons__wrapper')!,
                 (type: string) => this.onClickButton(type)
             );
@@ -171,7 +171,6 @@ export class App {
             }
             default:
                 throw new Error('Something went wrong');
-                break;
         }
     }
 }
