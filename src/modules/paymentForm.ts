@@ -1,4 +1,4 @@
-import { OnClickButton } from './interfaces/customTypes';
+import { OnButtonClick } from './interfaces/customTypes';
 
 const MAX_LENGTH_CARD_NUMBER = 19;
 const MAX_LENGTH_CVV = 3;
@@ -7,9 +7,9 @@ const MAX_LENGTH_DATE = 5;
 export class PaymentForm {
     private modalWindow: Element;
     private parent: Element;
-    private onClickButton: OnClickButton;
+    private onClickButton: OnButtonClick;
 
-    constructor(parent: Element, onClickButton: OnClickButton) {
+    constructor(parent: Element, onClickButton: OnButtonClick) {
         this.onClickButton = onClickButton;
 
         this.parent = parent;

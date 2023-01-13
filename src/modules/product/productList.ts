@@ -1,12 +1,12 @@
-import { OnButtonCartClick, OnClickProduct } from '../interfaces/customTypes';
+import { OnButtonCartClick, OnProductClick} from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 
 export class ProductList {
     private parent: Element;
     private onButtonClick: OnButtonCartClick;
-    private onProductClick: OnClickProduct;
+    private onProductClick: OnProductClick;
 
-    constructor(parent: Element, onButtonClick: OnButtonCartClick, onProductClick: OnClickProduct) {
+    constructor(parent: Element, onButtonClick: OnButtonCartClick, onProductClick: OnProductClick) {
         this.parent = parent;
         this.onButtonClick = onButtonClick;
         this.onProductClick = onProductClick;
