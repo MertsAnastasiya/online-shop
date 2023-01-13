@@ -28,3 +28,5 @@ export type OnButtonCartClick = (productId: number, isAdded: boolean) => void;
 export type OnChangeSearch = (param: string, searchText: string) => void;
 
 export type OnButtonClick = (type: string) => void;
+
+export type OnProductClick = (id: number) => void;

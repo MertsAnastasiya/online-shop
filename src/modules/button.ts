@@ -1,4 +1,4 @@
-import { OnButtonClick } from '../interfaces/customTypes';
+import { OnButtonClick } from './interfaces/customTypes';
 
 export class Button {
     private parent: Element;

@@ -6,7 +6,12 @@ import { IProduct } from '../interfaces/product.interface';
 import { ProductList } from '../product/productList';
 import { Cart } from '../cart';
 import { SearchParams } from '../searchParams';
-import { Button } from '../filters/button';
+import { Button } from '../button';
+import { ProductPage } from '../productPage';
+
+const MAIN_CONTAINER: Element = document.querySelector('.main__container')!;
+const HEADER_CONTAINER: Element = document.querySelector('.header__container')!;
+const PRODUCTS_LIST_CONTAINER: Element = document.querySelector('.products')!;
 
 export class App {
     private productList: ProductList;
@@ -34,37 +39,92 @@ export class App {
             (param: string, value: string) =>
                 this.searchParams.updateSearchParamBySearch(param, value)
         );
-        const products: Element = document.querySelector('.products')!; // ???
-        this.productList = new ProductList(
-            products,
-            (id: number, isAdded: boolean) =>
-                this.onProductItemSelected(id, isAdded)
-        );
-        const header: Element = document.querySelector('.header__container')!; //???
 
-        this.cart = new Cart(header);
+        this.productList = new ProductList(
+            PRODUCTS_LIST_CONTAINER,
+            (id: number, isAdded: boolean) =>
+                this.onProductItemSelected(id, isAdded),
+            (id: number) => this.onProductClick(id)
+        );
+
+        this.cart = new Cart(HEADER_CONTAINER);
     }
 
     public start(): void {
         this.cart.drawCart();
-        this.cart.setCurrentValues('0', '0');
+        this.cart.setCurrentValues(this.getSum(), this.getCount());
         this.cart.resetBtn(); // will be remove at the end
+
+        this.drawPageByUrl(window.location.href, window.location.search);
+    }
+
+    private drawPageByUrl(url: string, search: string): void {
+        if (url.includes('id')) {
+            const id: number = Number(url.split('=').pop());
+            this.drawProductPage(id);
+            return;
+        }
+
         this.globalFiltres.createFilters(productsData);
+        const searchParams = Object.fromEntries(new URLSearchParams(search));
 
-        const startFilters: Map<
-            FilterType,
-            Set<string>
-        > = this.globalFiltres.getCurrentFilters();
-        const startSliders: Map<SliderType, SliderValue> =
-            this.globalFiltres.getCurrentSliders();
-        this.updateResult(startFilters, startSliders, '');
+        if (search !== '') {
+            this.setStartFilters(searchParams);
+        }
 
-        const btnCopy = new Button(
+        this.updateResult(
+            this.globalFiltres.getCurrentFilters(),
+            this.globalFiltres.getCurrentSliders(),
+            searchParams['search'] || ''
+        );
+
+        this.createButtons();
+    }
+
+    private setStartFilters(searchParams: { [x: string]: string }) {
+        for (const key in searchParams) {
+            if (key === 'price' || key === 'stock') {
+                const objectMinMax: SliderValue = {
+                    min: Number(searchParams[key]!.split('/')[0]),
+                    max: Number(searchParams[key]!.split('/')[1]),
+                };
+                this.globalFiltres.setCurrentSliders(
+                    key as SliderType,
+                    objectMinMax
+                );
+            }
+            if (key === 'category' || key === 'brand') {
+                searchParams[key]!.split('|').forEach((item) => {
+                    const checkbox = document.getElementById(
+                        item!
+                    )! as HTMLInputElement;
+                    checkbox.checked = true;
+                    this.globalFiltres.setCurrentFilters(
+                        key as FilterType,
+                        item
+                    );
+                });
+            }
+        }
+    }
+
+    private drawProductPage(id: number): void {
+        const productView: ProductPage = new ProductPage(MAIN_CONTAINER, id);
+        productView.drawProductPage();
+    }
+
+    private createButtons(): void {
+        const buttonCopy: Button = new Button(
             document.querySelector('.buttons__wrapper')!,
             (type: string) => this.onClickButton(type)
         );
-        btnCopy.drawButton('copy');
-        btnCopy.drawButton('reset');
+        buttonCopy.drawButton('copy');
+
+        const buttonReset: Button = new Button(
+            document.querySelector('.buttons__wrapper')!,
+            (type: string) => this.onClickButton(type)
+        );
+        buttonReset.drawButton('reset');
     }
 
     public updateResult(
@@ -87,7 +147,7 @@ export class App {
     }
 
     public onProductItemSelected(productId: number, isAdded: boolean) {
-        const product = productsData.filter(
+        const product: IProduct = productsData.filter(
             (product) => product.id === productId
         )[0]!;
         let currentCount: number = Number(this.getCount());
@@ -99,20 +159,20 @@ export class App {
         this.cart.setCurrentValues(String(currentSum), String(currentCount));
     }
 
+    public onProductClick(id: number) {
+        window.open(`${window.location.origin}?id=${id}`, '_blank');
+    }
+
     public getSum(): string {
-        if (localStorage.getItem('sum')) {
-            return localStorage.getItem('sum')!;
-        } else {
-            return '0';
-        }
+        return localStorage.getItem('sum')
+            ? localStorage.getItem('sum')!
+            : '0';
     }
 
     public getCount(): string {
-        if (localStorage.getItem('count')) {
-            return localStorage.getItem('count')!;
-        } else {
-            return '0';
-        }
+        return localStorage.getItem('count')
+            ? localStorage.getItem('count')!
+            : '0';
     }
 
     private setSum(sum: string): void {
@@ -147,7 +207,6 @@ export class App {
             }
             default:
                 throw new Error('Something went wrong');
-                break;
         }
     }
 }
