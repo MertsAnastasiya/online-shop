@@ -176,22 +176,11 @@ export class GlobalFilters {
     }
 
     private getMax(data: IProduct[], property: keyof IProduct): number {
-        let max: number = 0;
-        data.forEach(element => {
-            if(element[property] > max) {
-                max = Number(element[property]);
-            }
-        });
-        return max;
+        return  Math.max(...data.map(element => Number(element[property])));
     }
 
     private getMin(data: IProduct[], property: keyof IProduct): number {
-        let min: number = this.getMax(data, property);
-        data.forEach(element => {
-            if(element[property] < min) {
-                min = Number(element[property]);
-            }
-        });
-        return min;
+        return  Math.min(...data.map(element => Number(element[property])));
+
     }
 }

@@ -68,7 +68,7 @@ export class App {
         this.globalFiltres.createFilters(productsData);
         const searchParams = Object.fromEntries(new URLSearchParams(search));
 
-        if (search) {
+        if (search !== '') {
             this.setStartFilters(searchParams);
         }
 
