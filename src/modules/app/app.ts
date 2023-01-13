@@ -81,7 +81,7 @@ export class App {
         this.createButtons();
     }
 
-    private setStartFilters(searchParams: { [x: string]: string; }) {
+    private setStartFilters(searchParams: { [x: string]: string }) {
         for (const key in searchParams) {
             if (key === 'price' || key === 'stock') {
                 const objectMinMax: SliderValue = {
@@ -94,7 +94,6 @@ export class App {
                 );
             }
             if (key === 'category' || key === 'brand') {
-                debugger;
                 searchParams[key]!.split('|').forEach((item) => {
                     const checkbox = document.getElementById(
                         item!
@@ -110,7 +109,7 @@ export class App {
     }
 
     private drawProductPage(id: number): void {
-        const productView = new ProductPage(MAIN_CONTAINER, id);
+        const productView: ProductPage = new ProductPage(MAIN_CONTAINER, id);
         productView.drawProductPage();
     }
 
@@ -148,7 +147,7 @@ export class App {
     }
 
     public onProductItemSelected(productId: number, isAdded: boolean) {
-        const product = productsData.filter(
+        const product: IProduct = productsData.filter(
             (product) => product.id === productId
         )[0]!;
         let currentCount: number = Number(this.getCount());
@@ -165,11 +164,15 @@ export class App {
     }
 
     public getSum(): string {
-        return localStorage.getItem('sum') ? localStorage.getItem('sum')! : '0';
+        return localStorage.getItem('sum')
+            ? localStorage.getItem('sum')!
+            : '0';
     }
 
     public getCount(): string {
-        return localStorage.getItem('count') ? localStorage.getItem('count')! : '0';
+        return localStorage.getItem('count')
+            ? localStorage.getItem('count')!
+            : '0';
     }
 
     private setSum(sum: string): void {
