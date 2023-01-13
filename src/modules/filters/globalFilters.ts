@@ -43,41 +43,41 @@ export class GlobalFilters {
     }
 
     public createFilters(productsData: IProduct[]): void {
-        const filterCategory = new CheckboxFilter(
+        const filterCategory: CheckboxFilter = new CheckboxFilter(
             wrapperFiltres,
             'category',
             (filterType: FilterType, value: string, isAdded: boolean) =>
                 this.updateCurrentFiltersState(filterType, value, isAdded)
         );
 
-        const filterBrand = new CheckboxFilter(
+        const filterBrand: CheckboxFilter = new CheckboxFilter(
             wrapperFiltres,
             'brand',
             (filterType: FilterType, value: string, isAdded: boolean) =>
                 this.updateCurrentFiltersState(filterType, value, isAdded)
         );
 
-        const sliderPrice = new DualSlider(
+        const sliderPrice: DualSlider = new DualSlider(
             wrapperSliders,
-            0,
-            3000,
+            this.getMin(productsData, 'price'),
+            this.getMax(productsData, 'price'),
             '1',
             'price',
             (sliderType: SliderType, currentSliderValue: SliderValue) =>
                 this.updateCurrentSliderState(sliderType, currentSliderValue)
         );
 
-        const sliderStock = new DualSlider(
+        const sliderStock: DualSlider = new DualSlider(
             wrapperSliders,
-            0,
-            100,
+            this.getMin(productsData, 'stock'),
+            this.getMax(productsData, 'stock'),
             '1',
             'stock',
             (sliderType: SliderType, currentSliderValue: SliderValue) =>
                 this.updateCurrentSliderState(sliderType, currentSliderValue)
         );
 
-        const search = new Search(
+        const search: Search = new Search(
             document.querySelector('.header__container')!,
             (param: string, value: string) => this.onChangeSearch(param, value)
         );
@@ -112,7 +112,7 @@ export class GlobalFilters {
         value: string,
         isAdded: boolean
     ): void {
-        const setSelectedCheckbox =
+        const setSelectedCheckbox: Set<string> =
             this.currentFilters.get(filterType) || new Set<string>();
         isAdded
             ? setSelectedCheckbox?.add(value)
@@ -136,7 +136,7 @@ export class GlobalFilters {
     }
 
     public setCurrentFilters(filterType: FilterType, value: string): void {
-        const setSelectedCheckbox = this.currentFilters.get(filterType) || new Set<string>();
+        const setSelectedCheckbox: Set<string> = this.currentFilters.get(filterType) || new Set<string>();
         setSelectedCheckbox.add(value);
 
         this.currentFilters.set(filterType, setSelectedCheckbox);
@@ -145,8 +145,8 @@ export class GlobalFilters {
     public setCurrentSliders(sliderType: SliderType, value: SliderValue): void {
         const sliderMax = document.querySelector(`.${sliderType}-max`)! as HTMLInputElement;
         const sliderMin = document.querySelector(`.${sliderType}-min`)! as HTMLInputElement;
-        const spanMax = document.querySelector(`.${sliderType}-spans__max`)!;
-        const spanMin = document.querySelector(`.${sliderType}-spans__min`)!;
+        const spanMax: Element = document.querySelector(`.${sliderType}-spans__max`)!;
+        const spanMin: Element = document.querySelector(`.${sliderType}-spans__min`)!;
         sliderMax.value = value.max.toString();
         sliderMin.value = value.min.toString();
         spanMax.innerHTML = value.max.toString();
@@ -173,5 +173,14 @@ export class GlobalFilters {
             this.currentSliders,
             this.currentSearch
         );
+    }
+
+    private getMax(data: IProduct[], property: keyof IProduct): number {
+        return  Math.max(...data.map(element => Number(element[property])));
+    }
+
+    private getMin(data: IProduct[], property: keyof IProduct): number {
+        return  Math.min(...data.map(element => Number(element[property])));
+
     }
 }
