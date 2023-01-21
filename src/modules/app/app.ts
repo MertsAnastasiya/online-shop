@@ -8,6 +8,7 @@ import { Cart } from '../cart';
 import { SearchParams } from '../searchParams';
 import { Button } from '../button';
 import { ProductPage } from '../productPage';
+import { PaymentForm } from '../paymentForm';
 
 const MAIN_CONTAINER: Element = document.querySelector('.main__container')!;
 const HEADER_CONTAINER: Element = document.querySelector('.header__container')!;
@@ -53,7 +54,6 @@ export class App {
     public start(): void {
         this.cart.drawCart();
         this.cart.setCurrentValues(this.getSum(), this.getCount());
-        this.cart.resetBtn(); // will be remove at the end
 
         this.drawPageByUrl(window.location.href, window.location.search);
     }
@@ -109,20 +109,20 @@ export class App {
     }
 
     private drawProductPage(id: number): void {
-        const productView: ProductPage = new ProductPage(MAIN_CONTAINER, id);
+        const productView: ProductPage = new ProductPage(MAIN_CONTAINER, id, this.onButtonClick);
         productView.drawProductPage();
     }
 
     private createButtons(): void {
         const buttonCopy: Button = new Button(
             document.querySelector('.buttons__wrapper')!,
-            (type: string) => this.onClickButton(type)
+            (type: string) => this.onButtonClick(type)
         );
         buttonCopy.drawButton('copy');
 
         const buttonReset: Button = new Button(
             document.querySelector('.buttons__wrapper')!,
-            (type: string) => this.onClickButton(type)
+            (type: string) => this.onButtonClick(type)
         );
         buttonReset.drawButton('reset');
     }
@@ -160,7 +160,9 @@ export class App {
     }
 
     public onProductClick(id: number) {
-        window.open(`${window.location.origin}?id=${id}`, '_blank');
+        window.open(
+            `${window.location.origin}?id=${id}`,
+            '_blank');
     }
 
     public getSum(): string {
@@ -183,7 +185,7 @@ export class App {
         localStorage.setItem('count', amount);
     }
 
-    private onClickButton(type: string) {
+    private onButtonClick(type: string) {
         switch (type) {
             case 'copy': {
                 const temp: HTMLInputElement = document.createElement('input');
@@ -204,6 +206,17 @@ export class App {
                 });
                 this.searchParams.clearUrl();
                 this.globalFiltres.clearFilters();
+            }
+            case 'buy': {
+                const paymentForm = new PaymentForm(MAIN_CONTAINER, this.onButtonClick);
+                paymentForm.drawForm();
+                break;
+            }
+            case 'pay': {
+                console.log('pay');
+                document.querySelector('.modal-window')!.innerHTML = `<p class="message">The order accepted!</p>`;
+                setTimeout(() => window.location.href = window.location.origin, 3000);
+                break;
             }
             default:
                 throw new Error('Something went wrong');

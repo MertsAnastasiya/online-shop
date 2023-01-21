@@ -1,5 +1,6 @@
 'use strict';
 import { productsData } from './data';
+import { OnButtonClick } from './interfaces/customTypes';
 import { IProduct } from './interfaces/product.interface';
 
 const IMAGE_COUNT = 3;
@@ -8,8 +9,11 @@ export class ProductPage {
     private parent: Element;
     private productDataLayout: string;
     private product: IProduct;
+    private onButtonClick: OnButtonClick;
 
-    constructor(parent: Element, id: number) {
+    constructor(parent: Element, id: number, onButtonClick: OnButtonClick) {
+        this.onButtonClick = onButtonClick;
+
         this.product = productsData.filter((data) => data.id === id)[0]!;
 
         this.parent = parent;
@@ -49,6 +53,7 @@ export class ProductPage {
         const brand: Element = document.querySelector('.brand')!;
         const description: Element = document.querySelector('.description')!;
         const addCartButton: Element = document.querySelector('.add-cart')!;
+        const buyButton: Element = document.querySelector('.button_buy')! as HTMLButtonElement;
         const price: Element = document.querySelector('.price')!;
         const rating: Element = document.querySelector('.rating')!;
         const mainImg = document.querySelector('.main-image')! as HTMLImageElement;
@@ -79,5 +84,7 @@ export class ProductPage {
             }
             i++;
         }
+        addCartButton.addEventListener('click', () => this.onButtonClick('cart'));
+        buyButton.addEventListener('click', () => this.onButtonClick('buy'));
     }
 }
