@@ -160,9 +160,7 @@ export class App {
     }
 
     public onProductClick(id: number) {
-        window.open(
-            `${window.location.origin}?id=${id}`,
-            '_blank');
+        window.open(`${window.location.origin}?id=${id}`, '_blank');
     }
 
     public getSum(): string {

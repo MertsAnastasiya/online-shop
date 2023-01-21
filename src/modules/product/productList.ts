@@ -1,4 +1,4 @@
-import { OnButtonCartClick, OnProductClick} from '../interfaces/customTypes';
+import { OnButtonCartClick, OnProductClick } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 
 export class ProductList {
