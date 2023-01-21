@@ -23,7 +23,7 @@ export type SliderValue = {
     'max': number;
 };
 
-export type OnButtonCartClick = (productId: number, isAdded: boolean) => void;
+export type OnButtonCartClick = (event: Event, productId: number) => void;
 
 export type OnChangeSearch = (param: string, searchText: string) => void;
 

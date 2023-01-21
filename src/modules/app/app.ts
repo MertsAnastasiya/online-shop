@@ -3,7 +3,7 @@ import { GlobalFilters } from '../filters/globalFilters';
 import { FilterResult } from '../filters/result';
 import { FilterType, SliderType, SliderValue } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
-import { ProductList } from '../product/productList';
+import { ProductList } from '../productList';
 import { Cart } from '../cart';
 import { SearchParams } from '../searchParams';
 import { Button } from '../button';
@@ -43,9 +43,9 @@ export class App {
 
         this.productList = new ProductList(
             PRODUCTS_LIST_CONTAINER,
-            (id: number, isAdded: boolean) =>
-                this.onProductItemSelected(id, isAdded),
-            (id: number) => this.onProductClick(id)
+            (event: Event, id: number) => this.onButtonClickAddToCart(event, id),
+            (id: number) => this.onProductClick(id),
+            (id: number) => this.checkButtonStatus(id)
         );
 
         this.cart = new Cart(HEADER_CONTAINER);
@@ -53,7 +53,7 @@ export class App {
 
     public start(): void {
         this.cart.drawCart();
-        this.cart.setCurrentValues(this.getSum(), this.getCount());
+        this.cart.setCurrentValues(String(this.getSum()), String(this.getCount()));
 
         this.drawPageByUrl(window.location.href, window.location.search);
     }
@@ -109,8 +109,9 @@ export class App {
     }
 
     private drawProductPage(id: number): void {
-        const productView: ProductPage = new ProductPage(MAIN_CONTAINER, id, this.onButtonClick);
-        productView.drawProductPage();
+        const productView: ProductPage = new ProductPage(MAIN_CONTAINER, id, (event: Event, id: number) =>
+            this.onButtonClickAddToCart(event, id), this.onButtonClick);
+        productView.drawProductPage(this.getSelectedProducts());
     }
 
     private createButtons(): void {
@@ -146,41 +147,68 @@ export class App {
         found.innerHTML = `Found: ${count}`;
     }
 
-    public onProductItemSelected(productId: number, isAdded: boolean) {
-        const product: IProduct = productsData.filter(
-            (product) => product.id === productId
-        )[0]!;
+    public onButtonClickAddToCart(event: Event, productId: number): void {
+        let isAdded: boolean;
+        const target = event.target as Element;
+        target.classList.toggle('add-to-cart');
+        target.classList.toggle('remove-from-cart');
+        if (target.classList.contains('remove-from-cart')) {
+            target.innerHTML = 'Remove from cart';
+            isAdded = true;
+        } else {
+            target.innerHTML = 'Add to cart';
+            isAdded = false ;
+        }
+        this.setSelectedProducts(productId, isAdded);
         let currentCount: number = Number(this.getCount());
         let currentSum: number = Number(this.getSum());
-        currentCount += isAdded ? 1 : -1;
-        currentSum += isAdded ? product.price : -product.price;
-        this.setCount(String(currentCount));
-        this.setSum(String(currentSum));
+
         this.cart.setCurrentValues(String(currentSum), String(currentCount));
+    }
+
+    public checkButtonStatus(id: number): boolean {
+        const arraySelectedProducts: number[] = this.getSelectedProducts();
+        if(arraySelectedProducts.includes(id)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public onProductClick(id: number) {
         window.open(`${window.location.origin}?id=${id}`, '_blank');
     }
 
-    public getSum(): string {
-        return localStorage.getItem('sum')
-            ? localStorage.getItem('sum')!
-            : '0';
+    public getSum(): number {
+        const array: number[] = this.getSelectedProducts();
+        let sum: number = 0;
+        productsData.forEach((item) => {
+            if(array.includes(item.id)) {
+                sum += item.price;
+            }
+        });
+        return sum;
     }
 
-    public getCount(): string {
-        return localStorage.getItem('count')
-            ? localStorage.getItem('count')!
-            : '0';
+    public getCount(): number {
+        const array: number[]= this.getSelectedProducts();
+        return array.length;
     }
 
-    private setSum(sum: string): void {
-        localStorage.setItem('sum', sum);
+    private setSelectedProducts(id: number, isAdded: boolean): void {
+        const arraySelectedProducts: number[] = this.getSelectedProducts();
+        if(isAdded) {
+            arraySelectedProducts.push(id);
+            localStorage.setItem('selected',JSON.stringify(arraySelectedProducts));
+        } else {
+            const newData: number[] = arraySelectedProducts.filter((item) => item !== id);
+            localStorage.setItem('selected',JSON.stringify(newData));
+        }
     }
 
-    private setCount(amount: string): void {
-        localStorage.setItem('count', amount);
+    private getSelectedProducts(): number[] {
+        const localStorageData: string | null = localStorage.getItem('selected');
+        return localStorageData ? JSON.parse(localStorageData) : [];
     }
 
     private onButtonClick(type: string) {

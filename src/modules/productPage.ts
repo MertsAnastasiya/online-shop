@@ -1,6 +1,6 @@
 'use strict';
 import { productsData } from './data';
-import { OnButtonClick } from './interfaces/customTypes';
+import { OnButtonCartClick, OnButtonClick } from './interfaces/customTypes';
 import { IProduct } from './interfaces/product.interface';
 
 const IMAGE_COUNT = 3;
@@ -10,10 +10,11 @@ export class ProductPage {
     private productDataLayout: string;
     private product: IProduct;
     private onButtonClick: OnButtonClick;
+    private onProductSelected: OnButtonCartClick;
 
-    constructor(parent: Element, id: number, onButtonClick: OnButtonClick) {
+    constructor(parent: Element, id: number, onProductSelected: OnButtonCartClick, onButtonClick: OnButtonClick) {
         this.onButtonClick = onButtonClick;
-
+        this.onProductSelected = onProductSelected;
         this.product = productsData.filter((data) => data.id === id)[0]!;
 
         this.parent = parent;
@@ -47,13 +48,23 @@ export class ProductPage {
         <div class="disabled-area hidden"></div>`;
     }
 
-    public drawProductPage() {
+    public drawProductPage(selectedArray: number[]) {
         this.parent.innerHTML = this.productDataLayout;
         const route: Element = document.querySelector('.route')!;
         const productName: Element = document.querySelector('.name')!;
         const brand: Element = document.querySelector('.brand')!;
         const description: Element = document.querySelector('.description')!;
-        const addCartButton: Element = document.querySelector('.add-cart')!;
+        const buttonAddToCart: Element = document.querySelector('.add-cart')!;
+        let isAddedToCart = Boolean(selectedArray.filter((item) => item === this.product.id)[0]);
+        if(isAddedToCart) {
+            buttonAddToCart.innerHTML = 'Remove from cart';
+            buttonAddToCart.classList.add('remove-from-cart');
+            isAddedToCart = false;
+        } else {
+            buttonAddToCart.innerHTML = 'Add to cart';
+            buttonAddToCart.classList.add('add-to-cart');
+            isAddedToCart = true;
+        }
         const buyButton: Element = document.querySelector('.button_buy')! as HTMLButtonElement;
         const price: Element = document.querySelector('.price')!;
         const rating: Element = document.querySelector('.rating')!;
@@ -65,7 +76,7 @@ export class ProductPage {
         productName.innerHTML = this.product.title;
         brand!.innerHTML = this.product.brand;
         description!.innerHTML = this.product.description;
-        addCartButton.setAttribute('id', this.product.id.toString());
+        buttonAddToCart.setAttribute('id', this.product.id.toString());
         price!.innerHTML = `€${this.product.price}`;
         rating!.innerHTML = `Rating: ${this.product.rating}`;
         if (this.product.images[0]) {
@@ -85,7 +96,7 @@ export class ProductPage {
             }
             i++;
         }
-        addCartButton.addEventListener('click', () => this.onButtonClick('cart'));
+        buttonAddToCart.addEventListener('click', (event) => this.onProductSelected(event, this.product.id));
         buyButton.addEventListener('click', () => this.onButtonClick('buy'));
     }
 }
