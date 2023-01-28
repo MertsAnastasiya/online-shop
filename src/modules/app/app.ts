@@ -206,12 +206,10 @@ export class App {
                 this.globalFiltres.clearFilters();
             }
             case 'buy': {
-                const paymentForm = new PaymentForm(MAIN_CONTAINER, this.onButtonClick);
-                paymentForm.drawForm();
+                new PaymentForm(MAIN_CONTAINER, this.onButtonClick).drawForm();
                 break;
             }
             case 'pay': {
-                console.log('pay');
                 document.querySelector('.modal-window')!.innerHTML = `<p class="message">The order accepted!</p>`;
                 setTimeout(() => window.location.href = window.location.origin, 3000);
                 break;
