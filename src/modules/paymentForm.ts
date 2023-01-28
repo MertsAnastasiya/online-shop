@@ -71,7 +71,6 @@ export class PaymentForm {
             .replace(/[^\d]/g, '')
             .replace(/(.{4})/g, '$1 ')
             .trim();
-
         return value.length === MAX_LENGTH_CARD_NUMBER;
     }
 
@@ -98,11 +97,7 @@ export class PaymentForm {
         )! as HTMLInputElement;
         const value = fullName.value;
         const regexp: RegExp = /^[A-Za-z]{3,}\s[A-Za-z]{3,}(\s?[A-Za-z]{3,})*$/;
-        if (regexp.test(value)) {
-            return true;
-        } else {
-            return false;
-        }
+        return regexp.test(value);
     }
 
     private checkCvv(): boolean {
@@ -110,11 +105,7 @@ export class PaymentForm {
         cvv.maxLength = MAX_LENGTH_CVV;
         const value = cvv.value;
         cvv.value = value.replace(/[^\d]/g, '');
-        if (value.length === MAX_LENGTH_CVV) {
-            return true;
-        } else {
-            return false;
-        }
+        return value.length === MAX_LENGTH_CVV;
     }
 
     private checkAddress() {
@@ -124,11 +115,7 @@ export class PaymentForm {
         const value = address.value;
         const regexp: RegExp =
             /^[A-Za-z0-9]{5,}\s[A-Za-z0-9]{5,}(\s?[A-Za-z0-9]{5,})*$/;
-        if (regexp.test(value)) {
-            return true;
-        } else {
-            return false;
-        }
+        return regexp.test(value);
     }
 
     private checkPhone(): boolean {
@@ -138,11 +125,7 @@ export class PaymentForm {
         const value = phone.value;
         phone.value = value.replace(/[^\+\d]/g, '');
         const regexp: RegExp = /^\+\d{9,}$/;
-        if (regexp.test(value)) {
-            return true;
-        } else {
-            return false;
-        }
+        return regexp.test(value);
     }
 
     private checkEmail(): boolean {
@@ -151,11 +134,7 @@ export class PaymentForm {
         )! as HTMLInputElement;
         const value = email.value;
         const regexp: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (regexp.test(value)) {
-            return true;
-        } else {
-            return false;
-        }
+        return regexp.test(value);
     }
 
     private checkExpirationDate(): boolean {
@@ -168,11 +147,7 @@ export class PaymentForm {
             .replace(/[^\d]/g, '')
             .replace(/(^.{2})/g, '$1/');
         const dateArray = value.split('/');
-        if (Number(dateArray[0]) < 12) {
-            return true;
-        } else {
-            return false;
-        }
+        return Number(dateArray[0]) < 12 ? true : false;
     }
 
     private validateForm() {
