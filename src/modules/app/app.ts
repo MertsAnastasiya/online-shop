@@ -168,11 +168,7 @@ export class App {
 
     public checkButtonStatus(id: number): boolean {
         const arraySelectedProducts: number[] = this.getSelectedProducts();
-        if(arraySelectedProducts.includes(id)) {
-            return true;
-        } else {
-            return false;
-        }
+        return arraySelectedProducts.includes(id);
     }
 
     public onProductClick(id: number) {
