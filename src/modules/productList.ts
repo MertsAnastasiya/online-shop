@@ -1,15 +1,17 @@
-import { OnButtonCartClick, OnProductClick } from '../interfaces/customTypes';
-import { IProduct } from '../interfaces/product.interface';
+import { OnButtonCartClick, OnProductClick} from './interfaces/customTypes';
+import { IProduct } from './interfaces/product.interface';
 
 export class ProductList {
     private parent: Element;
-    private onButtonClick: OnButtonCartClick;
+    private onButtonCartClick: OnButtonCartClick;
     private onProductClick: OnProductClick;
+    private checkButtonStatus: (id: number) => boolean;
 
-    constructor(parent: Element, onButtonClick: OnButtonCartClick, onProductClick: OnProductClick) {
+    constructor(parent: Element, onButtonCartClick: OnButtonCartClick, onProductClick: OnProductClick, checkButtonStatus: (id: number) => boolean) {
         this.parent = parent;
-        this.onButtonClick = onButtonClick;
+        this.onButtonCartClick = onButtonCartClick;
         this.onProductClick = onProductClick;
+        this.checkButtonStatus = checkButtonStatus;
     }
 
     public drawProductList(productsList: IProduct[]): void {
@@ -32,26 +34,21 @@ export class ProductList {
             nameTitle.className = 'product__name';
             priceSpan.className = 'product__price';
             nameTitle.innerHTML = product.title;
-            productDiv.addEventListener('click', () => this.onProductClick(product.id))
             priceSpan.innerHTML = product.price.toString();
-            buttonAddToCart.className = 'button button_small add-to-cart';
-            buttonAddToCart.innerHTML = 'Add to cart';
+            buttonAddToCart.className = 'button button_small';
+            if (this.checkButtonStatus(product.id)) {
+                buttonAddToCart.innerHTML = 'Remove from cart';
+                buttonAddToCart.classList.add('remove-from-cart');
+            } else {
+                buttonAddToCart.innerHTML = 'Add to cart';
+                buttonAddToCart.classList.add('add-to-cart');
+            }
+
             buttonAddToCart.addEventListener('click', (event) => {
                 event.stopPropagation();
-                const target = event.target as Element;
-                target.classList.toggle('add-to-cart');
-                target.classList.toggle('remove-from-cart');
-                let isAdded: boolean;
-                if (target.classList.contains('remove-from-cart')) {
-                   target.innerHTML = 'Remove from cart';
-                   isAdded = true;
-                 } else {
-                     target.innerHTML = 'Add to cart';
-                     isAdded = false;
-                 }
-
-                this.onButtonClick(product.id, isAdded);
+                this.onButtonCartClick(event, product.id);
             });
+            productDiv.addEventListener('click', () => this.onProductClick(product.id));
             productSpans.appendChild(nameTitle);
             productSpans.appendChild(priceSpan);
 
