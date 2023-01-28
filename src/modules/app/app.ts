@@ -211,11 +211,15 @@ export class App {
             }
             case 'pay': {
                 document.querySelector('.modal-window')!.innerHTML = `<p class="message">The order accepted!</p>`;
-                setTimeout(() => window.location.href = window.location.origin, 3000);
+                setTimeout(this.goToMainPage, 3000);
                 break;
             }
             default:
                 throw new Error('Something went wrong');
         }
+    }
+
+    private goToMainPage(): void {
+        window.location.href = window.location.origin;
     }
 }
