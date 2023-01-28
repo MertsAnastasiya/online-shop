@@ -42,8 +42,11 @@ export class PaymentForm {
     public drawForm(): void {
         this.parent.appendChild(this.modalWindow);
 
-        const form = document.querySelector('.modal__form')!;
+        const form: Element = document.querySelector('.modal__form')!;
         form.addEventListener('input', () => this.validateForm());
+
+        const backgroundArea: Element = document.querySelector('.disabled-area')!;
+        backgroundArea.classList.toggle('hidden');
 
         const cardNumber = document.querySelector(
             '.input_card-number'
@@ -51,10 +54,16 @@ export class PaymentForm {
         cardNumber.addEventListener('input', () => this.updateCardImage());
 
         const close: Element = document.querySelector('.modal__close')!;
-        close.addEventListener('click', () => this.closeWindow());
+        close.addEventListener('click', () => {
+            backgroundArea.classList.toggle('hidden');
+            this.closeWindow();
+        });
 
         const buttonPay: Element = document.querySelector('.button-pay')!;
-        buttonPay.addEventListener('click', () => this.onClickButton('pay'));
+        buttonPay.addEventListener('click', () => {
+            backgroundArea.classList.toggle('hidden');
+            this.onClickButton('pay');
+        });
     }
 
     private closeWindow(): void {

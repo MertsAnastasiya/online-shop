@@ -43,7 +43,8 @@ export class ProductPage {
                     </div>
                 </div>
             </div>
-        </div>`;
+        </div>
+        <div class="disabled-area hidden"></div>`;
     }
 
     public drawProductPage() {
