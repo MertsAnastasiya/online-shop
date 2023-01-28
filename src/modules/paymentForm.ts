@@ -72,11 +72,7 @@ export class PaymentForm {
             .replace(/(.{4})/g, '$1 ')
             .trim();
 
-        if (value.length === MAX_LENGTH_CARD_NUMBER) {
-            return true;
-        } else {
-            return false;
-        }
+        return value.length === MAX_LENGTH_CARD_NUMBER;
     }
 
     private updateCardImage(): void {
