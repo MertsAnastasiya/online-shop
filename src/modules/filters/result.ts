@@ -6,7 +6,8 @@ export class FilterResult {
     public static getFilterResult(
         stateFilters: Map<FilterType, Set<string>>,
         stateSliders: Map<SliderType, SliderValue>,
-        searchValue: string
+        searchValue: string,
+        sort: string
     ): IProduct[] {
         let productsResult: IProduct[] = [];
         productsData.forEach((product) => {
@@ -51,7 +52,30 @@ export class FilterResult {
             if (addToResult) {
                 productsResult.push(product);
             }
+
         });
+
+        if (sort !== '') {
+            const sortData = sort.split('/');
+            return sortData[1]! === 'desc'
+                ? this.sortByProperty(productsResult, sortData[0]! as keyof IProduct)
+                : this.sortByProperty(productsResult, sortData[0]! as keyof IProduct).reverse();
+
+        }
         return productsResult;
+    }
+
+    private static sortByProperty(productsData: IProduct[], sortProperty: keyof IProduct): IProduct[] {
+        return productsData.sort((a, b) => {
+            const nameA = a[sortProperty];
+            const nameB = b[sortProperty];
+            if (nameA < nameB) {
+                return -1;
+            }
+            if (nameA > nameB) {
+                return 1;
+            }
+            return 0;
+        });
     }
 }
