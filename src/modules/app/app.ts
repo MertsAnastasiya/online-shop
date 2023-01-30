@@ -9,6 +9,7 @@ import { SearchParams } from '../searchParams';
 import { Button } from '../button';
 import { ProductPage } from '../productPage';
 import { PaymentForm } from '../paymentForm';
+import { CartPage } from '../cartPage';
 
 const MAIN_CONTAINER: Element = document.querySelector('.main__container')!;
 const HEADER_CONTAINER: Element = document.querySelector('.header__container')!;
@@ -50,7 +51,7 @@ export class App {
             (id: number) => this.checkButtonStatus(id)
         );
 
-        this.cart = new Cart(HEADER_CONTAINER);
+        this.cart = new Cart(HEADER_CONTAINER, () => this.onClickCart());
     }
 
     public start(): void {
@@ -64,6 +65,11 @@ export class App {
         if (url.includes('id')) {
             const id: number = Number(url.split('=').pop());
             this.drawProductPage(id);
+            return;
+        }
+
+        if (url.includes('cart')) {
+            this.drawCartPage();
             return;
         }
 
@@ -116,6 +122,28 @@ export class App {
             this.onButtonClickAddToCart(event, id), this.onButtonClick);
         productView.drawProductPage(this.getSelectedProducts());
     }
+
+    private drawCartPage(): void {
+        const cartView: CartPage = new CartPage(MAIN_CONTAINER, productsData, this.getSelectedProducts(), (event: Event, id: number) => this.onChangeAmount(event, id));
+        cartView.drawCartPage();
+    }
+
+    public onChangeAmount(event: Event, id: number): void {
+        const target = event.target as Element;
+        if (target.classList.value.includes('remove-amount')) {
+            this.setSelectedProducts(id, false);
+        }
+        if (target.classList.value.includes('add-amount')) {
+            this.setSelectedProducts(id, true);
+        }
+        this.updateCart();
+        this.drawCartPage();
+    }
+
+    private updateCart(): void {
+        this.cart.setCurrentValues(String(this.getSum()), String(this.getCount()));
+    }
+
 
     private createButtons(): void {
         const buttonCopy: Button = new Button(
@@ -183,6 +211,12 @@ export class App {
 
     public onProductClick(id: number) {
         window.open(`${window.location.origin}?id=${id}`, '_blank');
+    }
+
+    public onClickCart(): void {
+        // window.location.pathname = '/cart';
+        // window.open(`${window.location.origin}/cart`);
+        this.drawCartPage();
     }
 
     public getSum(): number {

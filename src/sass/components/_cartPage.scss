@@ -1,0 +1,39 @@
+.cart-page_wrapper {
+    display: flex;
+    justify-content: space-around;
+    @include font($size: 2rem);
+}
+
+.selected-list {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    gap: 1rem;
+}
+
+.selected-item {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+}
+
+.selected-item__amount__wrapper {
+    display: flex;
+    gap: 1rem;
+}
+
+.selected-item__image {
+    width: 10rem;
+    height: 10rem;
+    border-radius: $radius;
+}
+
+.selected-item__change-amount {
+    width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+    border: 1px solid $color-primary;
+    border-radius: 5rem;
+    cursor: pointer;
+}
