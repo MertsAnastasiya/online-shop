@@ -11,12 +11,12 @@ import {
 import { IProduct } from '../interfaces/product.interface';
 import { DualSlider } from './sliders';
 import { Search } from './search';
-import { Sort } from './sort';
+import { ProductsSorter } from './sort';
 
 //I'll change it later when all layout is refactored
 const wrapperFiltres: Element = document.querySelector('.filters')!;
 const wrapperSliders: Element = document.querySelector('.sliders')!;
-const WRAPPER_SORT: Element = document.querySelector('.sort__wrapper')!;
+const wrapperSort: Element = document.querySelector('.sort__wrapper')!;
 
 type ToChangeParamsBySort = (value: string) => void;
 
@@ -98,10 +98,10 @@ export class GlobalFilters {
 
         search.drawSearch();
 
-        const sortByName: Sort = new Sort(WRAPPER_SORT, 'name', (sortProperty: string, direction: string) => this.onSortClick(sortProperty, direction))
+        const sortByName: ProductsSorter = new ProductsSorter(wrapperSort, 'name', (sortProperty: string, direction: string) => this.onSortClick(sortProperty, direction))
         sortByName.drawSortField();
 
-        const sortByPrice: Sort = new Sort(WRAPPER_SORT, 'price', (sortProperty: string, direction: string) => this.onSortClick(sortProperty, direction))
+        const sortByPrice: ProductsSorter = new ProductsSorter(wrapperSort, 'price', (sortProperty: string, direction: string) => this.onSortClick(sortProperty, direction))
         sortByPrice.drawSortField();
     }
 

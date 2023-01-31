@@ -66,7 +66,7 @@ export class FilterResult {
     }
 
     private static sortByProperty(productsData: IProduct[], sortProperty: keyof IProduct): IProduct[] {
-        return productsData.sort((a, b) => {
+        return productsData.sort((a: IProduct, b: IProduct) => {
             const nameA = a[sortProperty];
             const nameB = b[sortProperty];
             if (nameA < nameB) {
