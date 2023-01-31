@@ -24,11 +24,10 @@ export class CartPage {
         this.cartDataLayout = `
             <div class="cart-page_wrapper">
                 <div class="selected-list">
-                    <h2 class="h2">Selected Products</h2>
+                    <h2 class="h2">Bag</h2>
                 </div>
                 <div class="summary">
-                    <h2 class="h2">Summary</h2>
-                    <p class="summary__total-amount"></p>
+                    <h3 class="h3 summary__header"></h3>
                     <p class="summary__total-price"></p>
                 </div>
             </div>`;
@@ -37,7 +36,9 @@ export class CartPage {
     public drawCartPage() {
         this.parent.innerHTML = this.cartDataLayout;
         const selectedList: Element = document.querySelector('.selected-list')!;
-        const totalAmountContainer: Element = document.querySelector('.summary__total-amount')!;
+
+        const summaryHeader: Element = document.querySelector('.summary__header')!;
+        // const totalAmountContainer: Element = document.querySelector('.summary__total-amount')!;
         const totalPriceContainer: Element = document.querySelector('.summary__total-price')!;
         let totalAmount: number = 0;
         let totalPrice: number = 0;
@@ -54,8 +55,9 @@ export class CartPage {
                 selectedList.appendChild(this.drawCartItem(product, amount));
             }
         });
-        totalAmountContainer.textContent = `Products Amount: ${totalAmount}`;
-        totalPriceContainer.textContent = `Total Price: ${totalPrice}`;
+        summaryHeader.innerHTML = `<span>Summary</span> <span>[${totalAmount} items]</span>`;
+        // totalAmountContainer.textContent = `Products Amount: ${totalAmount}`;
+        totalPriceContainer.textContent = `Total €‎${totalPrice}`;
 
     }
 

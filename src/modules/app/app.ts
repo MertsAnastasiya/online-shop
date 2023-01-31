@@ -136,14 +136,9 @@ export class App {
         if (target.classList.value.includes('add-amount')) {
             this.setSelectedProducts(id, true);
         }
-        this.updateCart();
+        this.cart.setCurrentValues(String(this.getSum()), String(this.getCount()));
         this.drawCartPage();
     }
-
-    private updateCart(): void {
-        this.cart.setCurrentValues(String(this.getSum()), String(this.getCount()));
-    }
-
 
     private createButtons(): void {
         const buttonCopy: Button = new Button(
@@ -219,13 +214,15 @@ export class App {
         this.drawCartPage();
     }
 
-    public getSum(): number {
+    public getSum(): number {;
         const array: number[] = this.getSelectedProducts();
         let sum: number = 0;
-        productsData.forEach((item) => {
-            if(array.includes(item.id)) {
-                sum += item.price;
-            }
+        array.forEach((id) => {
+            productsData.forEach((product) => {
+                if (product.id === id) {
+                    sum += product.price;
+                }
+            });
         });
         return sum;
     }
@@ -241,7 +238,8 @@ export class App {
             arraySelectedProducts.push(id);
             localStorage.setItem('selected',JSON.stringify(arraySelectedProducts));
         } else {
-            const newData: number[] = arraySelectedProducts.filter((item) => item !== id);
+            const firstIndexOfId = arraySelectedProducts.indexOf(id);
+            const newData: number[] = arraySelectedProducts.filter((item, index) => (item !== id || index !== firstIndexOfId));
             localStorage.setItem('selected',JSON.stringify(newData));
         }
     }
