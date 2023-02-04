@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    @include font($size: 2rem);
+    @include font($size: 2.2rem);
 }
 
 .selected-list {
@@ -10,25 +10,37 @@
     flex-direction: column;
     width: 70%;
     gap: 1rem;
+    margin-top: 2rem;
 }
 
 .selected-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 2rem;
     border-bottom: 1px solid $color-filters;
     padding: 1rem 0;
     cursor: pointer;
 }
 
+.selected-item__name {
+    width: 30%;
+    text-align: center;
+}
+
+.selected-item__price {
+    width: 10%;
+    text-align: center;
+}
+
 .selected-item__amount__wrapper {
+    width: 10%;
     display: flex;
     gap: 1rem;
     align-items: center;
 }
 
 .selected-item__image {
+    width: 10%;
     width: 10rem;
     height: 10rem;
     border-radius: $radius;
@@ -52,6 +64,8 @@
 }
 
 .summary {
+    display: flex;
+    flex-direction: column;
     width: 25%;
     padding: 1rem;
     border: 1px solid $color-primary;
@@ -62,4 +76,20 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid $color-filters;
+}
+
+.summary__total-price {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 800;
+    padding-bottom: 2rem;
+}
+
+.summary .button_buy {
+    align-self: center;
+}
+
+.promo_code {
+    width: 100%;
+    margin: 3rem 0;
 }

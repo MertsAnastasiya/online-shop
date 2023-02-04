@@ -124,7 +124,7 @@ export class App {
     }
 
     private drawCartPage(): void {
-        const cartView: CartPage = new CartPage(MAIN_CONTAINER, productsData, this.getSelectedProducts(), (event: Event, id: number) => this.onChangeAmount(event, id));
+        const cartView: CartPage = new CartPage(MAIN_CONTAINER, productsData, this.getSelectedProducts(), (event: Event, id: number) => this.onChangeAmount(event, id), (id: number) => this.onProductClick(id), (type: string) => this.onButtonClick(type));
         cartView.drawCartPage();
     }
 
