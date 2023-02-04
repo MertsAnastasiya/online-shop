@@ -38,7 +38,6 @@ export class CartPage {
         const selectedList: Element = document.querySelector('.selected-list')!;
 
         const summaryHeader: Element = document.querySelector('.summary__header')!;
-        // const totalAmountContainer: Element = document.querySelector('.summary__total-amount')!;
         const totalPriceContainer: Element = document.querySelector('.summary__total-price')!;
         let totalAmount: number = 0;
         let totalPrice: number = 0;
@@ -56,8 +55,7 @@ export class CartPage {
             }
         });
         summaryHeader.innerHTML = `<span>Summary</span> <span>[${totalAmount} items]</span>`;
-        // totalAmountContainer.textContent = `Products Amount: ${totalAmount}`;
-        totalPriceContainer.textContent = `Total €‎${totalPrice}`;
+        totalPriceContainer.innerHTML = `<span>Total</span> <span>€‎${totalPrice}</span>`;
 
     }
 
