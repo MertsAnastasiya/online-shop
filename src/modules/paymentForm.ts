@@ -61,7 +61,6 @@ export class PaymentForm {
 
         const buttonPay: Element = document.querySelector('.button-pay')!;
         buttonPay.addEventListener('click', () => {
-            backgroundArea.classList.toggle('hidden');
             this.onClickButton('pay');
         });
     }
