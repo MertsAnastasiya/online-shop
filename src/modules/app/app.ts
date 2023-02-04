@@ -209,8 +209,7 @@ export class App {
     }
 
     public onClickCart(): void {
-        // window.location.pathname = '/cart';
-        // window.open(`${window.location.origin}/cart`);
+        window.location.href = `${window.location.origin}?cart`;
         this.drawCartPage();
     }
 
