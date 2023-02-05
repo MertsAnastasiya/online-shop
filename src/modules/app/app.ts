@@ -26,8 +26,9 @@ export class App {
             (
                 currentFilters: Map<FilterType, Set<string>>,
                 currentSliders: Map<SliderType, SliderValue>,
-                searchValue: string
-            ) => this.updateResult(currentFilters, currentSliders, searchValue),
+                searchValue: string,
+                sort: string
+            ) => this.updateResult(currentFilters, currentSliders, searchValue, sort),
 
             (param: string, value: string, isAdd: boolean) =>
                 this.searchParams.updateSearchParamByCheckbox(
@@ -38,7 +39,8 @@ export class App {
             (param: string, min: string, max: string) =>
                 this.searchParams.updateSearchParamBySlider(param, min, max),
             (param: string, value: string) =>
-                this.searchParams.updateSearchParamBySearch(param, value)
+                this.searchParams.updateSearchParamBySearch(param, value),
+            (value: string) => this.searchParams.updateSearchParamBySort(value)
         );
 
         this.productList = new ProductList(
@@ -75,7 +77,8 @@ export class App {
         this.updateResult(
             this.globalFiltres.getCurrentFilters(),
             this.globalFiltres.getCurrentSliders(),
-            searchParams['search'] || ''
+            searchParams['search'] || '',
+            searchParams['sort'] || ''
         );
 
         this.createButtons();
@@ -131,13 +134,20 @@ export class App {
     public updateResult(
         currentFilters: Map<FilterType, Set<string>>,
         slidersValue: Map<SliderType, SliderValue>,
-        searchValue: string
+        searchValue: string,
+        sort: string
     ): void {
-        const array: IProduct[] = FilterResult.getFilterResult(
+        const productsResult: IProduct[] = FilterResult.getFilterResult(
             currentFilters,
             slidersValue,
-            searchValue
+            searchValue,
+            sort
         );
+
+        this.redrawPage(productsResult);
+    }
+
+    private redrawPage(array: IProduct[]) {
         this.productList.drawProductList(array);
         this.setFoundProducts(array.length);
     }

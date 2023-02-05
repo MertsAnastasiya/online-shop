@@ -11,35 +11,44 @@ import {
 import { IProduct } from '../interfaces/product.interface';
 import { DualSlider } from './sliders';
 import { Search } from './search';
+import { ProductsSorter } from './sort';
 
 //I'll change it later when all layout is refactored
 const wrapperFiltres: Element = document.querySelector('.filters')!;
 const wrapperSliders: Element = document.querySelector('.sliders')!;
+const wrapperSort: Element = document.querySelector('.sort__wrapper')!;
+
+type ToChangeParamsBySort = (value: string) => void;
 
 export class GlobalFilters {
     private currentFilters: Map<FilterType, Set<string>>;
     private currentSliders: Map<SliderType, SliderValue>;
     private currentSearch: string;
+    private currentSort: string;
 
     private callbackOnChangeFilters: CallbackOnChangeFilters;
     private toChangeParamsByCheckbox: ToChangeParamsByCheckbox;
     private toChangeParamsBySlider: ToChangeParamsBySlider;
     private toChangeParamsBySearch: ToChangeParamsBySearch;
+    private toChangeParamsBySort: ToChangeParamsBySort;
 
     constructor(
         callbackOnChangeFilters: CallbackOnChangeFilters,
         toChangeSearchParamsCheckbox: ToChangeParamsByCheckbox,
         toChangeSearchParamsSlider: ToChangeParamsBySlider,
-        toChangeParamsBySearch: ToChangeParamsBySearch
+        toChangeParamsBySearch: ToChangeParamsBySearch,
+        toChangeParamsBySort: ToChangeParamsBySort
     ) {
         this.currentFilters = new Map();
         this.currentSliders = new Map();
         this.currentSearch = '';
+        this.currentSort = '';
 
         this.callbackOnChangeFilters = callbackOnChangeFilters;
         this.toChangeParamsByCheckbox = toChangeSearchParamsCheckbox;
         this.toChangeParamsBySlider = toChangeSearchParamsSlider;
         this.toChangeParamsBySearch = toChangeParamsBySearch;
+        this.toChangeParamsBySort = toChangeParamsBySort;
     }
 
     public createFilters(productsData: IProduct[]): void {
@@ -88,6 +97,12 @@ export class GlobalFilters {
         sliderStock.drawSlider();
 
         search.drawSearch();
+
+        const sortByName: ProductsSorter = new ProductsSorter(wrapperSort, 'name', (sortProperty: string, direction: string) => this.onSortClick(sortProperty, direction))
+        sortByName.drawSortField();
+
+        const sortByPrice: ProductsSorter = new ProductsSorter(wrapperSort, 'price', (sortProperty: string, direction: string) => this.onSortClick(sortProperty, direction))
+        sortByPrice.drawSortField();
     }
 
     public updateCurrentSliderState(
@@ -103,7 +118,8 @@ export class GlobalFilters {
         this.callbackOnChangeFilters(
             this.currentFilters,
             this.currentSliders,
-            this.currentSearch
+            this.currentSearch,
+            this.currentSort
         );
     }
 
@@ -123,7 +139,8 @@ export class GlobalFilters {
         this.callbackOnChangeFilters(
             this.currentFilters,
             this.currentSliders,
-            this.currentSearch
+            this.currentSearch,
+            this.currentSort
         );
     }
 
@@ -154,6 +171,10 @@ export class GlobalFilters {
         this.currentSliders.set(sliderType, value);
     }
 
+    private setCurrentSort(sort: string) {
+        this.currentSort = sort;
+    }
+
     public clearFilters(): void {
         this.currentFilters.clear();
         this.currentSearch = '';
@@ -161,7 +182,8 @@ export class GlobalFilters {
         this.callbackOnChangeFilters(
             this.currentFilters,
             this.currentSliders,
-            this.currentSearch
+            this.currentSearch,
+            this.currentSort
         );
     }
 
@@ -171,7 +193,8 @@ export class GlobalFilters {
         this.callbackOnChangeFilters(
             this.currentFilters,
             this.currentSliders,
-            this.currentSearch
+            this.currentSearch,
+            this.currentSort
         );
     }
 
@@ -182,5 +205,17 @@ export class GlobalFilters {
     private getMin(data: IProduct[], property: keyof IProduct): number {
         return  Math.min(...data.map(element => Number(element[property])));
 
+    }
+
+    private onSortClick(sortProperty: string, sortDirection: string) {
+        const sortValue = `${sortProperty}/${sortDirection}`;
+        this.setCurrentSort(sortValue);
+        this.toChangeParamsBySort(sortValue);
+        this.callbackOnChangeFilters(
+            this.currentFilters,
+            this.currentSliders,
+            this.currentSearch,
+            this.currentSort
+        );
     }
 }
