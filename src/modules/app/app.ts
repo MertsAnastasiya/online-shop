@@ -3,11 +3,12 @@ import { GlobalFilters } from '../filters/globalFilters';
 import { FilterResult } from '../filters/result';
 import { FilterType, SliderType, SliderValue } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
-import { ProductList } from '../product/productList';
+import { ProductList } from '../productList';
 import { Cart } from '../cart';
 import { SearchParams } from '../searchParams';
 import { Button } from '../button';
 import { ProductPage } from '../productPage';
+import { PaymentForm } from '../paymentForm';
 
 const MAIN_CONTAINER: Element = document.querySelector('.main__container')!;
 const HEADER_CONTAINER: Element = document.querySelector('.header__container')!;
@@ -25,8 +26,9 @@ export class App {
             (
                 currentFilters: Map<FilterType, Set<string>>,
                 currentSliders: Map<SliderType, SliderValue>,
-                searchValue: string
-            ) => this.updateResult(currentFilters, currentSliders, searchValue),
+                searchValue: string,
+                sort: string
+            ) => this.updateResult(currentFilters, currentSliders, searchValue, sort),
 
             (param: string, value: string, isAdd: boolean) =>
                 this.searchParams.updateSearchParamByCheckbox(
@@ -37,14 +39,15 @@ export class App {
             (param: string, min: string, max: string) =>
                 this.searchParams.updateSearchParamBySlider(param, min, max),
             (param: string, value: string) =>
-                this.searchParams.updateSearchParamBySearch(param, value)
+                this.searchParams.updateSearchParamBySearch(param, value),
+            (value: string) => this.searchParams.updateSearchParamBySort(value)
         );
 
         this.productList = new ProductList(
             PRODUCTS_LIST_CONTAINER,
-            (id: number, isAdded: boolean) =>
-                this.onProductItemSelected(id, isAdded),
-            (id: number) => this.onProductClick(id)
+            (event: Event, id: number) => this.onButtonClickAddToCart(event, id),
+            (id: number) => this.onProductClick(id),
+            (id: number) => this.checkButtonStatus(id)
         );
 
         this.cart = new Cart(HEADER_CONTAINER);
@@ -52,8 +55,7 @@ export class App {
 
     public start(): void {
         this.cart.drawCart();
-        this.cart.setCurrentValues(this.getSum(), this.getCount());
-        this.cart.resetBtn(); // will be remove at the end
+        this.cart.setCurrentValues(String(this.getSum()), String(this.getCount()));
 
         this.drawPageByUrl(window.location.href, window.location.search);
     }
@@ -75,7 +77,8 @@ export class App {
         this.updateResult(
             this.globalFiltres.getCurrentFilters(),
             this.globalFiltres.getCurrentSliders(),
-            searchParams['search'] || ''
+            searchParams['search'] || '',
+            searchParams['sort'] || ''
         );
 
         this.createButtons();
@@ -109,20 +112,21 @@ export class App {
     }
 
     private drawProductPage(id: number): void {
-        const productView: ProductPage = new ProductPage(MAIN_CONTAINER, id);
-        productView.drawProductPage();
+        const productView: ProductPage = new ProductPage(MAIN_CONTAINER, id, (event: Event, id: number) =>
+            this.onButtonClickAddToCart(event, id), this.onButtonClick);
+        productView.drawProductPage(this.getSelectedProducts());
     }
 
     private createButtons(): void {
         const buttonCopy: Button = new Button(
             document.querySelector('.buttons__wrapper')!,
-            (type: string) => this.onClickButton(type)
+            (type: string) => this.onButtonClick(type)
         );
         buttonCopy.drawButton('copy');
 
         const buttonReset: Button = new Button(
             document.querySelector('.buttons__wrapper')!,
-            (type: string) => this.onClickButton(type)
+            (type: string) => this.onButtonClick(type)
         );
         buttonReset.drawButton('reset');
     }
@@ -130,13 +134,20 @@ export class App {
     public updateResult(
         currentFilters: Map<FilterType, Set<string>>,
         slidersValue: Map<SliderType, SliderValue>,
-        searchValue: string
+        searchValue: string,
+        sort: string
     ): void {
-        const array: IProduct[] = FilterResult.getFilterResult(
+        const productsResult: IProduct[] = FilterResult.getFilterResult(
             currentFilters,
             slidersValue,
-            searchValue
+            searchValue,
+            sort
         );
+
+        this.redrawPage(productsResult);
+    }
+
+    private redrawPage(array: IProduct[]) {
         this.productList.drawProductList(array);
         this.setFoundProducts(array.length);
     }
@@ -146,44 +157,67 @@ export class App {
         found.innerHTML = `Found: ${count}`;
     }
 
-    public onProductItemSelected(productId: number, isAdded: boolean) {
-        const product: IProduct = productsData.filter(
-            (product) => product.id === productId
-        )[0]!;
+    public onButtonClickAddToCart(event: Event, productId: number): void {
+        let isAdded: boolean;
+        const target = event.target as Element;
+        target.classList.toggle('add-to-cart');
+        target.classList.toggle('remove-from-cart');
+        if (target.classList.contains('remove-from-cart')) {
+            target.innerHTML = 'Remove from cart';
+            isAdded = true;
+        } else {
+            target.innerHTML = 'Add to cart';
+            isAdded = false ;
+        }
+        this.setSelectedProducts(productId, isAdded);
         let currentCount: number = Number(this.getCount());
         let currentSum: number = Number(this.getSum());
-        currentCount += isAdded ? 1 : -1;
-        currentSum += isAdded ? product.price : -product.price;
-        this.setCount(String(currentCount));
-        this.setSum(String(currentSum));
+
         this.cart.setCurrentValues(String(currentSum), String(currentCount));
+    }
+
+    public checkButtonStatus(id: number): boolean {
+        const arraySelectedProducts: number[] = this.getSelectedProducts();
+        return arraySelectedProducts.includes(id);
     }
 
     public onProductClick(id: number) {
         window.open(`${window.location.origin}?id=${id}`, '_blank');
     }
 
-    public getSum(): string {
-        return localStorage.getItem('sum')
-            ? localStorage.getItem('sum')!
-            : '0';
+    public getSum(): number {
+        const array: number[] = this.getSelectedProducts();
+        let sum: number = 0;
+        productsData.forEach((item) => {
+            if(array.includes(item.id)) {
+                sum += item.price;
+            }
+        });
+        return sum;
     }
 
-    public getCount(): string {
-        return localStorage.getItem('count')
-            ? localStorage.getItem('count')!
-            : '0';
+    public getCount(): number {
+        const array: number[]= this.getSelectedProducts();
+        return array.length;
     }
 
-    private setSum(sum: string): void {
-        localStorage.setItem('sum', sum);
+    private setSelectedProducts(id: number, isAdded: boolean): void {
+        const arraySelectedProducts: number[] = this.getSelectedProducts();
+        if(isAdded) {
+            arraySelectedProducts.push(id);
+            localStorage.setItem('selected',JSON.stringify(arraySelectedProducts));
+        } else {
+            const newData: number[] = arraySelectedProducts.filter((item) => item !== id);
+            localStorage.setItem('selected',JSON.stringify(newData));
+        }
     }
 
-    private setCount(amount: string): void {
-        localStorage.setItem('count', amount);
+    private getSelectedProducts(): number[] {
+        const localStorageData: string | null = localStorage.getItem('selected');
+        return localStorageData ? JSON.parse(localStorageData) : [];
     }
 
-    private onClickButton(type: string) {
+    private onButtonClick(type: string) {
         switch (type) {
             case 'copy': {
                 const temp: HTMLInputElement = document.createElement('input');
@@ -205,8 +239,21 @@ export class App {
                 this.searchParams.clearUrl();
                 this.globalFiltres.clearFilters();
             }
+            case 'buy': {
+                new PaymentForm(MAIN_CONTAINER, this.onButtonClick).drawForm();
+                break;
+            }
+            case 'pay': {
+                document.querySelector('.modal-window')!.innerHTML = `<p class="message">The order accepted!</p>`;
+                setTimeout(this.goToMainPage, 3000);
+                break;
+            }
             default:
                 throw new Error('Something went wrong');
         }
+    }
+
+    private goToMainPage(): void {
+        window.location.href = window.location.origin;
     }
 }

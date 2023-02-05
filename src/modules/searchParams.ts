@@ -25,6 +25,11 @@ export class SearchParams {
         this.updateUrl();
     }
 
+    public updateSearchParamBySort(value: string): void {
+        this.searchParams.set('sort', value);
+        this.updateUrl();
+    }
+
     public updateSearchParamBySearch(param: string, value: string): void {
         value !== '' ? this.searchParams.set(param, value) : this.searchParams.delete(param);
         this.updateUrl();
