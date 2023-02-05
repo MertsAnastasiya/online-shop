@@ -209,8 +209,7 @@ export class App {
     }
 
     public onClickCart(): void {
-        // window.location.pathname = '/cart';
-        // window.open(`${window.location.origin}/cart`);
+        window.location.href = `${window.location.origin}?cart`;
         this.drawCartPage();
     }
 
@@ -277,15 +276,13 @@ export class App {
             }
             case 'pay': {
                 document.querySelector('.modal-window')!.innerHTML = `<p class="message">The order accepted!</p>`;
-                setTimeout(this.goToMainPage, 3000);
+                setTimeout(function() {
+                    window.location.href = window.location.origin;
+                }, 3000);
                 break;
             }
             default:
                 throw new Error('Something went wrong');
         }
-    }
-
-    private goToMainPage(): void {
-        window.location.href = window.location.origin;
     }
 }
