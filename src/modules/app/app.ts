@@ -213,17 +213,16 @@ export class App {
         this.drawCartPage();
     }
 
-    public getSum(): number {;
-        const array: number[] = this.getSelectedProducts();
-        let sum: number = 0;
-        array.forEach((id) => {
-            productsData.forEach((product) => {
-                if (product.id === id) {
-                    sum += product.price;
-                }
-            });
-        });
-        return sum;
+    public getSum(): number {
+        return this.getSelectedProducts()
+            .map((id) => this.getProductPrice(id))
+            .reduce((acc, current) => acc + current, 0);
+    }
+
+    private getProductPrice(id: number): number {
+        const selectedProduct: IProduct | undefined = productsData.filter((product) => product.id === id)[0];
+        if (selectedProduct === undefined) return 0;
+        return selectedProduct.price;
     }
 
     public getCount(): number {
@@ -276,9 +275,7 @@ export class App {
             }
             case 'pay': {
                 document.querySelector('.modal-window')!.innerHTML = `<p class="message">The order accepted!</p>`;
-                setTimeout(function() {
-                    window.location.href = window.location.origin;
-                }, 3000);
+                setTimeout(() => window.location.href = window.location.origin, 3000);
                 break;
             }
             default:

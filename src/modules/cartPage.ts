@@ -46,25 +46,26 @@ export class CartPage {
     public drawCartPage() {
         this.parent.innerHTML = this.cartDataLayout;
         const selectedList: Element = document.querySelector('.selected-list')!;
-
         const summaryHeader: Element = document.querySelector('.summary__header')!;
         const totalPriceContainer: Element = document.querySelector('.summary__total-price')!;
-        const inputPromoCode = document.querySelector('.promo_code')! as HTMLInputElement;
+        const inputPromoCode: HTMLInputElement = document.querySelector('.promo_code')! as HTMLInputElement;
         let totalAmount: number = 0;
         let totalPrice: number = 0;
-        this.productsData.forEach((product) => {
-            if (this.selectedProducts.includes(product.id)) {
-                let amount = this.selectedProducts.reduce((amount, currentItem) => {
-                    if (currentItem === product.id) {
-                        amount += 1;
-                    }
-                    return amount;
-                }, 0);
-                totalAmount += amount;
-                totalPrice += amount * product.price;
-                selectedList.appendChild(this.drawCartItem(product, amount));
-            }
-        });
+
+        this.productsData
+            .filter(product => this.selectedProducts.includes(product.id))
+            .forEach((product) => {
+                    let amount = this.selectedProducts.reduce((totalAmount, currentItem) => {
+                        if (currentItem === product.id) {
+                            totalAmount += 1;
+                        }
+                        return totalAmount;
+                    }, 0);
+                    totalAmount += amount;
+                    totalPrice += amount * product.price;
+                    selectedList.appendChild(this.drawCartItem(product, amount));
+            });
+
         inputPromoCode.addEventListener('input', () => {
             totalPrice = this.checkPromo(inputPromoCode, totalPrice, totalPriceContainer);
         });
@@ -76,51 +77,71 @@ export class CartPage {
         buyButton.addEventListener('click', () => this.onButtonClick('buy'));
     }
 
-    private drawCartItem(itemData: IProduct, amount: number): Element {
+    private drawCartItem(product: IProduct, amount: number): Element {
         const selectedItem: Element = document.createElement('div');
         selectedItem.classList.add('selected-item');
-        selectedItem.addEventListener('click', () => this.onProductClick(itemData.id))
+        selectedItem.addEventListener('click', () => this.onProductClick(product.id));
+
+        selectedItem.appendChild(this.createItemImage(product.images));
+        selectedItem.appendChild(this.createItemName(product.title));
+        selectedItem.appendChild(this.createItemPrice(product.price));
+        selectedItem.appendChild(this.createChangeAmount(product.id, amount));
+
+        return selectedItem;
+    }
+
+    private createItemImage(images: string[]): Element {
         const selectedItemImage: HTMLImageElement = document.createElement('img');
         selectedItemImage.classList.add('selected-item__image');
-        if (itemData.images[0] !== undefined) {
-            selectedItemImage.src = itemData.images[0];
+        if (images[0] !== undefined) {
+            selectedItemImage.src = images[0];
         }
+        return selectedItemImage;
+    }
+
+    private createItemName(name: string): Element {
         const selectedItemName: Element = document.createElement('p');
         selectedItemName.classList.add('selected-item__name');
-        selectedItemName.textContent = itemData.title;
+        selectedItemName.textContent = name;
+        return selectedItemName;
+    }
+
+    private createItemPrice(price: number): Element {
         const selectedItemPrice: Element = document.createElement('p');
         selectedItemPrice.classList.add('selected-item__price');
-        selectedItemPrice.textContent = `${itemData.price}€`;
+        selectedItemPrice.textContent = `${price}€`;
+        return selectedItemPrice;
+    }
 
+    private createChangeAmount(id: number, amount: number): Element {
         const selectedItemAmountWrapper: Element = document.createElement('div');
         selectedItemAmountWrapper.classList.add('selected-item__amount__wrapper');
+
         const selectedItemAmount: Element = document.createElement('p');
         selectedItemAmount.classList.add('selected-item__amount');
         selectedItemAmount.textContent = String(amount);
+
         const selectedItemAmountAdd: Element = document.createElement('p');
         selectedItemAmountAdd.classList.add('selected-item__change-amount');
         selectedItemAmountAdd.classList.add('add-amount');
         selectedItemAmountAdd.textContent = '+';
         selectedItemAmountAdd.addEventListener('click', (event) => {
-            this.onChangeAmount(event, itemData.id);
-        })
+            this.onChangeAmount(event, id);
+        });
+
         const selectedItemAmountRemove: Element = document.createElement('p');
         selectedItemAmountRemove.classList.add('selected-item__change-amount');
         selectedItemAmountRemove.classList.add('remove-amount');
         selectedItemAmountRemove.textContent = '-';
         selectedItemAmountRemove.addEventListener('click', (event) => {
-            this.onChangeAmount(event, itemData.id);
-        })
+            this.onChangeAmount(event, id);
+        });
 
-        selectedItem.appendChild(selectedItemImage);
-        selectedItem.appendChild(selectedItemName);
-        selectedItem.appendChild(selectedItemPrice);
         selectedItemAmountWrapper.appendChild(selectedItemAmountAdd);
         selectedItemAmountWrapper.appendChild(selectedItemAmount);
         selectedItemAmountWrapper.appendChild(selectedItemAmountRemove);
-        selectedItem.appendChild(selectedItemAmountWrapper);
+        return selectedItemAmountWrapper;
 
-        return selectedItem;
     }
 
     private checkPromo(inputPromoCode: HTMLInputElement, totalPrice: number, totalPriceContainer: Element): number {
