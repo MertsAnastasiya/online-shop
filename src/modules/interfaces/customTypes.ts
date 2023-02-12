@@ -59,6 +59,8 @@ export type OnClickCart = () => void;
 
 export type OnChangeAmount = (event: Event, id: number) => void;
 
+export type OnChangeCart = (sum: string, count: string) => void;
+
 export enum PageButtons {
     Copy = 'copy',
     Reset = 'reset',

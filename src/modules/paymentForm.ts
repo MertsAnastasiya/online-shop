@@ -1,16 +1,12 @@
-import { Cart } from './cart';
 import { OnButtonClick, PageButtons } from './interfaces/customTypes';
 
-const MAX_LENGTH_CARD_NUMBER = 19;
-const MAX_LENGTH_CVV = 3;
-const MAX_LENGTH_DATE = 5;
-
-export type OnChangeCart = (sum: string, count: string) => void;
-
 export class PaymentForm {
-    private modalWindow: Element;
-    private parent: Element;
-    private onClickButton: OnButtonClick;
+    private readonly modalWindow: Element;
+    private readonly parent: Element;
+    private readonly onClickButton: OnButtonClick;
+    private readonly maxLengthCardNumber: number = 19;
+    private readonly maxLengthCvv: number = 3;
+    private readonly maxLengthDate: number = 5;
 
     constructor(parent: Element, onClickButton: OnButtonClick) {
         this.onClickButton = onClickButton;
@@ -45,12 +41,12 @@ export class PaymentForm {
         const form: Element = document.querySelector('.modal__form')!;
         form.addEventListener('input', () => this.validateForm());
 
-        const backgroundArea: Element = document.querySelector('.disabled-area')!;
+        const backgroundArea: Element =
+            document.querySelector('.disabled-area')!;
         backgroundArea.classList.toggle('hidden');
 
-        const cardNumber = document.querySelector(
-            '.input_card-number'
-        )! as HTMLInputElement;
+        const cardNumber: HTMLInputElement =
+            document.querySelector<HTMLInputElement>('.input_card-number')!;
         cardNumber.addEventListener('input', () => this.updateCardImage());
 
         const close: Element = document.querySelector('.modal__close')!;
@@ -70,26 +66,23 @@ export class PaymentForm {
     }
 
     private checkCardNumber(): boolean {
-        const cardNumber = document.querySelector(
-            '.input_card-number'
-        )! as HTMLInputElement;
-        cardNumber.maxLength = MAX_LENGTH_CARD_NUMBER;
-        const value = cardNumber.value;
+        const cardNumber: HTMLInputElement =
+            document.querySelector<HTMLInputElement>('.input_card-number')!;
+        cardNumber.maxLength = this.maxLengthCardNumber;
+        const value: string = cardNumber.value;
         cardNumber.value = value
             .replace(/[^\d]/g, '')
             .replace(/(.{4})/g, '$1 ')
             .trim();
-        return value.length === MAX_LENGTH_CARD_NUMBER;
+        return value.length === this.maxLengthCardNumber;
     }
 
     private updateCardImage(): void {
-        const cardNumber = document.querySelector(
-            '.input_card-number'
-        )! as HTMLInputElement;
-        const cardImage = document.querySelector(
-            '.img_payments'
-        )! as HTMLImageElement;
-        const value = cardNumber.value;
+        const cardNumber: HTMLInputElement =
+            document.querySelector<HTMLInputElement>('.input_card-number')!;
+        const cardImage: HTMLImageElement =
+            document.querySelector<HTMLImageElement>('.img_payments')!;
+        const value: string = cardNumber.value;
         if (value.charAt(0) === '4') {
             cardImage.src = '../../assets/icons/visa.png';
         } else if (value.charAt(0) === '5') {
@@ -100,66 +93,62 @@ export class PaymentForm {
     }
 
     private checkName(): boolean {
-        const fullName = document.querySelector(
-            '.input_name'
-        )! as HTMLInputElement;
+        const fullName: HTMLInputElement =
+            document.querySelector<HTMLInputElement>('.input_name')!;
         const value = fullName.value;
         const regexp: RegExp = /^[A-Za-z]{3,}\s[A-Za-z]{3,}(\s?[A-Za-z]{3,})*$/;
         return regexp.test(value);
     }
 
     private checkCvv(): boolean {
-        const cvv = document.querySelector('.input_code')! as HTMLInputElement;
-        cvv.maxLength = MAX_LENGTH_CVV;
-        const value = cvv.value;
+        const cvv: HTMLInputElement =
+            document.querySelector<HTMLInputElement>('.input_code')!;
+        cvv.maxLength = this.maxLengthCvv;
+        const value: string = cvv.value;
         cvv.value = value.replace(/[^\d]/g, '');
-        return value.length === MAX_LENGTH_CVV;
+        return value.length === this.maxLengthCvv;
     }
 
-    private checkAddress() {
-        const address = document.querySelector(
-            '.input_address'
-        )! as HTMLInputElement;
-        const value = address.value;
+    private checkAddress(): boolean {
+        const address: HTMLInputElement =
+            document.querySelector<HTMLInputElement>('.input_address')!;
+        const value: string = address.value;
         const regexp: RegExp =
             /^[A-Za-z0-9]{5,}\s[A-Za-z0-9]{5,}(\s?[A-Za-z0-9]{5,})*$/;
         return regexp.test(value);
     }
 
     private checkPhone(): boolean {
-        const phone = document.querySelector(
-            '.input_phone'
-        )! as HTMLInputElement;
-        const value = phone.value;
+        const phone: HTMLInputElement =
+            document.querySelector<HTMLInputElement>('.input_phone')!;
+        const value: string = phone.value;
         phone.value = value.replace(/[^\+\d]/g, '');
         const regexp: RegExp = /^\+\d{9,}$/;
         return regexp.test(value);
     }
 
     private checkEmail(): boolean {
-        const email = document.querySelector(
-            '.input_email'
-        )! as HTMLInputElement;
+        const email: HTMLInputElement =
+            document.querySelector<HTMLInputElement>('.input_email')!;
         const value = email.value;
         const regexp: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         return regexp.test(value);
     }
 
     private checkExpirationDate(): boolean {
-        const expirationDate = document.querySelector(
-            '.input_valid'
-        )! as HTMLInputElement;
-        expirationDate.maxLength = MAX_LENGTH_DATE;
-        const value = expirationDate.value;
+        const expirationDate: HTMLInputElement =
+            document.querySelector<HTMLInputElement>('.input_valid')!;
+        expirationDate.maxLength = this.maxLengthDate;
+        const value: string = expirationDate.value;
         expirationDate.value = value
             .replace(/[^\d]/g, '')
             .replace(/(^.{2})/g, '$1/');
-        const dateArray = value.split('/');
+        const dateArray: string[] = value.split('/');
         return Number(dateArray[0]) < 12 ? true : false;
     }
 
-    private validateForm() {
-        let isOk = false;
+    private validateForm(): void {
+        let isOk: boolean = false;
         isOk = this.checkCardNumber();
         isOk = this.checkName();
         isOk = this.checkEmail();
@@ -168,9 +157,8 @@ export class PaymentForm {
         isOk = this.checkCvv();
         isOk = this.checkAddress();
         if (isOk) {
-            const buttonPay = document.querySelector(
-                '.button-pay'
-            )! as HTMLButtonElement;
+            const buttonPay: HTMLButtonElement =
+                document.querySelector<HTMLButtonElement>('.button-pay')!;
             buttonPay.disabled = false;
         }
     }
