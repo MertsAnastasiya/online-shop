@@ -1,12 +1,12 @@
-import { onSortClick } from '../interfaces/customTypes';
+import { OnSortClick } from '../interfaces/customTypes';
 
 export class ProductsSorter {
     public sortProperty: string;
     public sortDirection: string;
     private parent: Element;
-    private onSortClick: onSortClick;
+    private onSortClick: OnSortClick;
 
-    constructor(parent: Element, type: string, onSortClick: onSortClick) {
+    constructor(parent: Element, type: string, onSortClick: OnSortClick) {
         this.sortProperty = type;
         this.parent = parent;
         this.onSortClick = onSortClick;
