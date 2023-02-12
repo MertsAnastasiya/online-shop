@@ -17,7 +17,7 @@ export class Cart {
             <p class="total-amount"></p>
             <div class="basket-background">
                 <img
-                    src="assets/img/solution-cart 1.png"
+                    src="assets/img/cart.svg"
                     alt="basket"
                     class="basket"
                 />

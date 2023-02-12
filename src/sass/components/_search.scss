@@ -3,7 +3,7 @@
   height: 35px;
   background: #fcfafa;
   border: 1px solid $color-primary;
-  border-radius: 37px;
+  border-radius: $radius;
   @include font($size: 2rem);
   padding: 1rem;
 

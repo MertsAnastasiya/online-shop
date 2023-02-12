@@ -1,11 +1,11 @@
 .promo {
   background: $color-promo;
-  border-radius: 5px;
-  margin-top: 20px;
+  border-radius: $radius;
+  margin-top: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 20rem;
 
   @include media-mobile {
     display: none;

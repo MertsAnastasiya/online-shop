@@ -1,13 +1,14 @@
 .footer {
   background: $color-primary;
   padding: 10px 0;
+  margin-top: 2rem;
 }
 
 .footer__container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  @include font($size: 3.3rem);
+  @include font($size: 2.5rem);
 
   @include media-mobile {
     flex-direction: column;
