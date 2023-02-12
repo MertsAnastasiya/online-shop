@@ -1,5 +1,5 @@
 import { Cart } from './cart';
-import { OnButtonClick } from './interfaces/customTypes';
+import { OnButtonClick, PageButtons } from './interfaces/customTypes';
 
 const MAX_LENGTH_CARD_NUMBER = 19;
 const MAX_LENGTH_CVV = 3;
@@ -61,7 +61,7 @@ export class PaymentForm {
 
         const buttonPay: Element = document.querySelector('.button-pay')!;
         buttonPay.addEventListener('click', () => {
-            this.onClickButton('pay');
+            this.onClickButton(PageButtons.Pay);
         });
     }
 

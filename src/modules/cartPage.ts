@@ -1,5 +1,5 @@
 'use strict';
-import { OnButtonClick, OnProductClick } from './interfaces/customTypes';
+import { OnButtonClick, OnProductClick, PageButtons } from './interfaces/customTypes';
 import { IProduct } from './interfaces/product.interface';
 
 type OnChangeAmount = (event: Event, id: number) => void;
@@ -74,7 +74,7 @@ export class CartPage {
         totalPriceContainer.innerHTML = `<span>Total</span> <span>€‎${totalPrice}</span>`;
 
         const buyButton: Element = document.querySelector('.button_buy')! as HTMLButtonElement;
-        buyButton.addEventListener('click', () => this.onButtonClick('buy'));
+        buyButton.addEventListener('click', () => this.onButtonClick(PageButtons.Buy));
     }
 
     private drawCartItem(product: IProduct, amount: number): Element {

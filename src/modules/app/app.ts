@@ -1,7 +1,7 @@
 import { productsData } from '../data';
 import { GlobalFilters } from '../filters/globalFilters';
 import { FilterResult } from '../filters/result';
-import { FilterType, SliderType, SliderValue } from '../interfaces/customTypes';
+import { FilterType, PageButtons, SliderType, SliderValue } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 import { ProductList } from '../productList';
 import { Cart } from '../cart';
@@ -124,7 +124,7 @@ export class App {
     }
 
     private drawCartPage(): void {
-        const cartView: CartPage = new CartPage(mainContainer, productsData, this.getSelectedProducts(), (event: Event, id: number) => this.onChangeAmount(event, id), (id: number) => this.onProductClick(id), (type: string) => this.onButtonClick(type));
+        const cartView: CartPage = new CartPage(mainContainer, productsData, this.getSelectedProducts(), (event: Event, id: number) => this.onChangeAmount(event, id), (id: number) => this.onProductClick(id), (type: PageButtons) => this.onButtonClick(type));
         cartView.drawCartPage();
     }
 
@@ -143,15 +143,15 @@ export class App {
     private createButtons(): void {
         const buttonCopy: Button = new Button(
             document.querySelector('.buttons__wrapper')!,
-            (type: string) => this.onButtonClick(type)
+            (type: PageButtons) => this.onButtonClick(type)
         );
-        buttonCopy.drawButton('copy');
+        buttonCopy.drawButton(PageButtons.Copy);
 
         const buttonReset: Button = new Button(
             document.querySelector('.buttons__wrapper')!,
-            (type: string) => this.onButtonClick(type)
+            (type: PageButtons) => this.onButtonClick(type)
         );
-        buttonReset.drawButton('reset');
+        buttonReset.drawButton(PageButtons.Reset);
     }
 
     public updateResult(
@@ -247,9 +247,9 @@ export class App {
         return localStorageData ? JSON.parse(localStorageData) : [];
     }
 
-    private onButtonClick(type: string) {
+    private onButtonClick(type: PageButtons) {
         switch (type) {
-            case 'copy': {
+            case PageButtons.Copy: {
                 const temp: HTMLInputElement = document.createElement('input');
                 document.body.appendChild(temp);
                 temp.value = window.location.href;
@@ -258,7 +258,7 @@ export class App {
                 document.body.removeChild(temp);
                 break;
             }
-            case 'reset': {
+            case PageButtons.Reset: {
                 const allCheckbox: NodeListOf<HTMLInputElement> =
                     document.querySelectorAll('.checkbox');
                 allCheckbox.forEach((checkbox) => {
@@ -269,11 +269,11 @@ export class App {
                 this.searchParams.clearUrl();
                 this.globalFiltres.clearFilters();
             }
-            case 'buy': {
+            case PageButtons.Buy: {
                 new PaymentForm(mainContainer, this.onButtonClick).drawForm();
                 break;
             }
-            case 'pay': {
+            case PageButtons.Pay: {
                 document.querySelector('.modal-window')!.innerHTML = `<p class="message">The order accepted!</p>`;
                 setTimeout(() => window.location.href = window.location.origin, 3000);
                 break;

@@ -27,8 +27,16 @@ export type OnButtonCartClick = (event: Event, productId: number) => void;
 
 export type OnChangeSearch = (param: string, searchText: string) => void;
 
-export type OnButtonClick = (type: string) => void;
+export type OnButtonClick = (type: PageButtons) => void;
+// export type OnButtonClick = (type: string) => void;
 
 export type OnProductClick = (id: number) => void;
 
-export type onSortClick = (sortProperty: string, direction: string) => void;
+export type OnSortClick = (sortProperty: string, direction: string) => void;
+
+export enum PageButtons {
+    Copy = 'copy',
+    Reset = 'reset',
+    Buy = 'buy',
+    Pay = 'pay',
+}

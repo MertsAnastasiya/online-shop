@@ -1,4 +1,4 @@
-import { OnButtonClick } from './interfaces/customTypes';
+import { OnButtonClick, PageButtons } from './interfaces/customTypes';
 
 export class Button {
     private parent: Element;
@@ -9,7 +9,7 @@ export class Button {
         this.onClickButton = onClickButton;
     }
 
-    public drawButton(type: string) {
+    public drawButton(type: PageButtons) {
         const button = document.createElement('button');
         button.textContent = type;
         button.classList.add('button');

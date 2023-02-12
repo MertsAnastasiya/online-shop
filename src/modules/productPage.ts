@@ -1,6 +1,6 @@
 'use strict';
 import { productsData } from './data';
-import { OnButtonCartClick, OnButtonClick } from './interfaces/customTypes';
+import { OnButtonCartClick, OnButtonClick, PageButtons } from './interfaces/customTypes';
 import { IProduct } from './interfaces/product.interface';
 
 const IMAGE_COUNT = 3;
@@ -97,6 +97,6 @@ export class ProductPage {
             i++;
         }
         buttonAddToCart.addEventListener('click', (event) => this.onProductSelected(event, this.product.id));
-        buyButton.addEventListener('click', () => this.onButtonClick('buy'));
+        buyButton.addEventListener('click', () => this.onButtonClick(PageButtons.Buy));
     }
 }
