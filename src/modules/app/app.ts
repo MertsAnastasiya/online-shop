@@ -11,15 +11,15 @@ import { ProductPage } from '../productPage';
 import { PaymentForm } from '../paymentForm';
 import { CartPage } from '../cartPage';
 
-const MAIN_CONTAINER: Element = document.querySelector('.main__container')!;
-const HEADER_CONTAINER: Element = document.querySelector('.header__container')!;
-const PRODUCTS_LIST_CONTAINER: Element = document.querySelector('.products')!;
+const mainContainer: Element = document.querySelector('.main__container')!;
+const headerContainer: Element = document.querySelector('.header__container')!;
+const productListContainer: Element = document.querySelector('.products')!;
 
 export class App {
-    private productList: ProductList;
-    private globalFiltres: GlobalFilters;
-    private cart: Cart;
-    private searchParams: SearchParams;
+    private readonly productList: ProductList;
+    private readonly globalFiltres: GlobalFilters;
+    private readonly cart: Cart;
+    private readonly searchParams: SearchParams;
 
     constructor() {
         this.searchParams = new SearchParams();
@@ -45,13 +45,13 @@ export class App {
         );
 
         this.productList = new ProductList(
-            PRODUCTS_LIST_CONTAINER,
+            productListContainer,
             (event: Event, id: number) => this.onButtonClickAddToCart(event, id),
             (id: number) => this.onProductClick(id),
             (id: number) => this.checkButtonStatus(id)
         );
 
-        this.cart = new Cart(HEADER_CONTAINER, () => this.onClickCart());
+        this.cart = new Cart(headerContainer, () => this.onClickCart());
     }
 
     public start(): void {
@@ -118,18 +118,18 @@ export class App {
     }
 
     private drawProductPage(id: number): void {
-        const productView: ProductPage = new ProductPage(MAIN_CONTAINER, id, (event: Event, id: number) =>
+        const productView: ProductPage = new ProductPage(mainContainer, id, (event: Event, id: number) =>
             this.onButtonClickAddToCart(event, id), this.onButtonClick);
         productView.drawProductPage(this.getSelectedProducts());
     }
 
     private drawCartPage(): void {
-        const cartView: CartPage = new CartPage(MAIN_CONTAINER, productsData, this.getSelectedProducts(), (event: Event, id: number) => this.onChangeAmount(event, id), (id: number) => this.onProductClick(id), (type: string) => this.onButtonClick(type));
+        const cartView: CartPage = new CartPage(mainContainer, productsData, this.getSelectedProducts(), (event: Event, id: number) => this.onChangeAmount(event, id), (id: number) => this.onProductClick(id), (type: string) => this.onButtonClick(type));
         cartView.drawCartPage();
     }
 
     public onChangeAmount(event: Event, id: number): void {
-        const target = event.target as Element;
+        const target: Element = event.target as Element;
         if (target.classList.value.includes('remove-amount')) {
             this.setSelectedProducts(id, false);
         }
@@ -170,9 +170,9 @@ export class App {
         this.redrawPage(productsResult);
     }
 
-    private redrawPage(array: IProduct[]) {
-        this.productList.drawProductList(array);
-        this.setFoundProducts(array.length);
+    private redrawPage(productsList: IProduct[]) {
+        this.productList.drawProductList(productsList);
+        this.setFoundProducts(productsList.length);
     }
 
     private setFoundProducts(count: number): void {
@@ -182,7 +182,7 @@ export class App {
 
     public onButtonClickAddToCart(event: Event, productId: number): void {
         let isAdded: boolean;
-        const target = event.target as Element;
+        const target: Element = event.target as Element;
         target.classList.toggle('add-to-cart');
         target.classList.toggle('remove-from-cart');
         if (target.classList.contains('remove-from-cart')) {
@@ -226,7 +226,7 @@ export class App {
     }
 
     public getCount(): number {
-        const array: number[]= this.getSelectedProducts();
+        const array: number[] = this.getSelectedProducts();
         return array.length;
     }
 
@@ -236,7 +236,7 @@ export class App {
             arraySelectedProducts.push(id);
             localStorage.setItem('selected',JSON.stringify(arraySelectedProducts));
         } else {
-            const firstIndexOfId = arraySelectedProducts.indexOf(id);
+            const firstIndexOfId: number = arraySelectedProducts.indexOf(id);
             const newData: number[] = arraySelectedProducts.filter((item, index) => (item !== id || index !== firstIndexOfId));
             localStorage.setItem('selected',JSON.stringify(newData));
         }
@@ -270,7 +270,7 @@ export class App {
                 this.globalFiltres.clearFilters();
             }
             case 'buy': {
-                new PaymentForm(MAIN_CONTAINER, this.onButtonClick).drawForm();
+                new PaymentForm(mainContainer, this.onButtonClick).drawForm();
                 break;
             }
             case 'pay': {
