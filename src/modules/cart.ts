@@ -1,9 +1,10 @@
-type OnClickCart = () => void;
+import { OnClickCart } from './interfaces/customTypes';
+
 
 export class Cart {
-    private parent: Element;
-    private basketWrapper: Element;
-    private onClickCart: OnClickCart;
+    private readonly parent: Element;
+    private readonly basketWrapper: Element;
+    private readonly onClickCart: OnClickCart;
 
     constructor(parent: Element, onClickCart: OnClickCart) {
         this.parent = parent;

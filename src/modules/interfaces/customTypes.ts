@@ -56,6 +56,8 @@ export type OnProductClick = (id: number) => void;
 
 export type OnSortClick = (sortProperty: string, direction: string) => void;
 
+export type OnClickCart = () => void;
+
 export enum PageButtons {
     Copy = 'copy',
     Reset = 'reset',
