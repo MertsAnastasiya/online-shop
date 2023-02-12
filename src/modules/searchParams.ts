@@ -1,8 +1,14 @@
 export class SearchParams {
     private static readonly unused: string = '';
-    private searchParams: URLSearchParams = new URLSearchParams(window.location.search);
+    private searchParams: URLSearchParams = new URLSearchParams(
+        window.location.search
+    );
 
-    public updateSearchParamByCheckbox(param: string, value: string, isAdd: boolean): void {
+    public updateSearchParamByCheckbox(
+        param: string,
+        value: string,
+        isAdd: boolean
+    ): void {
         if (isAdd) {
             const temp: string | null = this.searchParams.get(param);
             if (temp) {
@@ -11,8 +17,12 @@ export class SearchParams {
                 this.searchParams.set(param, `${value}`);
             }
         } else {
-            const currentParamValueArray: string[] = this.searchParams.get(param)!.split('|')!;
-            const newCurrentValue: string[] = currentParamValueArray.filter((item) => item !== value);
+            const currentParamValueArray: string[] = this.searchParams
+                .get(param)!
+                .split('|')!;
+            const newCurrentValue: string[] = currentParamValueArray.filter(
+                (item) => item !== value
+            );
             newCurrentValue.length !== 0
                 ? this.searchParams.set(param, newCurrentValue.join('|'))
                 : this.searchParams.delete(param);
@@ -20,7 +30,11 @@ export class SearchParams {
         this.updateUrl();
     }
 
-    public updateSearchParamBySlider(param: string, min: string, max: string): void {
+    public updateSearchParamBySlider(
+        param: string,
+        min: string,
+        max: string
+    ): void {
         this.searchParams.set(param, `${min}/${max}`);
         this.updateUrl();
     }
@@ -31,7 +45,9 @@ export class SearchParams {
     }
 
     public updateSearchParamBySearch(param: string, value: string): void {
-        value !== '' ? this.searchParams.set(param, value) : this.searchParams.delete(param);
+        value !== ''
+            ? this.searchParams.set(param, value)
+            : this.searchParams.delete(param);
         this.updateUrl();
     }
 
@@ -50,6 +66,10 @@ export class SearchParams {
 
     public clearUrl(): void {
         window.location.search = '';
-        window.history.pushState({}, SearchParams.unused, window.location.pathname);
+        window.history.pushState(
+            {},
+            SearchParams.unused,
+            window.location.pathname
+        );
     }
 }
