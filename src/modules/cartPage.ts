@@ -1,17 +1,15 @@
 'use strict';
-import { OnButtonClick, OnProductClick, PageButtons } from './interfaces/customTypes';
+import { OnButtonClick, OnChangeAmount, OnProductClick, PageButtons } from './interfaces/customTypes';
 import { IProduct } from './interfaces/product.interface';
 
-type OnChangeAmount = (event: Event, id: number) => void;
-
 export class CartPage {
-    private parent: Element;
-    private cartDataLayout: string;
-    private productsData: IProduct[];
-    private selectedProducts: number[];
-    private onChangeAmount: OnChangeAmount;
-    private onProductClick: OnProductClick;
-    private onButtonClick: OnButtonClick;
+    private readonly parent: Element;
+    private readonly cartDataLayout: string;
+    private readonly productsData: IProduct[];
+    private readonly selectedProducts: number[];
+    private readonly onChangeAmount: OnChangeAmount;
+    private readonly onProductClick: OnProductClick;
+    private readonly onButtonClick: OnButtonClick;
 
     constructor(
         parent: Element,
@@ -43,7 +41,7 @@ export class CartPage {
             <div class="disabled-area hidden"></div>`;
     }
 
-    public drawCartPage() {
+    public drawCartPage(): void {
         this.parent.innerHTML = this.cartDataLayout;
         const selectedList: Element = document.querySelector('.selected-list')!;
         const summaryHeader: Element = document.querySelector('.summary__header')!;
@@ -55,7 +53,7 @@ export class CartPage {
         this.productsData
             .filter(product => this.selectedProducts.includes(product.id))
             .forEach((product) => {
-                    let amount = this.selectedProducts.reduce((totalAmount, currentItem) => {
+                    let amount: number = this.selectedProducts.reduce((totalAmount, currentItem) => {
                         if (currentItem === product.id) {
                             totalAmount += 1;
                         }
@@ -141,11 +139,10 @@ export class CartPage {
         selectedItemAmountWrapper.appendChild(selectedItemAmount);
         selectedItemAmountWrapper.appendChild(selectedItemAmountRemove);
         return selectedItemAmountWrapper;
-
     }
 
     private checkPromo(inputPromoCode: HTMLInputElement, totalPrice: number, totalPriceContainer: Element): number {
-        const value = inputPromoCode.value;
+        const value: string = inputPromoCode.value;
         if (value.toLowerCase() === 'promo') {
             totalPrice -= 0.1 * totalPrice;
             totalPriceContainer.innerHTML = `<span>Total</span> <span>€‎${totalPrice}</span>`;
