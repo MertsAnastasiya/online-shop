@@ -9,6 +9,7 @@ import { SearchParams } from '../searchParams';
 import { Button } from '../button';
 import { ProductPage } from '../productPage';
 import { PaymentForm } from '../paymentForm';
+import { CartPage } from '../cartPage';
 
 const MAIN_CONTAINER: Element = document.querySelector('.main__container')!;
 const HEADER_CONTAINER: Element = document.querySelector('.header__container')!;
@@ -50,7 +51,7 @@ export class App {
             (id: number) => this.checkButtonStatus(id)
         );
 
-        this.cart = new Cart(HEADER_CONTAINER);
+        this.cart = new Cart(HEADER_CONTAINER, () => this.onClickCart());
     }
 
     public start(): void {
@@ -64,6 +65,11 @@ export class App {
         if (url.includes('id')) {
             const id: number = Number(url.split('=').pop());
             this.drawProductPage(id);
+            return;
+        }
+
+        if (url.includes('cart')) {
+            this.drawCartPage();
             return;
         }
 
@@ -115,6 +121,23 @@ export class App {
         const productView: ProductPage = new ProductPage(MAIN_CONTAINER, id, (event: Event, id: number) =>
             this.onButtonClickAddToCart(event, id), this.onButtonClick);
         productView.drawProductPage(this.getSelectedProducts());
+    }
+
+    private drawCartPage(): void {
+        const cartView: CartPage = new CartPage(MAIN_CONTAINER, productsData, this.getSelectedProducts(), (event: Event, id: number) => this.onChangeAmount(event, id), (id: number) => this.onProductClick(id), (type: string) => this.onButtonClick(type));
+        cartView.drawCartPage();
+    }
+
+    public onChangeAmount(event: Event, id: number): void {
+        const target = event.target as Element;
+        if (target.classList.value.includes('remove-amount')) {
+            this.setSelectedProducts(id, false);
+        }
+        if (target.classList.value.includes('add-amount')) {
+            this.setSelectedProducts(id, true);
+        }
+        this.cart.setCurrentValues(String(this.getSum()), String(this.getCount()));
+        this.drawCartPage();
     }
 
     private createButtons(): void {
@@ -185,15 +208,21 @@ export class App {
         window.open(`${window.location.origin}?id=${id}`, '_blank');
     }
 
+    public onClickCart(): void {
+        window.location.href = `${window.location.origin}?cart`;
+        this.drawCartPage();
+    }
+
     public getSum(): number {
-        const array: number[] = this.getSelectedProducts();
-        let sum: number = 0;
-        productsData.forEach((item) => {
-            if(array.includes(item.id)) {
-                sum += item.price;
-            }
-        });
-        return sum;
+        return this.getSelectedProducts()
+            .map((id) => this.getProductPrice(id))
+            .reduce((acc, current) => acc + current, 0);
+    }
+
+    private getProductPrice(id: number): number {
+        const selectedProduct: IProduct | undefined = productsData.filter((product) => product.id === id)[0];
+        if (selectedProduct === undefined) return 0;
+        return selectedProduct.price;
     }
 
     public getCount(): number {
@@ -207,7 +236,8 @@ export class App {
             arraySelectedProducts.push(id);
             localStorage.setItem('selected',JSON.stringify(arraySelectedProducts));
         } else {
-            const newData: number[] = arraySelectedProducts.filter((item) => item !== id);
+            const firstIndexOfId = arraySelectedProducts.indexOf(id);
+            const newData: number[] = arraySelectedProducts.filter((item, index) => (item !== id || index !== firstIndexOfId));
             localStorage.setItem('selected',JSON.stringify(newData));
         }
     }
@@ -245,15 +275,11 @@ export class App {
             }
             case 'pay': {
                 document.querySelector('.modal-window')!.innerHTML = `<p class="message">The order accepted!</p>`;
-                setTimeout(this.goToMainPage, 3000);
+                setTimeout(() => window.location.href = window.location.origin, 3000);
                 break;
             }
             default:
                 throw new Error('Something went wrong');
         }
-    }
-
-    private goToMainPage(): void {
-        window.location.href = window.location.origin;
     }
 }

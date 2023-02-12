@@ -13,3 +13,13 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto;
 }
+
+.h2 {
+  @include font($size: 3rem, $weight: 700);
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.h3 {
+  @include font($size: 2.5rem, $weight: 700);
+}
