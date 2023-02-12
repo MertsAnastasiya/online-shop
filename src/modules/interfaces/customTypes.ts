@@ -18,6 +18,8 @@ export type ToChangeParamsBySlider = (param: string, min: string, max: string) =
 
 export type ToChangeParamsBySearch = (param: string, value: string) => void;
 
+export type ToChangeParamsBySort = (param: string) => void;
+
 export type SliderValue = {
     'min': number;
     'max': number;
