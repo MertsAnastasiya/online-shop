@@ -1,5 +1,10 @@
 'use strict';
-import { OnButtonClick, OnChangeAmount, OnProductClick, PageButtons } from './interfaces/customTypes';
+import {
+    OnButtonClick,
+    OnChangeAmount,
+    OnProductClick,
+    PageButtons,
+} from './interfaces/customTypes';
 import { IProduct } from './interfaces/product.interface';
 
 export class CartPage {
@@ -42,43 +47,73 @@ export class CartPage {
     }
 
     public drawCartPage(): void {
-        this.parent.innerHTML = this.cartDataLayout;
-        const selectedList: Element = document.querySelector('.selected-list')!;
-        const summaryHeader: Element = document.querySelector('.summary__header')!;
-        const totalPriceContainer: Element = document.querySelector('.summary__total-price')!;
-        const inputPromoCode: HTMLInputElement = document.querySelector('.promo_code')! as HTMLInputElement;
-        let totalAmount: number = 0;
-        let totalPrice: number = 0;
+        if (this.selectedProducts.length !== 0) {
+            this.parent.innerHTML = this.cartDataLayout;
+            const selectedList: Element =
+                document.querySelector('.selected-list')!;
+            const summaryHeader: Element =
+                document.querySelector('.summary__header')!;
+            const totalPriceContainer: Element = document.querySelector(
+                '.summary__total-price'
+            )!;
+            const inputPromoCode: HTMLInputElement = document.querySelector(
+                '.promo_code'
+            )! as HTMLInputElement;
+            let totalAmount: number = 0;
+            let totalPrice: number = 0;
 
-        this.productsData
-            .filter(product => this.selectedProducts.includes(product.id))
-            .forEach((product) => {
-                    let amount: number = this.selectedProducts.reduce((totalAmount, currentItem) => {
-                        if (currentItem === product.id) {
-                            totalAmount += 1;
-                        }
-                        return totalAmount;
-                    }, 0);
+            this.productsData
+                .filter((product) => this.selectedProducts.includes(product.id))
+                .forEach((product) => {
+                    let amount: number = this.selectedProducts.reduce(
+                        (totalAmount, currentItem) => {
+                            if (currentItem === product.id) {
+                                totalAmount += 1;
+                            }
+                            return totalAmount;
+                        },
+                        0
+                    );
                     totalAmount += amount;
                     totalPrice += amount * product.price;
-                    selectedList.appendChild(this.drawCartItem(product, amount));
+                    selectedList.appendChild(
+                        this.drawCartItem(product, amount)
+                    );
+                });
+
+            inputPromoCode.addEventListener('input', () => {
+                totalPrice = this.checkPromo(
+                    inputPromoCode,
+                    totalPrice,
+                    totalPriceContainer
+                );
             });
+            summaryHeader.innerHTML = `<span>Summary</span> <span>[${totalAmount} items]</span>`;
+            totalPrice = this.checkPromo(
+                inputPromoCode,
+                totalPrice,
+                totalPriceContainer
+            );
+            totalPriceContainer.innerHTML = `<span>Total</span> <span>€‎${totalPrice}</span>`;
 
-        inputPromoCode.addEventListener('input', () => {
-            totalPrice = this.checkPromo(inputPromoCode, totalPrice, totalPriceContainer);
-        });
-        summaryHeader.innerHTML = `<span>Summary</span> <span>[${totalAmount} items]</span>`;
-        totalPrice = this.checkPromo(inputPromoCode, totalPrice, totalPriceContainer);
-        totalPriceContainer.innerHTML = `<span>Total</span> <span>€‎${totalPrice}</span>`;
-
-        const buyButton: Element = document.querySelector('.button_buy')! as HTMLButtonElement;
-        buyButton.addEventListener('click', () => this.onButtonClick(PageButtons.Buy));
+            const buyButton: Element = document.querySelector(
+                '.button_buy'
+            )! as HTMLButtonElement;
+            buyButton.addEventListener('click', () =>
+                this.onButtonClick(PageButtons.Buy)
+            );
+        } else {
+            this.parent.innerHTML = `<div class="not-found">The cart is empty</div>`;
+        }
     }
 
     private drawCartItem(product: IProduct, amount: number): Element {
         const selectedItem: Element = document.createElement('div');
         selectedItem.classList.add('selected-item');
-        selectedItem.addEventListener('click', () => this.onProductClick(product.id));
+
+        selectedItem.addEventListener('click', () =>
+            this.onProductClick(product.id)
+        );
 
         selectedItem.appendChild(this.createItemImage(product.images));
         selectedItem.appendChild(this.createItemName(product.title));
@@ -89,7 +124,8 @@ export class CartPage {
     }
 
     private createItemImage(images: string[]): Element {
-        const selectedItemImage: HTMLImageElement = document.createElement('img');
+        const selectedItemImage: HTMLImageElement =
+            document.createElement('img');
         selectedItemImage.classList.add('selected-item__image');
         if (images[0] !== undefined) {
             selectedItemImage.src = images[0];
@@ -112,8 +148,11 @@ export class CartPage {
     }
 
     private createChangeAmount(id: number, amount: number): Element {
-        const selectedItemAmountWrapper: Element = document.createElement('div');
-        selectedItemAmountWrapper.classList.add('selected-item__amount__wrapper');
+        const selectedItemAmountWrapper: Element =
+            document.createElement('div');
+        selectedItemAmountWrapper.classList.add(
+            'selected-item__amount__wrapper'
+        );
 
         const selectedItemAmount: Element = document.createElement('p');
         selectedItemAmount.classList.add('selected-item__amount');
@@ -124,6 +163,7 @@ export class CartPage {
         selectedItemAmountAdd.classList.add('add-amount');
         selectedItemAmountAdd.textContent = '+';
         selectedItemAmountAdd.addEventListener('click', (event) => {
+            event.stopPropagation();
             this.onChangeAmount(event, id);
         });
 
@@ -132,6 +172,7 @@ export class CartPage {
         selectedItemAmountRemove.classList.add('remove-amount');
         selectedItemAmountRemove.textContent = '-';
         selectedItemAmountRemove.addEventListener('click', (event) => {
+            event.stopPropagation();
             this.onChangeAmount(event, id);
         });
 
@@ -141,7 +182,11 @@ export class CartPage {
         return selectedItemAmountWrapper;
     }
 
-    private checkPromo(inputPromoCode: HTMLInputElement, totalPrice: number, totalPriceContainer: Element): number {
+    private checkPromo(
+        inputPromoCode: HTMLInputElement,
+        totalPrice: number,
+        totalPriceContainer: Element
+    ): number {
         const value: string = inputPromoCode.value;
         if (value.toLowerCase() === 'promo') {
             totalPrice -= 0.1 * totalPrice;

@@ -10,7 +10,7 @@ import { IProduct } from './interfaces/product.interface';
 export class ProductPage {
     private readonly parent: Element;
     private readonly productDataLayout: string;
-    private readonly product: IProduct;
+    private readonly product: IProduct | undefined;
     private readonly onButtonClick: OnButtonClick;
     private readonly onProductSelected: OnButtonCartClick;
     private readonly imageCount = 3;
@@ -25,7 +25,7 @@ export class ProductPage {
         this.onButtonClick = onButtonClick;
         this.onProductSelected = onProductSelected;
 
-        this.product = productsData.filter((data) => data.id === id)[0]!;
+        this.product = productsData.filter((data) => data.id === id)[0];
 
         this.productDataLayout = `
             <div class="route"></div>
@@ -59,63 +59,70 @@ export class ProductPage {
 
     public drawProductPage(selectedArray: number[]): void {
         this.parent.innerHTML = this.productDataLayout;
-        const route: Element = document.querySelector('.route')!;
-        const productName: Element = document.querySelector('.name')!;
-        const brand: Element = document.querySelector('.brand')!;
-        const description: Element = document.querySelector('.description')!;
-        const buttonAddToCart: Element = document.querySelector('.add-cart')!;
-        let isAddedToCart: boolean = Boolean(
-            selectedArray.filter((item) => item === this.product.id)[0]
-        );
-        if (isAddedToCart) {
-            buttonAddToCart.innerHTML = 'Remove from cart';
-            buttonAddToCart.classList.add('remove-from-cart');
-            isAddedToCart = false;
-        } else {
-            buttonAddToCart.innerHTML = 'Add to cart';
-            buttonAddToCart.classList.add('add-to-cart');
-            isAddedToCart = true;
-        }
-        const buyButton: HTMLButtonElement =
-            document.querySelector<HTMLButtonElement>('.button_buy')!;
-        const price: Element = document.querySelector('.price')!;
-        const rating: Element = document.querySelector('.rating')!;
-        const mainImg: HTMLImageElement =
-            document.querySelector<HTMLImageElement>('.main-image')!;
-        const addImgWrapper: Element = document.querySelector(
-            '.additional-images__wrapper'
-        )!;
-
-        const routeText: string = `Store / ${this.product.category} / ${this.product.brand} / ${this.product.title}`;
-        route.textContent = routeText;
-        productName.innerHTML = this.product.title;
-        brand!.textContent = this.product.brand;
-        description!.textContent = this.product.description;
-        buttonAddToCart.setAttribute('id', this.product.id.toString());
-        price!.textContent = `€${this.product.price}`;
-        rating!.textContent = `Rating: ${this.product.rating}`;
-        if (this.product.images[0]) {
-            mainImg.src = this.product.images[0]!;
-        }
-
-        let i: number = 0;
-        while (i < this.imageCount) {
-            if (this.product.images[i]) {
-                const addImg: HTMLImageElement = document.createElement('img');
-                addImg.classList.add('additional-image');
-                addImg.src = this.product.images[i]!;
-                addImg.addEventListener('click', () => {
-                    mainImg.src = addImg.src;
-                });
-                addImgWrapper.appendChild(addImg);
+        if (this.product !== undefined) {
+            const route: Element = document.querySelector('.route')!;
+            const productName: Element = document.querySelector('.name')!;
+            const brand: Element = document.querySelector('.brand')!;
+            const description: Element =
+                document.querySelector('.description')!;
+            const buttonAddToCart: Element =
+                document.querySelector('.add-cart')!;
+            let isAddedToCart: boolean = Boolean(
+                selectedArray.filter((item) => item === this.product!.id)[0]
+            );
+            if (isAddedToCart) {
+                buttonAddToCart.innerHTML = 'Remove from cart';
+                buttonAddToCart.classList.add('remove-from-cart');
+                isAddedToCart = false;
+            } else {
+                buttonAddToCart.innerHTML = 'Add to cart';
+                buttonAddToCart.classList.add('add-to-cart');
+                isAddedToCart = true;
             }
-            i++;
+            const buyButton: HTMLButtonElement =
+                document.querySelector<HTMLButtonElement>('.button_buy')!;
+            const price: Element = document.querySelector('.price')!;
+            const rating: Element = document.querySelector('.rating')!;
+            const mainImg: HTMLImageElement =
+                document.querySelector<HTMLImageElement>('.main-image')!;
+            const addImgWrapper: Element = document.querySelector(
+                '.additional-images__wrapper'
+            )!;
+
+            const routeText: string = `Store / ${this.product.category} / ${this.product.brand} / ${this.product.title}`;
+            route.textContent = routeText;
+            productName.innerHTML = this.product.title;
+            brand!.textContent = this.product.brand;
+            description!.textContent = this.product.description;
+            buttonAddToCart.setAttribute('id', this.product.id.toString());
+            price!.textContent = `€${this.product.price}`;
+            rating!.textContent = `Rating: ${this.product.rating}`;
+            if (this.product.images[0]) {
+                mainImg.src = this.product.images[0]!;
+            }
+
+            let i: number = 0;
+            while (i < this.imageCount) {
+                if (this.product.images[i]) {
+                    const addImg: HTMLImageElement =
+                        document.createElement('img');
+                    addImg.classList.add('additional-image');
+                    addImg.src = this.product.images[i]!;
+                    addImg.addEventListener('click', () => {
+                        mainImg.src = addImg.src;
+                    });
+                    addImgWrapper.appendChild(addImg);
+                }
+                i++;
+            }
+            buttonAddToCart.addEventListener('click', (event) =>
+                this.onProductSelected(event, this.product!.id)
+            );
+            buyButton.addEventListener('click', () =>
+                this.onButtonClick(PageButtons.Buy)
+            );
+        } else {
+            this.parent.innerHTML = `<div class="not-found">Not found items</div>`;
         }
-        buttonAddToCart.addEventListener('click', (event) =>
-            this.onProductSelected(event, this.product.id)
-        );
-        buyButton.addEventListener('click', () =>
-            this.onButtonClick(PageButtons.Buy)
-        );
     }
 }
