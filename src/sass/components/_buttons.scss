@@ -1,13 +1,12 @@
 .buttons__wrapper {
   display: flex;
   gap: 2rem;
-  padding-top: 15px;
   justify-content: center;
 }
 
 .button {
   @include font($size: 2rem);
-  width: 16.5rem;
+  width: 19.5rem;
   padding: 5px 10px;
   border: 1px solid $color-primary;
   color: $color-primary;
