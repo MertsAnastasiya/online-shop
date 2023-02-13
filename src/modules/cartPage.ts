@@ -6,6 +6,7 @@ import {
     PageButtons,
 } from './interfaces/customTypes';
 import { IProduct } from './interfaces/product.interface';
+import { defaultImage, requiresNonNullOrDefault } from './utils';
 
 export class CartPage {
     private readonly parent: Element;
@@ -47,8 +48,12 @@ export class CartPage {
     }
 
     public drawCartPage(): void {
+        this.parent.innerHTML =
+            this.selectedProducts.length !== 0
+                ? this.cartDataLayout
+                : `<div class="not-found">The cart is empty</div>`;
+
         if (this.selectedProducts.length !== 0) {
-            this.parent.innerHTML = this.cartDataLayout;
             const selectedList: Element =
                 document.querySelector('.selected-list')!;
             const summaryHeader: Element =
@@ -102,8 +107,6 @@ export class CartPage {
             buyButton.addEventListener('click', () =>
                 this.onButtonClick(PageButtons.Buy)
             );
-        } else {
-            this.parent.innerHTML = `<div class="not-found">The cart is empty</div>`;
         }
     }
 
@@ -127,9 +130,7 @@ export class CartPage {
         const selectedItemImage: HTMLImageElement =
             document.createElement('img');
         selectedItemImage.classList.add('selected-item__image');
-        if (images[0] !== undefined) {
-            selectedItemImage.src = images[0];
-        }
+        selectedItemImage.src = requiresNonNullOrDefault(images[0], defaultImage);
         return selectedItemImage;
     }
 

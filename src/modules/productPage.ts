@@ -6,6 +6,7 @@ import {
     PageButtons,
 } from './interfaces/customTypes';
 import { IProduct } from './interfaces/product.interface';
+import { defaultImage, requiresNonNullOrDefault } from './utils';
 
 export class ProductPage {
     private readonly parent: Element;
@@ -58,7 +59,11 @@ export class ProductPage {
     }
 
     public drawProductPage(selectedArray: number[]): void {
-        this.parent.innerHTML = this.productDataLayout;
+        this.parent.innerHTML =
+            this.product !== undefined
+                ? this.productDataLayout
+                : `<div class="not-found">Not found items</div>`;
+
         if (this.product !== undefined) {
             const route: Element = document.querySelector('.route')!;
             const productName: Element = document.querySelector('.name')!;
@@ -97,9 +102,10 @@ export class ProductPage {
             buttonAddToCart.setAttribute('id', this.product.id.toString());
             price!.textContent = `€${this.product.price}`;
             rating!.textContent = `Rating: ${this.product.rating}`;
-            if (this.product.images[0]) {
-                mainImg.src = this.product.images[0]!;
-            }
+            mainImg.src = requiresNonNullOrDefault(
+                this.product.images[0],
+                defaultImage
+            );
 
             let i: number = 0;
             while (i < this.imageCount) {
@@ -121,8 +127,6 @@ export class ProductPage {
             buyButton.addEventListener('click', () =>
                 this.onButtonClick(PageButtons.Buy)
             );
-        } else {
-            this.parent.innerHTML = `<div class="not-found">Not found items</div>`;
         }
     }
 }

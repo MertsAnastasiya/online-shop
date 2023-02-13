@@ -1,7 +1,12 @@
 import { productsData } from '../data';
 import { GlobalFilters } from '../filters/globalFilters';
 import { FilterResult } from '../filters/result';
-import { FilterType, PageButtons, SliderType, SliderValue } from '../interfaces/customTypes';
+import {
+    FilterType,
+    PageButtons,
+    SliderType,
+    SliderValue,
+} from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 import { ProductList } from '../productList';
 import { Cart } from '../cart';
@@ -10,6 +15,7 @@ import { Button } from '../button';
 import { ProductPage } from '../productPage';
 import { PaymentForm } from '../paymentForm';
 import { CartPage } from '../cartPage';
+import { defaultProduct, requiresNonNullOrDefault } from '../utils';
 
 const mainContainer: Element = document.querySelector('.main__container')!;
 const headerContainer: Element = document.querySelector('.header__container')!;
@@ -29,7 +35,13 @@ export class App {
                 currentSliders: Map<SliderType, SliderValue>,
                 searchValue: string,
                 sort: string
-            ) => this.updateResult(currentFilters, currentSliders, searchValue, sort),
+            ) =>
+                this.updateResult(
+                    currentFilters,
+                    currentSliders,
+                    searchValue,
+                    sort
+                ),
 
             (param: string, value: string, isAdd: boolean) =>
                 this.searchParams.updateSearchParamByCheckbox(
@@ -46,7 +58,8 @@ export class App {
 
         this.productList = new ProductList(
             productListContainer,
-            (event: Event, id: number) => this.onButtonClickAddToCart(event, id),
+            (event: Event, id: number) =>
+                this.onButtonClickAddToCart(event, id),
             (id: number) => this.onProductClick(id),
             (id: number) => this.checkButtonStatus(id)
         );
@@ -56,7 +69,10 @@ export class App {
 
     public start(): void {
         this.cart.drawCart();
-        this.cart.setCurrentValues(String(this.getSum()), String(this.getCount()));
+        this.cart.setCurrentValues(
+            String(this.getSum()),
+            String(this.getCount())
+        );
 
         this.drawPageByUrl(window.location.href, window.location.search);
     }
@@ -118,13 +134,25 @@ export class App {
     }
 
     private drawProductPage(id: number): void {
-        const productView: ProductPage = new ProductPage(mainContainer, id, (event: Event, id: number) =>
-            this.onButtonClickAddToCart(event, id), this.onButtonClick);
+        const productView: ProductPage = new ProductPage(
+            mainContainer,
+            id,
+            (event: Event, id: number) =>
+                this.onButtonClickAddToCart(event, id),
+            this.onButtonClick
+        );
         productView.drawProductPage(this.getSelectedProducts());
     }
 
     private drawCartPage(): void {
-        const cartView: CartPage = new CartPage(mainContainer, productsData, this.getSelectedProducts(), (event: Event, id: number) => this.onChangeAmount(event, id), (id: number) => this.onProductClick(id), (type: PageButtons) => this.onButtonClick(type));
+        const cartView: CartPage = new CartPage(
+            mainContainer,
+            productsData,
+            this.getSelectedProducts(),
+            (event: Event, id: number) => this.onChangeAmount(event, id),
+            (id: number) => this.onProductClick(id),
+            (type: PageButtons) => this.onButtonClick(type)
+        );
         cartView.drawCartPage();
     }
 
@@ -136,7 +164,10 @@ export class App {
         if (target.classList.value.includes('add-amount')) {
             this.setSelectedProducts(id, true);
         }
-        this.cart.setCurrentValues(String(this.getSum()), String(this.getCount()));
+        this.cart.setCurrentValues(
+            String(this.getSum()),
+            String(this.getCount())
+        );
         this.drawCartPage();
     }
 
@@ -190,7 +221,7 @@ export class App {
             isAdded = true;
         } else {
             target.innerHTML = 'Add to cart';
-            isAdded = false ;
+            isAdded = false;
         }
         this.setSelectedProducts(productId, isAdded);
         let currentCount: number = Number(this.getCount());
@@ -220,9 +251,10 @@ export class App {
     }
 
     private getProductPrice(id: number): number {
-        const selectedProduct: IProduct | undefined = productsData.filter((product) => product.id === id)[0];
-        if (selectedProduct === undefined) return 0;
-        return selectedProduct.price;
+        return requiresNonNullOrDefault(
+            productsData.filter((product) => product.id === id)[0],
+            defaultProduct
+        ).price;
     }
 
     public getCount(): number {
@@ -232,18 +264,24 @@ export class App {
 
     private setSelectedProducts(id: number, isAdded: boolean): void {
         const arraySelectedProducts: number[] = this.getSelectedProducts();
-        if(isAdded) {
+        if (isAdded) {
             arraySelectedProducts.push(id);
-            localStorage.setItem('selected',JSON.stringify(arraySelectedProducts));
+            localStorage.setItem(
+                'selected',
+                JSON.stringify(arraySelectedProducts)
+            );
         } else {
             const firstIndexOfId: number = arraySelectedProducts.indexOf(id);
-            const newData: number[] = arraySelectedProducts.filter((item, index) => (item !== id || index !== firstIndexOfId));
-            localStorage.setItem('selected',JSON.stringify(newData));
+            const newData: number[] = arraySelectedProducts.filter(
+                (item, index) => item !== id || index !== firstIndexOfId
+            );
+            localStorage.setItem('selected', JSON.stringify(newData));
         }
     }
 
     private getSelectedProducts(): number[] {
-        const localStorageData: string | null = localStorage.getItem('selected');
+        const localStorageData: string | null =
+            localStorage.getItem('selected');
         return localStorageData ? JSON.parse(localStorageData) : [];
     }
 
@@ -274,8 +312,13 @@ export class App {
                 break;
             }
             case PageButtons.Pay: {
-                document.querySelector('.modal-window')!.innerHTML = `<p class="message">The order accepted!</p>`;
-                setTimeout(() => window.location.href = window.location.origin, 3000);
+                document.querySelector(
+                    '.modal-window'
+                )!.innerHTML = `<p class="message">The order accepted!</p>`;
+                setTimeout(
+                    () => (window.location.href = window.location.origin),
+                    3000
+                );
                 break;
             }
             default:
