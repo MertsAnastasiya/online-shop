@@ -27,26 +27,6 @@ export class SearchParams {
             ? this.searchParams.set(param, `${temp}|${value}`)
             : this.searchParams.set(param, `${value}`);
             this.updateUrl();
-
-        // if (isAdd) {
-        //     const temp: string | null = this.searchParams.get(param);
-        //     if (temp) {
-        //         this.searchParams.set(param, `${temp}|${value}`);
-        //     } else {
-        //         this.searchParams.set(param, `${value}`);
-        //     }
-        // } else {
-        //     const currentParamValueArray: string[] = this.searchParams
-        //         .get(param)!
-        //         .split('|')!;
-        //     const newCurrentValue: string[] = currentParamValueArray.filter(
-        //         (item) => item !== value
-        //     );
-        //     newCurrentValue.length !== 0
-        //         ? this.searchParams.set(param, newCurrentValue.join('|'))
-        //         : this.searchParams.delete(param);
-        // }
-        // this.updateUrl();
     }
 
     public updateSearchParamBySlider(
@@ -82,16 +62,6 @@ export class SearchParams {
             SearchParams.unused,
             `${window.location.pathname}?${this.searchParams.toString()}`
         );
-        // if (this.searchParams.toString() !== '') {
-        //     this.searchParams.sort();
-        //     window.history.pushState(
-        //         Object.fromEntries(this.searchParams.entries()),
-        //         SearchParams.unused,
-        //         `${window.location.pathname}?${this.searchParams.toString()}`
-        //     );
-        // } else {
-        //     this.clearUrl();
-        // }
     }
 
     public clearUrl(): void {

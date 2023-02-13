@@ -54,16 +54,6 @@ export class FilterResult {
                     addToResult = false;
                     break;
                 }
-
-                // if (
-                //     productPropertyValue >= sliderValueMin &&
-                //     productPropertyValue <= sliderValueMax
-                // ) {
-                //     break;
-                // } else {
-                //     addToResult = false;
-                //     break;
-                // }
             }
 
             if (addToResult) {

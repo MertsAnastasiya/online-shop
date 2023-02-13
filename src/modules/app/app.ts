@@ -272,16 +272,8 @@ export class App {
             localStorage.setItem('selected', JSON.stringify(newData));
             return;
         }
-        // if (isAdded) {
         arraySelectedProducts.push(id);
         localStorage.setItem('selected', JSON.stringify(arraySelectedProducts));
-        // } else {
-        //     const firstIndexOfId: number = arraySelectedProducts.indexOf(id);
-        //     const newData: number[] = arraySelectedProducts.filter(
-        //         (item, index) => item !== id || index !== firstIndexOfId
-        //     );
-        //     localStorage.setItem('selected', JSON.stringify(newData));
-        // }
     }
 
     private getSelectedProducts(): number[] {
