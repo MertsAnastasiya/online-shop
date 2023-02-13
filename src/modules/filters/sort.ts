@@ -20,11 +20,8 @@ export class ProductsSorter {
         sort.textContent = this.sortProperty;
 
         sort.addEventListener('click', () => {
-            if (this.sortDirection === 'asc') {
-                this.sortDirection = 'desc';
-            } else if (this.sortDirection === 'desc') {
-                this.sortDirection = 'asc';
-            }
+            this.sortDirection =
+                this.sortDirection === 'asc' ? 'desc' : 'asc';
             this.onSortClick(this.sortProperty, this.sortDirection);
         });
 

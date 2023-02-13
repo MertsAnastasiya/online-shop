@@ -264,19 +264,24 @@ export class App {
 
     private setSelectedProducts(id: number, isAdded: boolean): void {
         const arraySelectedProducts: number[] = this.getSelectedProducts();
-        if (isAdded) {
-            arraySelectedProducts.push(id);
-            localStorage.setItem(
-                'selected',
-                JSON.stringify(arraySelectedProducts)
-            );
-        } else {
+        if (!isAdded) {
             const firstIndexOfId: number = arraySelectedProducts.indexOf(id);
             const newData: number[] = arraySelectedProducts.filter(
                 (item, index) => item !== id || index !== firstIndexOfId
             );
             localStorage.setItem('selected', JSON.stringify(newData));
+            return;
         }
+        // if (isAdded) {
+        arraySelectedProducts.push(id);
+        localStorage.setItem('selected', JSON.stringify(arraySelectedProducts));
+        // } else {
+        //     const firstIndexOfId: number = arraySelectedProducts.indexOf(id);
+        //     const newData: number[] = arraySelectedProducts.filter(
+        //         (item, index) => item !== id || index !== firstIndexOfId
+        //     );
+        //     localStorage.setItem('selected', JSON.stringify(newData));
+        // }
     }
 
     private getSelectedProducts(): number[] {

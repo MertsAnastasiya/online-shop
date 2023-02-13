@@ -36,7 +36,6 @@ export class FilterResult {
             for (let key of stateFilters.keys()) {
                 const filterValue: Set<string> = stateFilters.get(key)!;
                 const productPropertyValue: string = product[key].toLowerCase();
-
                 if (
                     filterValue.size !== 0 &&
                     !filterValue.has(productPropertyValue)
@@ -50,15 +49,21 @@ export class FilterResult {
                 const sliderValueMax = stateSliders.get(key)?.max!;
                 const sliderValueMin = stateSliders.get(key)?.min!;
                 const productPropertyValue: number = product[key];
-                if (
-                    productPropertyValue >= sliderValueMin &&
-                    productPropertyValue <= sliderValueMax
-                ) {
-                    break;
-                } else {
+
+                if (!(productPropertyValue >= sliderValueMin) && !(productPropertyValue <= sliderValueMax)) {
                     addToResult = false;
                     break;
                 }
+
+                // if (
+                //     productPropertyValue >= sliderValueMin &&
+                //     productPropertyValue <= sliderValueMax
+                // ) {
+                //     break;
+                // } else {
+                //     addToResult = false;
+                //     break;
+                // }
             }
 
             if (addToResult) {

@@ -72,6 +72,7 @@ export class ProductPage {
         let isAddedToCart: boolean = Boolean(
             selectedArray.filter((item) => item === this.product!.id)[0]
         );
+
         if (isAddedToCart) {
             buttonAddToCart.innerHTML = 'Remove from cart';
             buttonAddToCart.classList.add('remove-from-cart');
