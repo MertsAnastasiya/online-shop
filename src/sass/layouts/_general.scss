@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 75%;
   border: 1px solid $color-filters;
-  padding: 0 1rem;
+  padding: 1rem;
 
   @include media-mobile {
     width: 50%;

@@ -12,6 +12,12 @@ body {
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  color: $color-dark;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.h1 {
+  @include font($size: 3rem);
 }
 
 .h2 {

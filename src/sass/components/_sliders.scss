@@ -15,7 +15,6 @@
   display: flex;
   margin-top: 25px;
   justify-content: space-between;
-  font-family: 'Roboto';
   @include font($size: 2.1rem);
 
   @include media-mobile {

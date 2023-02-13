@@ -81,7 +81,7 @@
 .summary__total-price {
     display: flex;
     justify-content: space-between;
-    font-weight: 800;
+    @include font($size: 2.2rem, $weight: 700);
     padding-bottom: 2rem;
 }
 

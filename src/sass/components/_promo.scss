@@ -1,7 +1,6 @@
 .promo {
   background: $color-promo;
   border-radius: $radius;
-  margin-top: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,8 +9,4 @@
   @include media-mobile {
     display: none;
   }
-}
-
-.h1 {
-  @include font($size: 3rem);
 }

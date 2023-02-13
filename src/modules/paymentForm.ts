@@ -30,7 +30,7 @@ export class PaymentForm {
                 <input type="text" class="input input_code" id="input_code" placeholder="CVV">
             </div>
             <div class="buttons__wrapper">
-            <button type="submit" class="button button-pay" disabled>Pay</button>
+            <button type="submit" class="button button_pay" disabled>Pay</button>
             </div>
         </form>`;
     }
@@ -55,7 +55,7 @@ export class PaymentForm {
             this.closeWindow();
         });
 
-        const buttonPay: Element = document.querySelector('.button-pay')!;
+        const buttonPay: Element = document.querySelector('.button_pay')!;
         buttonPay.addEventListener('click', () => {
             this.onClickButton(PageButtons.Pay);
         });
@@ -158,7 +158,7 @@ export class PaymentForm {
         isOk = this.checkAddress();
         if (isOk) {
             const buttonPay: HTMLButtonElement =
-                document.querySelector<HTMLButtonElement>('.button-pay')!;
+                document.querySelector<HTMLButtonElement>('.button_pay')!;
             buttonPay.disabled = false;
         }
     }

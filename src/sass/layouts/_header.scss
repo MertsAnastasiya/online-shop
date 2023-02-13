@@ -1,6 +1,5 @@
 .header {
   background: $color-primary;
-  padding: 20px 0;
 }
 
 .header__container {
@@ -10,6 +9,6 @@
 
   @include media-mobile {
     flex-direction: column;
-    gap: 10px;
+    gap: 1rem;
   }
 }

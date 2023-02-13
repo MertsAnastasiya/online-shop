@@ -41,14 +41,15 @@ export class ProductList {
     }
 
     private createProductImage(images: string[]): Element {
-        const productImgDiv: HTMLDivElement = document.createElement('div');
-        const productImg: HTMLImageElement = document.createElement('img');
-        productImg.setAttribute('src', images[0]!);
-        productImg.setAttribute('alt', 'product');
-        productImg.classList.add('product__img');
-        productImgDiv.appendChild(productImg);
+        const imageWrapper: HTMLDivElement = document.createElement('div');
+        imageWrapper.classList.add('image__wrapper');
+        const image: HTMLImageElement = document.createElement('img');
+        image.setAttribute('src', images[0]!);
+        image.setAttribute('alt', 'product');
+        image.classList.add('product__img');
+        imageWrapper.appendChild(image);
 
-        return productImgDiv;
+        return imageWrapper;
     }
 
     private createProductTitle(title: string, price: number): Element {

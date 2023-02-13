@@ -8,6 +8,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: $color-light;
   @include font($size: 2.5rem);
 
   @include media-mobile {
@@ -38,18 +39,6 @@
   flex-direction: column;
   gap: 10px;
   list-style-type: none;
-}
-
-.authors-githubs__link {
-  text-decoration: none;
-  font-family: "Roboto";
-
-  color: #fffcfc;
-}
-
-.year {
-  font-family: "Roboto";
-  color: #fffcfc;
 }
 
 .rs-logo {
