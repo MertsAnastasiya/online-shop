@@ -6,7 +6,7 @@
 .price-slider,
 .stock-slider {
   width: 99%;
-  padding: 15px 0;
+  padding: 1.5rem 0;
   border-top: 2px solid $color-filters;
 }
 
@@ -29,7 +29,8 @@
   width: 100%;
 }
 
-input[type='range'] {
+input[type="range"] {
+  position: absolute;
   box-sizing: border-box;
   appearance: none;
   width: 100%;
