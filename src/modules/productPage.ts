@@ -6,11 +6,12 @@ import {
     PageButtons,
 } from './interfaces/customTypes';
 import { IProduct } from './interfaces/product.interface';
+import { defaultImage, requiresNonNullOrDefault } from './utils';
 
 export class ProductPage {
     private readonly parent: Element;
     private readonly productDataLayout: string;
-    private readonly product: IProduct;
+    private readonly product: IProduct | undefined;
     private readonly onButtonClick: OnButtonClick;
     private readonly onProductSelected: OnButtonCartClick;
     private readonly imageCount = 3;
@@ -25,7 +26,7 @@ export class ProductPage {
         this.onButtonClick = onButtonClick;
         this.onProductSelected = onProductSelected;
 
-        this.product = productsData.filter((data) => data.id === id)[0]!;
+        this.product = productsData.filter((data) => data.id === id)[0];
 
         this.productDataLayout = `
             <div class="route"></div>
@@ -58,6 +59,10 @@ export class ProductPage {
     }
 
     public drawProductPage(selectedArray: number[]): void {
+        if (this.product === undefined) {
+            this.parent.innerHTML = `<div class="not-found">Not found items</div>`;
+            return;
+        }
         this.parent.innerHTML = this.productDataLayout;
         const route: Element = document.querySelector('.route')!;
         const productName: Element = document.querySelector('.name')!;
@@ -65,8 +70,9 @@ export class ProductPage {
         const description: Element = document.querySelector('.description')!;
         const buttonAddToCart: Element = document.querySelector('.add-cart')!;
         let isAddedToCart: boolean = Boolean(
-            selectedArray.filter((item) => item === this.product.id)[0]
+            selectedArray.filter((item) => item === this.product!.id)[0]
         );
+
         if (isAddedToCart) {
             buttonAddToCart.innerHTML = 'Remove from cart';
             buttonAddToCart.classList.add('remove-from-cart');
@@ -94,9 +100,10 @@ export class ProductPage {
         buttonAddToCart.setAttribute('id', this.product.id.toString());
         price!.textContent = `€${this.product.price}`;
         rating!.textContent = `Rating: ${this.product.rating}`;
-        if (this.product.images[0]) {
-            mainImg.src = this.product.images[0]!;
-        }
+        mainImg.src = requiresNonNullOrDefault(
+            this.product.images[0],
+            defaultImage
+        );
 
         let i: number = 0;
         while (i < this.imageCount) {
@@ -112,7 +119,7 @@ export class ProductPage {
             i++;
         }
         buttonAddToCart.addEventListener('click', (event) =>
-            this.onProductSelected(event, this.product.id)
+            this.onProductSelected(event, this.product!.id)
         );
         buyButton.addEventListener('click', () =>
             this.onButtonClick(PageButtons.Buy)

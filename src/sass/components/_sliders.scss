@@ -67,3 +67,21 @@ input[type="range"] {
     }
   }
 }
+
+input[type='range'] {
+  position: absolute;
+
+  &:nth-child(1) {
+    &::-webkit-slider-thumb::before {
+      background-color: red;
+    }
+  }
+
+  &:nth-child(2) {
+    background: none;
+
+    &::-webkit-slider-thumb::before {
+      background-color: grey;
+    }
+  }
+}

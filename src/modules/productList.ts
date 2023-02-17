@@ -1,5 +1,6 @@
 import { OnButtonCartClick, OnProductClick } from './interfaces/customTypes';
 import { IProduct } from './interfaces/product.interface';
+import { defaultImage, requiresNonNullOrDefault } from './utils';
 
 export class ProductList {
     private readonly parent: Element;
@@ -30,7 +31,7 @@ export class ProductList {
                 this.onProductClick(product.id)
             );
 
-            productWrapper.appendChild(this.createProductImage(product.images));
+            productWrapper.appendChild(this.createProductImage(product.images, product.title));
             productWrapper.appendChild(
                 this.createProductTitle(product.title, product.price)
             );
@@ -40,12 +41,12 @@ export class ProductList {
         });
     }
 
-    private createProductImage(images: string[]): Element {
+    private createProductImage(images: string[], title: string): Element {
         const imageWrapper: HTMLDivElement = document.createElement('div');
         imageWrapper.classList.add('image__wrapper');
         const image: HTMLImageElement = document.createElement('img');
-        image.setAttribute('src', images[0]!);
-        image.setAttribute('alt', 'product');
+        image.src = requiresNonNullOrDefault(images[0], defaultImage);
+        image.alt = title;
         image.classList.add('product__img');
         imageWrapper.appendChild(image);
 
