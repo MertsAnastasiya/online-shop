@@ -1,30 +1,27 @@
-import { onSortClick } from '../interfaces/customTypes';
+import { OnSortClick } from '../interfaces/customTypes';
 
 export class ProductsSorter {
-    public sortProperty: string;
+    public readonly sortProperty: string;
     public sortDirection: string;
-    private parent: Element;
-    private onSortClick: onSortClick;
+    private readonly parent: Element;
+    private readonly onSortClick: OnSortClick;
 
-    constructor(parent: Element, type: string, onSortClick: onSortClick) {
-        this.sortProperty = type;
+    constructor(parent: Element, sortProperty: string, onSortClick: OnSortClick) {
+        this.sortProperty = sortProperty;
         this.parent = parent;
         this.onSortClick = onSortClick;
         this.sortDirection = 'desc';
     }
 
-    drawSortField() {
-        const sort = document.createElement('div');
+    public drawSortField(): void {
+        const sort: Element = document.createElement('div');
         sort.classList.add('sort');
         sort.classList.add(`sort__${this.sortProperty}`);
-        sort.innerText = this.sortProperty;
+        sort.textContent = this.sortProperty;
 
         sort.addEventListener('click', () => {
-            if (this.sortDirection === 'asc') {
-                this.sortDirection = 'desc';
-            } else if (this.sortDirection === 'desc') {
-                this.sortDirection = 'asc';
-            }
+            this.sortDirection =
+                this.sortDirection === 'asc' ? 'desc' : 'asc';
             this.onSortClick(this.sortProperty, this.sortDirection);
         });
 

@@ -1,12 +1,9 @@
 .layout_lines {
   display: flex;
   flex-direction: column;
-}
-
-.wrapper .layout_lines {
   width: 75%;
-  border-top: 1px solid $color-filters;
-  border-bottom: 1px solid $color-filters;
+  border: 1px solid $color-filters;
+  padding: 1rem;
 
   @include media-mobile {
     width: 50%;

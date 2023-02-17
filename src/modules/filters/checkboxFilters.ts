@@ -2,9 +2,9 @@ import { CallbackOnClickCheckbox, FilterType } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 
 export class CheckboxFilter {
-    private parent: Element;
-    private filterType: FilterType;
-    private onClickCheckbox: CallbackOnClickCheckbox;
+    private readonly parent: Element;
+    private readonly filterType: FilterType;
+    private readonly onClickCheckbox: CallbackOnClickCheckbox;
 
     constructor(
         parent: Element,
@@ -34,7 +34,7 @@ export class CheckboxFilter {
     }
 
     private generateFilterItems(data: IProduct[]): Set<string> {
-        const setItems = new Set<string>();
+        const setItems: Set<string> = new Set<string>();
         data.forEach((item) =>
             setItems.add(item[this.filterType].toLowerCase())
         );
@@ -56,7 +56,7 @@ export class CheckboxFilter {
             if (checkbox.checked) isAdded = true;
             this.onClickCheckbox(this.filterType, checkbox.id, isAdded);
         });
-        const label = document.createElement('label');
+        const label: HTMLLabelElement = document.createElement('label');
         label.classList.add('label');
         label.htmlFor = checkbox.id;
         label.textContent = value.charAt(0).toUpperCase() + value.slice(1);

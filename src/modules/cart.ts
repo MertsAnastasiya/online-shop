@@ -1,9 +1,10 @@
-type OnClickCart = () => void;
+import { OnClickCart } from './interfaces/customTypes';
+
 
 export class Cart {
-    private parent: Element;
-    private basketWrapper: Element;
-    private onClickCart: OnClickCart;
+    private readonly parent: Element;
+    private readonly basketWrapper: Element;
+    private readonly onClickCart: OnClickCart;
 
     constructor(parent: Element, onClickCart: OnClickCart) {
         this.parent = parent;
@@ -16,7 +17,7 @@ export class Cart {
             <p class="total-amount"></p>
             <div class="basket-background">
                 <img
-                    src="assets/img/solution-cart 1.png"
+                    src="assets/img/cart.svg"
                     alt="basket"
                     class="basket"
                 />

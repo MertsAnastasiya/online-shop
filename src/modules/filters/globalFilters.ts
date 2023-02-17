@@ -7,35 +7,33 @@ import {
     SliderType,
     SliderValue,
     ToChangeParamsBySearch,
+    ToChangeParamsBySort,
 } from '../interfaces/customTypes';
 import { IProduct } from '../interfaces/product.interface';
 import { DualSlider } from './sliders';
 import { Search } from './search';
 import { ProductsSorter } from './sort';
 
-//I'll change it later when all layout is refactored
 const wrapperFiltres: Element = document.querySelector('.filters')!;
 const wrapperSliders: Element = document.querySelector('.sliders')!;
 const wrapperSort: Element = document.querySelector('.sort__wrapper')!;
 
-type ToChangeParamsBySort = (value: string) => void;
-
 export class GlobalFilters {
-    private currentFilters: Map<FilterType, Set<string>>;
-    private currentSliders: Map<SliderType, SliderValue>;
+    private readonly currentFilters: Map<FilterType, Set<string>>;
+    private readonly currentSliders: Map<SliderType, SliderValue>;
     private currentSearch: string;
     private currentSort: string;
 
-    private callbackOnChangeFilters: CallbackOnChangeFilters;
-    private toChangeParamsByCheckbox: ToChangeParamsByCheckbox;
-    private toChangeParamsBySlider: ToChangeParamsBySlider;
-    private toChangeParamsBySearch: ToChangeParamsBySearch;
-    private toChangeParamsBySort: ToChangeParamsBySort;
+    private readonly callbackOnChangeFilters: CallbackOnChangeFilters;
+    private readonly toChangeParamsByCheckbox: ToChangeParamsByCheckbox;
+    private readonly toChangeParamsBySlider: ToChangeParamsBySlider;
+    private readonly toChangeParamsBySearch: ToChangeParamsBySearch;
+    private readonly toChangeParamsBySort: ToChangeParamsBySort;
 
     constructor(
         callbackOnChangeFilters: CallbackOnChangeFilters,
-        toChangeSearchParamsCheckbox: ToChangeParamsByCheckbox,
-        toChangeSearchParamsSlider: ToChangeParamsBySlider,
+        toChangeParamsByCheckbox: ToChangeParamsByCheckbox,
+        toChangeParamsBySlider: ToChangeParamsBySlider,
         toChangeParamsBySearch: ToChangeParamsBySearch,
         toChangeParamsBySort: ToChangeParamsBySort
     ) {
@@ -45,8 +43,8 @@ export class GlobalFilters {
         this.currentSort = '';
 
         this.callbackOnChangeFilters = callbackOnChangeFilters;
-        this.toChangeParamsByCheckbox = toChangeSearchParamsCheckbox;
-        this.toChangeParamsBySlider = toChangeSearchParamsSlider;
+        this.toChangeParamsByCheckbox = toChangeParamsByCheckbox;
+        this.toChangeParamsBySlider = toChangeParamsBySlider;
         this.toChangeParamsBySearch = toChangeParamsBySearch;
         this.toChangeParamsBySort = toChangeParamsBySort;
     }
@@ -160,8 +158,8 @@ export class GlobalFilters {
     }
 
     public setCurrentSliders(sliderType: SliderType, value: SliderValue): void {
-        const sliderMax = document.querySelector(`.${sliderType}-max`)! as HTMLInputElement;
-        const sliderMin = document.querySelector(`.${sliderType}-min`)! as HTMLInputElement;
+        const sliderMax: HTMLInputElement = document.querySelector<HTMLInputElement>(`.${sliderType}-max`)!;
+        const sliderMin: HTMLInputElement = document.querySelector<HTMLInputElement>(`.${sliderType}-min`)!;
         const spanMax: Element = document.querySelector(`.${sliderType}-spans__max`)!;
         const spanMin: Element = document.querySelector(`.${sliderType}-spans__min`)!;
         sliderMax.value = value.max.toString();
@@ -171,7 +169,7 @@ export class GlobalFilters {
         this.currentSliders.set(sliderType, value);
     }
 
-    private setCurrentSort(sort: string) {
+    private setCurrentSort(sort: string): void {
         this.currentSort = sort;
     }
 
@@ -207,8 +205,8 @@ export class GlobalFilters {
 
     }
 
-    private onSortClick(sortProperty: string, sortDirection: string) {
-        const sortValue = `${sortProperty}/${sortDirection}`;
+    private onSortClick(sortProperty: string, sortDirection: string): void {
+        const sortValue: string = `${sortProperty}/${sortDirection}`;
         this.setCurrentSort(sortValue);
         this.toChangeParamsBySort(sortValue);
         this.callbackOnChangeFilters(

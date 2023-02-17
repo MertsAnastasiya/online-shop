@@ -1,16 +1,16 @@
-import { OnButtonClick } from './interfaces/customTypes';
+import { OnButtonClick, PageButtons } from './interfaces/customTypes';
 
 export class Button {
-    private parent: Element;
-    private onClickButton: OnButtonClick;
+    private readonly parent: Element;
+    private readonly onClickButton: OnButtonClick;
 
     constructor(parent: Element, onClickButton: OnButtonClick) {
         this.parent = parent;
         this.onClickButton = onClickButton;
     }
 
-    public drawButton(type: string) {
-        const button = document.createElement('button');
+    public drawButton(type: PageButtons): void {
+        const button: Element = document.createElement('div');
         button.textContent = type;
         button.classList.add('button');
         button.classList.add(`button_${type}`);

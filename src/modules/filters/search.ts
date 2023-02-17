@@ -1,16 +1,16 @@
 import { OnChangeSearch } from '../interfaces/customTypes';
 
  export class Search {
-     private parent: Element;
-     private onChangeSearch: OnChangeSearch;
+     private readonly parent: Element;
+     private readonly onChangeSearch: OnChangeSearch;
 
      constructor(parent: Element, onChangeSearch: OnChangeSearch) {
          this.parent = parent;
          this.onChangeSearch = onChangeSearch;
      }
 
-     public drawSearch() {
-         const inputSearch = document.createElement('input');
+     public drawSearch(): void {
+         const inputSearch: HTMLInputElement = document.createElement('input');
          inputSearch.type = 'text';
          inputSearch.classList.add('search');
          inputSearch.placeholder = 'Search product';

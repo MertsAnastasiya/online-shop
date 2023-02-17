@@ -5,13 +5,13 @@ import {
 } from '../interfaces/customTypes';
 
 export class DualSlider {
-    private min: number;
-    private max: number;
-    private step: string;
-    private sliderType: SliderType;
-    private currentValue: SliderValue;
-    private parent: Element;
-    private onChangeSliders: CallbackViewChanged;
+    private readonly min: number;
+    private readonly max: number;
+    private readonly step: string;
+    private readonly sliderType: SliderType;
+    private readonly currentValue: SliderValue;
+    private readonly parent: Element;
+    private readonly onChangeSliders: CallbackViewChanged;
 
     constructor(
         parent: Element,
