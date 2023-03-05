@@ -158,10 +158,10 @@ export class App {
     public onChangeAmount(event: Event, id: number): void {
         const target: Element = event.target as Element;
         if (target.classList.value.includes('remove-amount')) {
-            this.setSelectedProducts(id, false);
+            this.setSelectedProducts(id, false, false);
         }
         if (target.classList.value.includes('add-amount')) {
-            this.setSelectedProducts(id, true);
+            this.setSelectedProducts(id, true, false);
         }
         this.cart.setCurrentValues(
             String(this.getSum()),
@@ -222,7 +222,7 @@ export class App {
             target.innerHTML = 'Add to cart';
             isAdded = false;
         }
-        this.setSelectedProducts(productId, isAdded);
+        this.setSelectedProducts(productId, isAdded, true);
         let currentCount: number = Number(this.getCount());
         let currentSum: number = Number(this.getSum());
 
@@ -261,13 +261,26 @@ export class App {
         return array.length;
     }
 
-    private setSelectedProducts(id: number, isAdded: boolean): void {
+    private setSelectedProducts(
+        id: number,
+        isAdded: boolean,
+        isDeleteAll: boolean
+    ): void {
+        console.log('delete');
+
         const arraySelectedProducts: number[] = this.getSelectedProducts();
         if (!isAdded) {
-            const firstIndexOfId: number = arraySelectedProducts.indexOf(id);
-            const newData: number[] = arraySelectedProducts.filter(
-                (item, index) => item !== id || index !== firstIndexOfId
-            );
+            if (!isDeleteAll) {
+                const firstIndexOfId: number =
+                    arraySelectedProducts.indexOf(id);
+                const newData: number[] = arraySelectedProducts.filter(
+                    (item, index) => item !== id || index !== firstIndexOfId
+                );
+                localStorage.setItem('selected', JSON.stringify(newData));
+                return;
+            }
+
+            const newData: number[] = arraySelectedProducts.filter((item) => item !== id);
             localStorage.setItem('selected', JSON.stringify(newData));
             return;
         }
