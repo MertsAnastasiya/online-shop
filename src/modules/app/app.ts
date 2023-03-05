@@ -42,7 +42,6 @@ export class App {
                     searchValue,
                     sort
                 ),
-
             (param: string, value: string, isAdd: boolean) =>
                 this.searchParams.updateSearchParamByCheckbox(
                     param,

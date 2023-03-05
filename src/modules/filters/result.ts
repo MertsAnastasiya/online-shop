@@ -50,7 +50,10 @@ export class FilterResult {
                 const sliderValueMin = stateSliders.get(key)?.min!;
                 const productPropertyValue: number = product[key];
 
-                if (!(productPropertyValue >= sliderValueMin) && !(productPropertyValue <= sliderValueMax)) {
+                if (
+                    !(productPropertyValue >= sliderValueMin) ||
+                    !(productPropertyValue <= sliderValueMax)
+                ) {
                     addToResult = false;
                     break;
                 }
