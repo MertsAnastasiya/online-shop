@@ -1,0 +1,11 @@
+.layout_lines {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  border: 1px solid $color-filters;
+  padding: 1rem;
+
+  @include media-mobile {
+    width: 50%;
+  }
+}

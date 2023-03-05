@@ -1,0 +1,12 @@
+.promo {
+  background: $color-promo;
+  border-radius: $radius;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20rem;
+
+  @include media-mobile {
+    display: none;
+  }
+}

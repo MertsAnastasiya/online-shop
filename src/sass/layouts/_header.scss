@@ -1,0 +1,14 @@
+.header {
+  background: $color-primary;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include media-mobile {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

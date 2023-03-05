@@ -1,0 +1,53 @@
+.line {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid $color-filters;
+}
+
+.sort__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 5px 0;
+}
+
+.sort__title {
+  @include font($size: 2.1rem, $weight: 600);
+
+  @include media-mobile {
+    @include font($size: 1.8rem, $weight: 600);
+  }
+}
+
+.sort__name {
+  @include font($size: 2.1rem);
+
+  @include media-mobile {
+    @include font($size: 1.8rem);
+  }
+}
+
+.view__wrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.view {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+
+  &_5 {
+    background: url("../assets/icons/view5.png") no-repeat;
+    background-size: contain;
+  }
+  &_3 {
+    background: url("../assets/icons/view3.png") no-repeat;
+    background-size: contain;
+  }
+
+  @include media-mobile {
+    display: none;
+  }
+}

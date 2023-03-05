@@ -1,0 +1,26 @@
+.basket-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: $color-light;
+  @include font($size: 3rem, $weight: 500);
+  cursor: pointer;
+}
+
+.basket-background {
+  position: relative;
+}
+
+.counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4rem;
+  height: 4rem;
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  color: $color-primary;
+  background-color: $color-light;
+  border-radius: 50%;
+}

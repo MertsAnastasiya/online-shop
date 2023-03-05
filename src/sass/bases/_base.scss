@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  color: $color-dark;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.h1 {
+  @include font($size: 3rem);
+}
+
+.h2 {
+  @include font($size: 3rem, $weight: 700);
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.h3 {
+  @include font($size: 2.5rem, $weight: 700);
+}

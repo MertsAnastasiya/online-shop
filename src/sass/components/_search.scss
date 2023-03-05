@@ -1,0 +1,18 @@
+.search {
+  width: 350px;
+  height: 35px;
+  background: #fcfafa;
+  border: 1px solid $color-primary;
+  border-radius: $radius;
+  @include font($size: 2rem);
+  padding: 1rem;
+
+  &::placeholder {
+    color: $color-primary;
+     opacity: 0.5;
+  }
+
+  &:focus::-webkit-input-placeholder {
+    color: transparent;
+  }
+}

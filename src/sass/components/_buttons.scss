@@ -1,0 +1,33 @@
+.buttons__wrapper {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.button {
+  @include font($size: 2rem);
+  width: 19.5rem;
+  padding: 5px 10px;
+  border: 1px solid $color-primary;
+  color: $color-primary;
+  border-radius: $radius;
+  background-color: $color-light;
+  text-transform: capitalize;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-primary;
+    color: $color-light;
+  }
+
+  &_small {
+    @include font($size: 1.6rem);
+  }
+
+  &:disabled {
+    color: $color-filters;
+    border-color: $color-filters;
+    cursor: auto;
+  }
+}

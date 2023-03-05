@@ -1,0 +1,40 @@
+.delivery__wrapper {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $color-filters;
+  border-radius: $radius;
+  margin-top: 15px;
+}
+
+.delivery::before {
+  content: " ";
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background: url("../assets/icons/truck.png") no-repeat;
+  filter: invert(75%) sepia(5%) saturate(3778%) hue-rotate(338deg)
+    brightness(102%) contrast(91%);
+  background-size: contain;
+  padding-right: 20px;
+}
+
+.delivery,
+.return {
+  display: flex;
+  align-items: center;
+  @include font($size: 1.8rem, $weight: 700);
+  border-bottom: 1px solid $color-filters;
+  padding: 10px 10px;
+}
+
+.return::before {
+  content: " ";
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background: url("../assets/icons/calendar.png") no-repeat;
+  filter: invert(75%) sepia(5%) saturate(3778%) hue-rotate(338deg)
+    brightness(102%) contrast(91%);
+  background-size: contain;
+  padding-right: 20px;
+}

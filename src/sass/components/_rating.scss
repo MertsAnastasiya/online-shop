@@ -1,0 +1,16 @@
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating__label {
+  @include font($size: 2rem);
+  color: $color-rating;
+  text-decoration: none;
+}
